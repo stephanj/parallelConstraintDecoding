@@ -255,6 +255,14 @@ public final class NativeParallelEngine {
                     bestToken = e.getKey();
                 }
             }
+            // How many live choices share each next token: an eliminated group's mass is split evenly
+            // among its members so the reported probabilities still form a distribution.
+            Map<Integer, Integer> groupSize = new LinkedHashMap<>();
+            for (int c = 0; c < n; c++) {
+                if (live[c]) {
+                    groupSize.merge(nextToken(c), 1, Integer::sum);
+                }
+            }
             int remaining = 0;
             int last = -1;
             for (int c = 0; c < n; c++) {
@@ -269,6 +277,7 @@ public final class NativeParallelEngine {
                     last = c;
                 } else {
                     live[c] = false;
+                    prob[c] /= groupSize.get(t);
                 }
             }
             if (remaining == 1) {

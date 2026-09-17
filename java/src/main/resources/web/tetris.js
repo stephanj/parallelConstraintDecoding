@@ -68,7 +68,11 @@
         const maxH = Math.max(...hs);
         // A plain heuristic (Dellacherie-flavoured) used only as a reference in the UI.
         const heur = res.cleared * 10 - Math.max(0, newHoles) * 8 - maxH * 1.5 - bumpiness(hs) * 0.5;
-        out.push({ rot, col, row, label: `column ${col}, rotation ${rot}`, cleared: res.cleared, newHoles, maxH, bump: bumpiness(hs), heur });
+        // The outcome leads the label so the decoder's first decision token is about the outcome, not the position.
+        const outcome = res.cleared > 0
+          ? `clears ${res.cleared} line${res.cleared === 1 ? "" : "s"}`
+          : `no line, ${Math.max(0, newHoles)} new hole${newHoles === 1 ? "" : "s"}, height ${maxH}`;
+        out.push({ rot, col, row, label: `${outcome} - column ${col}, rotation ${rot}`, cleared: res.cleared, newHoles, maxH, bump: bumpiness(hs), heur });
       }
     }
     return out;
@@ -85,16 +89,16 @@
       boardText(board) + "\n\n" +
       `Column heights: ${hs.join(" ")}\nHoles: ${holes(board)}\nLines cleared so far: ${lines}\n` +
       `Falling piece: ${PIECE_NAMES[piece]}. Next piece: ${PIECE_NAMES[next]}.\n\n` +
-      `Legal placements (rotation 0 = spawn orientation, clockwise) with the result of each: lines cleared, new holes, stack height:\n` +
-      placements.map((p) => `- ${p.label}: ${p.cleared} lines, ${p.newHoles > 0 ? p.newHoles : 0} holes, height ${p.maxH}`).join("\n") + "\n\n" +
-      `Goal: keep the stack low and flat, avoid holes, clear lines.`;
+      `Each candidate placement is labelled with its outcome. Pick the placement that clears the most lines; ` +
+      `if none clears a line, pick one with no new holes and the lowest height.\n\nCandidates (rotation 0 = spawn orientation, clockwise):\n` +
+      placements.map((p) => `- ${p.label}`).join("\n");
     return {
       id: "tetris", title: "Tetris", description: "",
       context,
       schema: {
         placement: {
           type: "enum",
-          description: "Where to drop the falling piece",
+          description: "The placement to play, chosen by its outcome",
           choices: placements.map((p) => p.label),
         },
       },
@@ -128,12 +132,28 @@
   // ---------------------------------------------------------------- game loop
   const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
-  /** The placements offered to the model: all legal ones, or the heuristic's top N in column order. */
+  /**
+   * The placements offered to the model.
+   *  - "best": the game engine keeps the best outcome class only — every placement that clears the
+   *    most lines possible, or, when no line can be cleared, those creating the fewest new holes
+   *    (lowest resulting height first, at most 8). A line is completed whenever the piece can do it;
+   *    the model chooses among the equally good moves.
+   *  - "6": the heuristic's top 6, in column order.
+   *  - "all": every legal placement (raw behaviour).
+   */
   function candidates(all) {
     const mode = $("tetris-candidates").value;
-    if (mode === "all" || all.length <= 6) return all;
-    return all.slice().sort((a, b) => b.heur - a.heur).slice(0, parseInt(mode, 10))
-      .sort((a, b) => a.col - b.col || a.rot - b.rot);
+    if (mode === "all") return all;
+    if (mode === "6") {
+      return all.slice().sort((a, b) => b.heur - a.heur).slice(0, 6).sort((a, b) => a.col - b.col || a.rot - b.rot);
+    }
+    const maxLines = Math.max(...all.map((p) => p.cleared));
+    let pool = maxLines > 0 ? all.filter((p) => p.cleared === maxLines) : all;
+    if (maxLines === 0) {
+      const minHoles = Math.min(...pool.map((p) => Math.max(0, p.newHoles)));
+      pool = pool.filter((p) => Math.max(0, p.newHoles) === minHoles).sort((a, b) => a.maxH - b.maxH || b.heur - a.heur).slice(0, 8);
+    }
+    return pool.sort((a, b) => a.col - b.col || a.rot - b.rot);
   }
 
   async function turn() {
@@ -219,8 +239,8 @@
     const rows = Object.entries(d.probs).slice(0, 8).map(([label, p]) => {
       const pl = d.placements.find((x) => x.label === label);
       const cls = label === d.chosen.label ? "chosen" : "";
-      const note = pl ? `${pl.cleared ? pl.cleared + " line" + (pl.cleared > 1 ? "s" : "") + ", " : ""}${pl.newHoles > 0 ? pl.newHoles + " hole" + (pl.newHoles > 1 ? "s" : "") + ", " : ""}h ${pl.maxH}` : "";
-      return `<li class="${cls}"><span class="plabel">${label}</span><span class="pbar"><i style="width:${(p * 100).toFixed(0)}%"></i></span><span class="pprob">${(p * 100).toFixed(0)}%</span><span class="pnote">${note}</span></li>`;
+      const [outcome, where] = label.split(" - ");
+      return `<li class="${cls}"><span class="plabel">${where || label}</span><span class="pbar"><i style="width:${(p * 100).toFixed(0)}%"></i></span><span class="pprob">${(p * 100).toFixed(0)}%</span><span class="pnote">${outcome}</span></li>`;
     }).join("");
     $("tetris-probs").innerHTML = rows;
     $("tetris-heur").textContent = `Heuristic would pick ${best.label}` + (best.label === d.chosen.label ? " — same." : ".");

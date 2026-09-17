@@ -210,15 +210,17 @@
     <label class="control">
       <span>Candidates offered to the model</span>
       <select id="tetris-candidates">
+        <option value="best">best outcome class (completes a line whenever possible)</option>
         <option value="6">top 6 placements by the heuristic</option>
-        <option value="all">all legal placements</option>
+        <option value="all">all legal placements (raw)</option>
       </select>
     </label>
     <p class="hint">Every falling piece is one extraction call: the board is the input, the legal placements are the
       allowed values of a single field, and the decoder picks one in two forward passes. At temperature 0 it takes the
-      most probable placement; higher values sample from the distribution. With all legal placements offered, a small
-      model mostly stacks on the left; offering only the heuristic's top candidates keeps the game going while the model
-      still makes every pick.</p>
+      most probable placement; higher values sample from the distribution. Candidates are labelled with their outcome
+      first (“clears 2 lines - column 4, rotation 0”). By default the game engine offers only the best outcome class —
+      every placement that completes the most lines, or, failing that, those creating the fewest holes — and the model
+      chooses among them; offer all legal placements to see how a small model does on its own.</p>
   </section>
 
   <section class="tetris-layout">
@@ -244,9 +246,11 @@
       <details class="how">
         <summary>What the model is asked</summary>
         <p>The prompt is the board as a 10×20 grid of <code>#</code>/<code>.</code>, the column heights, the falling
-          and next piece, and one line per legal placement stating what it would do (lines cleared, new holes, resulting
-          height, bumpiness). The schema has one field, <code>placement</code>, whose allowed values are exactly those
-          placements — so an illegal move is impossible. A small model is a weak spatial reasoner: the interesting part is
+          and next piece, and the falling
+          and next piece, plus one candidate per legal placement whose label leads with its outcome (lines cleared, or new
+          holes and resulting height) followed by the column and rotation. The schema has one field,
+          <code>placement</code>, whose allowed values are exactly those labels — so an illegal move is impossible, and
+          the decoder's first scored token separates “clears …” from “no line …”. A small model is a weak spatial reasoner: the interesting part is
           watching it decide many times per second with a calibrated probability per option, not whether it beats the
           simple heuristic shown for reference.</p>
       </details>
