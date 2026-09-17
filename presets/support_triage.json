@@ -1,0 +1,200 @@
+{
+  "id": "support_triage",
+  "title": "Enterprise Incident Triage & Routing (28 Fields)",
+  "description": "End-to-end multi-dimensional semantic analysis of a critical enterprise production outage ticket.",
+  "context": "SUPPORT TICKET #INC-44019\nFrom: Marcus Vance, CTO @ Omnicorp Global (Tier 1 Strategic Enterprise, k ARR)\nSubject: CRITICAL P0: Production US-East API 502 Gateway Outage - Checkout Down\n\nBody: Our primary checkout service has been failing completely for the last 48 minutes because your US-East API endpoint is throwing 502 Bad Gateway errors on every POST /v2/charges call. We are losing approximately ,000 in transaction revenue every ten minutes!\n\nFurthermore, our billing audit discovered this morning that your platform double-billed our corporate account for data overages (,800 improper charge on Invoice #INV-8812).\n\nIf this API outage is not resolved within 30 minutes, our legal counsel will formally issue notice of material breach of our 99.99% availability SLA and initiate contract termination with full damages. We demand an immediate phone bridge with your VP of Engineering and a full refund of the bogus invoice.\n\nEnvironment: PRODUCTION\nAffected Cluster: us-east-1a\nAccount Priority: STRATEGIC_TIER_1",
+  "schema": {
+    "sentiment": {
+      "type": "enum",
+      "description": "Customer emotional state",
+      "choices": [
+        "VERY_NEGATIVE",
+        "NEGATIVE",
+        "NEUTRAL",
+        "POSITIVE"
+      ]
+    },
+    "severity_tier": {
+      "type": "enum",
+      "description": "Contractual incident severity tier",
+      "choices": [
+        "SEV_0_CRITICAL",
+        "SEV_1_MAJOR",
+        "SEV_2_MODERATE",
+        "SEV_3_MINOR"
+      ]
+    },
+    "primary_department": {
+      "type": "enum",
+      "description": "Primary internal department to resolve",
+      "choices": [
+        "INFRASTRUCTURE_SRE",
+        "BILLING_FINANCE",
+        "SECURITY_OPS",
+        "LEGAL_COMPLIANCE",
+        "ENTERPRISE_SUCCESS"
+      ]
+    },
+    "secondary_department": {
+      "type": "enum",
+      "description": "Secondary coordinating department",
+      "choices": [
+        "DATABASE_TEAM",
+        "NETWORK_OPS",
+        "CORE_API",
+        "IDENTITY_AUTH",
+        "NONE"
+      ]
+    },
+    "sla_breach_risk": {
+      "type": "boolean",
+      "description": "Whether contractual uptime SLA is at immediate risk"
+    },
+    "requires_executive_escalation": {
+      "type": "boolean",
+      "description": "Whether VP/Exec team must be alerted immediately"
+    },
+    "can_resolve_autonomously": {
+      "type": "boolean",
+      "description": "Whether automated runbook can resolve without human intervention"
+    },
+    "confidence_above_auto_threshold": {
+      "type": "boolean",
+      "description": "Whether system decision confidence exceeds 95% threshold"
+    },
+    "churn_risk_level": {
+      "type": "enum",
+      "description": "Probability customer cancels contract",
+      "choices": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL_IMMINENT"
+      ]
+    },
+    "refund_recommended": {
+      "type": "boolean",
+      "description": "Whether a billing refund/credit should be issued"
+    },
+    "refund_tier": {
+      "type": "enum",
+      "description": "Scale of recommended financial refund",
+      "choices": [
+        "NONE",
+        "PARTIAL_CREDIT",
+        "FULL_MONTH_CREDIT",
+        "CUSTOM_COMPENSATION"
+      ]
+    },
+    "requires_legal_review": {
+      "type": "boolean",
+      "description": "Whether legal counsel must review breach claims"
+    },
+    "security_incident": {
+      "type": "boolean",
+      "description": "Whether ticket indicates unauthorized security breach"
+    },
+    "compliance_breach": {
+      "type": "boolean",
+      "description": "Whether regulatory compliance standard was violated"
+    },
+    "customer_tenure_tier": {
+      "type": "enum",
+      "description": "Customer contract classification",
+      "choices": [
+        "ENTERPRISE_STRATEGIC",
+        "MID_MARKET",
+        "GROWTH",
+        "EARLY_STAGE"
+      ]
+    },
+    "root_cause_domain": {
+      "type": "enum",
+      "description": "Probable technical system domain of failure",
+      "choices": [
+        "DNS_ROUTING",
+        "DB_LOCKING",
+        "API_GATEWAY",
+        "BILLING_SYNC",
+        "AUTH_TOKEN_EXPIRY"
+      ]
+    },
+    "target_resolution_hours": {
+      "type": "enum",
+      "description": "Target turnaround SLA window",
+      "choices": [
+        "1_HOUR",
+        "4_HOURS",
+        "12_HOURS",
+        "24_HOURS"
+      ]
+    },
+    "requires_phone_call": {
+      "type": "boolean",
+      "description": "Whether emergency live bridge call is required"
+    },
+    "notify_account_executive": {
+      "type": "boolean",
+      "description": "Whether dedicated enterprise AE should be paged"
+    },
+    "public_status_page_incident": {
+      "type": "boolean",
+      "description": "Whether incident should be posted to public status page"
+    },
+    "postmortem_required": {
+      "type": "boolean",
+      "description": "Whether formal RCA postmortem document must be authored"
+    },
+    "vendor_fault": {
+      "type": "boolean",
+      "description": "Whether outage is confirmed due to our platform"
+    },
+    "contract_penalty_applicable": {
+      "type": "boolean",
+      "description": "Whether customer has right to claim SLA penalty credits"
+    },
+    "escalate_to_vp": {
+      "type": "boolean",
+      "description": "Whether VP of Engineering page is warranted"
+    },
+    "customer_sentiment_trend": {
+      "type": "enum",
+      "description": "Direction of customer relationship sentiment",
+      "choices": [
+        "WORSENING",
+        "STATIC",
+        "IMPROVING"
+      ]
+    },
+    "suggested_action": {
+      "type": "enum",
+      "description": "Immediate first response workflow action",
+      "choices": [
+        "PAGE_ONCALL_SRE",
+        "ISSUE_CREDIT_MEMO",
+        "DISPATCH_SECURITY_TEAM",
+        "SCHEDULE_EXEC_CALL"
+      ]
+    },
+    "assigned_agent_tier": {
+      "type": "enum",
+      "description": "Support engineer tier required",
+      "choices": [
+        "TIER_1",
+        "TIER_2",
+        "SENIOR_SRE",
+        "DIRECTOR"
+      ]
+    },
+    "ticket_priority": {
+      "type": "enum",
+      "description": "Internal triage queue priority",
+      "choices": [
+        "P0_EMERGENCY",
+        "P1_HIGH",
+        "P2_NORMAL",
+        "P3_LOW"
+      ]
+    }
+  }
+}

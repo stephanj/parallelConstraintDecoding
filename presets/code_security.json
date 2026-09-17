@@ -1,0 +1,201 @@
+{
+  "id": "code_security",
+  "title": "Autonomous Code Security & PR Vulnerability Triage (28 Fields)",
+  "description": "Automated SAST/DAST static analysis triage evaluating an enterprise pull request containing leaked secrets and injection risks.",
+  "context": "CI/CD PIPELINE AUDIT #PR-10822\nRepository: payment-gateway-core\nBranch: feature/direct-stripe-integration -> main\nAuthor: external-contractor-92 (First PR submitted)\nDiff Summary: +482 lines, -12 lines in src/services/charge_processor.py and config/aws.env\n\nStatic Scanner Findings:\n1. Hardcoded Plaintext AWS Root Secret: AWS_SECRET_ACCESS_KEY=\"AKIAIOSFODNN7EXAMPLE...\" committed into config/aws.env\n2. Unsanitized SQL Query Concatenation: cursor.execute(f\"SELECT * FROM users WHERE id = '{req.user_id}' AND secret = '{req.token}'\")\n3. Insecure Deserialization: pickle.loads(base64.b64decode(req.headers['X-Payload'])) detected in webhook handler.\n4. Dependency Check: Added vulnerable PyPI package 'requests-oauthlib==0.4.0' with 3 critical CVEs.\n\nDeployment Target: PRODUCTION (us-west-2 Kubernetes Cluster)\nCompliance Scope: SOC2 Type II, PCI-DSS Level 1, HIPAA\nSecurity Gate Status: FAILED_BLOCKING",
+  "schema": {
+    "is_vulnerability": {
+      "type": "boolean",
+      "description": "Whether pull request introduces severe security vulnerabilities"
+    },
+    "primary_cwe": {
+      "type": "enum",
+      "description": "Primary vulnerability classification",
+      "choices": [
+        "CWE_89_SQL_INJECTION",
+        "CWE_798_HARDCODED_CREDENTIALS",
+        "CWE_502_DESERIALIZATION",
+        "CWE_20_IMPROPER_INPUT"
+      ]
+    },
+    "secondary_cwe": {
+      "type": "enum",
+      "description": "Secondary vulnerability indicator",
+      "choices": [
+        "CWE_798_HARDCODED_CREDENTIALS",
+        "CWE_1104_OUTDATED_COMPONENTS",
+        "CWE_200_INFO_EXPOSURE",
+        "NONE"
+      ]
+    },
+    "severity_level": {
+      "type": "enum",
+      "description": "Combined security severity tier",
+      "choices": [
+        "CRITICAL",
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
+    },
+    "block_pull_request": {
+      "type": "boolean",
+      "description": "Whether CI/CD merge should be immediately blocked"
+    },
+    "quarantine_branch": {
+      "type": "boolean",
+      "description": "Whether git branch should be locked and quarantined"
+    },
+    "credential_revocation_required": {
+      "type": "boolean",
+      "description": "Whether AWS IAM credentials must be revoked immediately"
+    },
+    "requires_security_lead_signoff": {
+      "type": "boolean",
+      "description": "Whether AppSec lead signature is required to unblock"
+    },
+    "exploitability_in_production": {
+      "type": "enum",
+      "description": "Production exploitability ease",
+      "choices": [
+        "REMOTE_UNAUTHENTICATED",
+        "AUTHENTICATED_USER",
+        "INTERNAL_NETWORK_ONLY",
+        "THEORETICAL"
+      ]
+    },
+    "blast_radius": {
+      "type": "enum",
+      "description": "Potential system impact scope",
+      "choices": [
+        "FULL_AWS_ACCOUNT",
+        "DATABASE_COMPROMISE",
+        "CONTAINER_LOCAL",
+        "NONE"
+      ]
+    },
+    "auto_generate_fix": {
+      "type": "boolean",
+      "description": "Whether automated remediation patch should be PRed"
+    },
+    "remediation_effort": {
+      "type": "enum",
+      "description": "Estimated fix complexity",
+      "choices": [
+        "TRIVIAL_SECRETS_ROTATION",
+        "PARAMETRIZED_SQL_REFACTOR",
+        "MAJOR_ARCHITECTURE_CHANGE"
+      ]
+    },
+    "pci_dss_impact": {
+      "type": "boolean",
+      "description": "Whether findings trigger PCI-DSS compliance breach"
+    },
+    "soc2_audit_flag": {
+      "type": "boolean",
+      "description": "Whether finding must be logged for annual SOC2 audit"
+    },
+    "hipaa_exposure_risk": {
+      "type": "boolean",
+      "description": "Whether patient ePHI data is exposed"
+    },
+    "secret_type_detected": {
+      "type": "enum",
+      "description": "Specific secret credential leaked",
+      "choices": [
+        "AWS_ROOT_KEY",
+        "STRIPE_API_KEY",
+        "DATABASE_PASSWORD",
+        "NONE"
+      ]
+    },
+    "target_environment": {
+      "type": "enum",
+      "description": "Destination deployment environment",
+      "choices": [
+        "PRODUCTION_CLUSTER",
+        "STAGING_ENVIRONMENT",
+        "LOCAL_DEV"
+      ]
+    },
+    "notify_ciso": {
+      "type": "boolean",
+      "description": "Whether CISO must be paged on mobile"
+    },
+    "requires_immediate_patch": {
+      "type": "boolean",
+      "description": "Whether zero-day emergency patch window applies"
+    },
+    "jira_ticket_priority": {
+      "type": "enum",
+      "description": "Jira security queue priority",
+      "choices": [
+        "P0_BLOCKER",
+        "P1_CRITICAL",
+        "P2_MAJOR",
+        "P3_MINOR"
+      ]
+    },
+    "assigned_team": {
+      "type": "enum",
+      "description": "Primary team responsible for remediation",
+      "choices": [
+        "APP_SEC_TEAM",
+        "INFRA_CLOUD_SEC",
+        "CORE_BACKEND",
+        "DEVOPS_PLATFORM"
+      ]
+    },
+    "false_positive_risk": {
+      "type": "enum",
+      "description": "Likelihood of false positive scan finding",
+      "choices": [
+        "ALMOST_ZERO",
+        "LOW",
+        "MODERATE",
+        "HIGH"
+      ]
+    },
+    "public_cve_match": {
+      "type": "boolean",
+      "description": "Whether findings match known public CVE databases"
+    },
+    "auto_merge_allowed": {
+      "type": "boolean",
+      "description": "Whether branch can merge under any circumstance"
+    },
+    "container_escape_risk": {
+      "type": "boolean",
+      "description": "Whether vulnerability allows Docker/Kubernetes container breakout"
+    },
+    "data_exfiltration_risk": {
+      "type": "enum",
+      "description": "Risk of bulk sensitive data theft",
+      "choices": [
+        "CATASTROPHIC",
+        "HIGH",
+        "MODERATE",
+        "NEGLIGIBLE"
+      ]
+    },
+    "author_trust_score": {
+      "type": "enum",
+      "description": "Author risk profile evaluation",
+      "choices": [
+        "UNTRUSTED_EXTERNAL",
+        "NEW_EMPLOYEE",
+        "VERIFIED_STAFF",
+        "CORE_MAINTAINER"
+      ]
+    },
+    "security_gate_status": {
+      "type": "enum",
+      "description": "Final policy engine disposition",
+      "choices": [
+        "FAILED_BLOCKING",
+        "WARNING_OVERRIDABLE",
+        "PASSED"
+      ]
+    }
+  }
+}

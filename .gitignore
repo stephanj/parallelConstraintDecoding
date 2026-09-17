@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# System and IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Local model caches if stored in-tree
+checkpoints/
+
+# Java
+java/target/
+
+# jextract tool
+java/tools/jextract-22/
+
+# GGUF weights for the native Java engine
+models/*.gguf
+
+# IDE metadata (Eclipse/JDT language server)
+java/.classpath
+java/.project
+java/.settings/
+
+# benchmark runs written by the web UI
+results/

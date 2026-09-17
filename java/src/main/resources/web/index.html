@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parallel Constrained Decoding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <span class="brand-name">Parallel constrained decoding</span>
+    <span class="brand-model" id="model-name"></span>
+  </div>
+  <nav class="views" aria-label="Views">
+    <button class="view-tab is-active" data-view="demo">Race</button>
+    <button class="view-tab" data-view="presets">Presets</button>
+    <button class="view-tab" data-view="bench">Benchmarks</button>
+  </nav>
+</header>
+
+<!-- ============================================================ Race -->
+<main id="view-demo" class="view is-active">
+
+  <section class="controls">
+    <label class="control">
+      <span>Scenario</span>
+      <select id="preset-select"></select>
+    </label>
+    <button id="run-race" class="primary">Run the race</button>
+    <p class="hint" id="race-hint">Fills every field of the schema on the right. Edit the text below to try your own input.</p>
+  </section>
+
+  <section class="input-row">
+    <div class="input-col">
+      <div class="col-head">
+        <h2 id="context-title">Input</h2>
+        <span class="muted" id="context-meta"></span>
+      </div>
+      <textarea id="context" spellcheck="false" aria-label="Input text"></textarea>
+    </div>
+    <div class="input-col">
+      <div class="col-head">
+        <h2>Fields to extract</h2>
+        <button class="linklike" data-view-link="presets">Edit schema</button>
+      </div>
+      <ul id="schema-chips" class="chips"></ul>
+    </div>
+  </section>
+
+  <section class="ruler" aria-label="Elapsed time">
+    <div class="ruler-track">
+      <div class="ruler-ticks" id="ruler-ticks"></div>
+      <div class="lane lane-naive">
+        <span class="lane-name">token by token</span>
+        <div class="lane-bar" id="bar-naive"></div>
+        <span class="lane-time" id="time-naive">0 ms</span>
+      </div>
+      <div class="lane lane-parallel">
+        <span class="lane-name">parallel constrained</span>
+        <div class="lane-bar" id="bar-parallel"></div>
+        <span class="lane-time" id="time-parallel">0 ms</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="panes">
+    <article class="pane pane-naive">
+      <header class="pane-head">
+        <h2>Token by token</h2>
+        <p class="pane-sub">The same model writes compact JSON token by token, constrained to the schema by a grammar.</p>
+        <dl class="stats">
+          <div><dt>elapsed</dt><dd id="naive-ms">–</dd></div>
+          <div><dt>forward passes</dt><dd id="naive-passes">–</dd></div>
+          <div><dt>schema</dt><dd id="naive-valid">–</dd></div>
+        </dl>
+      </header>
+      <pre class="stream" id="naive-stream" aria-live="polite"></pre>
+      <ul class="issues" id="naive-issues"></ul>
+    </article>
+
+    <article class="pane pane-parallel">
+      <header class="pane-head">
+        <h2>Parallel constrained</h2>
+        <p class="pane-sub">One prefill, every field decided in the same batched pass.</p>
+        <dl class="stats">
+          <div><dt>elapsed</dt><dd id="par-ms">–</dd></div>
+          <div><dt>forward passes</dt><dd id="par-passes">–</dd></div>
+          <div><dt>schema</dt><dd id="par-valid">–</dd></div>
+        </dl>
+      </header>
+      <ol class="fields" id="par-fields"></ol>
+    </article>
+  </section>
+
+  <section class="verdict" id="verdict" hidden>
+    <p id="verdict-text"></p>
+  </section>
+
+  <details class="how">
+    <summary>How the parallel engine fills a schema in a couple of passes</summary>
+    <ol>
+      <li><strong>Prefill once.</strong> The text and a one-line catalog of every field go through the model a single time and stay in the KV cache.</li>
+      <li><strong>Broadcast.</strong> That cached prefix is tagged for one sequence per field — no copying.</li>
+      <li><strong>One batched pass.</strong> Every sequence gets its own <code>"field": "</code> suffix; the logits at each suffix's last token are read in the same forward pass.</li>
+      <li><strong>Score only the allowed values.</strong> Softmax over the candidate tokens gives a calibrated probability per choice — nothing outside the schema can win.</li>
+      <li><strong>Resolve ties level by level.</strong> Choices that share a first token are separated with one more batched pass per level, never one pass per token.</li>
+      <li><strong>Assemble.</strong> The JSON is built from the winners, so it is always valid and never misses a key.</li>
+    </ol>
+  </details>
+</main>
+
+<!-- ============================================================ Presets -->
+<main id="view-presets" class="view">
+  <div class="presets-layout">
+    <aside class="preset-list">
+      <div class="col-head">
+        <h2>Scenarios</h2>
+        <button class="linklike" id="preset-new">New</button>
+      </div>
+      <ul id="preset-items"></ul>
+    </aside>
+
+    <form class="preset-editor" id="preset-form">
+      <div class="field-grid">
+        <label>Identifier <input id="p-id" pattern="[a-z0-9_]{1,64}" required placeholder="spam_email"></label>
+        <label>Title <input id="p-title" required placeholder="Spam &amp; phishing triage"></label>
+        <label class="wide">Description <input id="p-desc" placeholder="What this scenario decides"></label>
+        <label class="wide">Example input <textarea id="p-context" required rows="8" spellcheck="false"></textarea></label>
+      </div>
+
+      <div class="col-head">
+        <h2>Fields</h2>
+        <button type="button" class="linklike" id="field-add">Add field</button>
+      </div>
+      <table class="fields-table">
+        <thead>
+          <tr><th>Name</th><th>Type</th><th>Description</th><th>Allowed values (comma-separated)</th><th></th></tr>
+        </thead>
+        <tbody id="field-rows"></tbody>
+      </table>
+
+      <div class="editor-actions">
+        <button type="submit" class="primary">Save scenario</button>
+        <button type="button" id="preset-run" class="secondary">Save and run the race</button>
+        <button type="button" id="preset-delete" class="danger">Delete</button>
+        <span class="muted" id="editor-status"></span>
+      </div>
+    </form>
+  </div>
+</main>
+
+<!-- ============================================================ Benchmarks -->
+<main id="view-bench" class="view">
+  <section class="controls">
+    <button id="run-bench" class="primary">Run all scenarios</button>
+    <label class="control">
+      <span>Previous runs</span>
+      <select id="run-select"></select>
+    </label>
+    <p class="hint" id="bench-hint">Each scenario runs through both engines. Takes about 15 seconds.</p>
+  </section>
+
+  <table class="bench-table">
+    <thead>
+      <tr>
+        <th>Scenario</th><th>Fields</th>
+        <th class="num">Token by token</th><th class="num">Parallel</th><th class="num">Speedup</th>
+        <th>Token-by-token schema</th><th class="num">Forward passes</th>
+      </tr>
+    </thead>
+    <tbody id="bench-rows"></tbody>
+  </table>
+
+  <div class="charts">
+    <figure>
+      <figcaption>Latency per scenario</figcaption>
+      <canvas id="chart-latency" height="220"></canvas>
+    </figure>
+    <figure>
+      <figcaption>Where the parallel engine spends its time</figcaption>
+      <canvas id="chart-phases" height="220"></canvas>
+    </figure>
+  </div>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>
