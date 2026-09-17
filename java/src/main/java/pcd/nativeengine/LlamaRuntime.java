@@ -121,6 +121,59 @@ public final class LlamaRuntime implements AutoCloseable {
         return nVocab;
     }
 
+    /** Request-local grammar followed by greedy selection; sample() also accepts the token. */
+    public final class GrammarSampler implements AutoCloseable {
+        private final Arena scope = Arena.ofConfined();
+        private final MemorySegment chain;
+
+        private GrammarSampler(String grammar) {
+            chain = Llama.llama_sampler_chain_init(Llama.llama_sampler_chain_default_params(scope));
+            try {
+                MemorySegment constraint = Llama.llama_sampler_init_grammar(vocab,
+                        scope.allocateFrom(grammar), scope.allocateFrom("root"));
+                if (constraint.equals(MemorySegment.NULL)) {
+                    throw new IllegalArgumentException("Invalid JSON grammar");
+                }
+                Llama.llama_sampler_chain_add(chain, constraint);
+                Llama.llama_sampler_chain_add(chain, Llama.llama_sampler_init_greedy());
+            } catch (RuntimeException | Error e) {
+                Llama.llama_sampler_free(chain);
+                scope.close();
+                throw e;
+            }
+        }
+
+        public int sample(int batchIndex) {
+            return Llama.llama_sampler_sample(chain, ctx, batchIndex);
+        }
+
+        @Override public void close() {
+            Llama.llama_sampler_free(chain);
+            scope.close();
+        }
+    }
+
+    public GrammarSampler grammarSampler(String grammar) {
+        return new GrammarSampler(grammar);
+    }
+
+    public int batchCapacity() {
+        return batchCapacity;
+    }
+
+    public byte[] pieceBytes(int token) {
+        int n = Llama.llama_token_to_piece(vocab, token, pieceScratch, (int) pieceScratch.byteSize(), 0, false);
+        if (n < 0) {
+            try (Arena scope = Arena.ofConfined()) {
+                MemorySegment buffer = scope.allocate(-n);
+                int actual = Llama.llama_token_to_piece(vocab, token, buffer, -n, 0, false);
+                if (actual < 0) throw new IllegalStateException("Cannot decode token " + token);
+                return buffer.asSlice(0, actual).toArray(ValueLayout.JAVA_BYTE);
+            }
+        }
+        return pieceScratch.asSlice(0, n).toArray(ValueLayout.JAVA_BYTE);
+    }
+
     public boolean isEndOfGeneration(int token) {
         return Llama.llama_vocab_is_eog(vocab, token);
     }

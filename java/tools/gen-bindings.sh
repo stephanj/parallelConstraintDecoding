@@ -6,8 +6,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 INC="${LLAMA_INCLUDE:-/opt/homebrew/opt/llama.cpp/include}"
 GGML_INC="${GGML_INCLUDE:-/opt/homebrew/opt/ggml/include}"
 OUT="$DIR/../src/main/java"
-rm -rf "$OUT/llama"
-"$DIR/jextract-22/bin/jextract" \
+"${JEXTRACT:-$DIR/jextract-22/bin/jextract}" \
   --output "$OUT" \
   --target-package llama \
   --header-class-name Llama \
@@ -36,6 +35,14 @@ rm -rf "$OUT/llama"
   --include-function llama_decode \
   --include-function llama_get_logits_ith \
   --include-function llama_synchronize \
+  --include-function llama_sampler_chain_default_params \
+  --include-function llama_sampler_chain_init \
+  --include-function llama_sampler_chain_add \
+  --include-function llama_sampler_init_grammar \
+  --include-function llama_sampler_init_greedy \
+  --include-function llama_sampler_sample \
+  --include-function llama_sampler_free \
+  --include-struct llama_sampler_chain_params \
   --include-struct llama_model_params \
   --include-struct llama_context_params \
   --include-struct llama_batch \

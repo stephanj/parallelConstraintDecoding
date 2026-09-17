@@ -116,10 +116,13 @@ public final class NaiveJsonEngine {
                 JsonNode v = parsed.get(f.name());
                 if (v == null) {
                     missing.add(f.name());
-                } else if (!f.isBoolean() && !f.choices().contains(v.asText())) {
+                } else if (f.isBoolean() ? !v.isBoolean() : !v.isTextual() || !f.choices().contains(v.asText())) {
                     invalid.add(f.name() + "=" + v.asText());
                 }
             }
+            parsed.fieldNames().forEachRemaining(name -> {
+                if (!preset.schema().containsKey(name)) invalid.add("unexpected key: " + name);
+            });
         }
         return new Result(elapsedMs, tokens, text, parsed, valid, missing, invalid);
     }

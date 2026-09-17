@@ -168,6 +168,7 @@
     fitRuler(res.elapsedMs, parallel.elapsedMs);
 
     const issues = [];
+    if (res.completed === false) issues.push("Generation reached the token limit before completing the object.");
     if (!res.validJson) issues.push("The output is not valid JSON.");
     for (const k of res.missingKeys) issues.push(`Missing field: ${k}`);
     for (const k of res.extraKeys) issues.push(`Invented field: ${k}`);

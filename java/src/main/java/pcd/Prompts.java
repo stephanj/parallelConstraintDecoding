@@ -23,6 +23,13 @@ public final class Prompts {
         return "Analyze the following context and generate the required formatted JSON object:\n\n" + preset.context();
     }
 
+    public static String grammarSystem(Preset preset) {
+        return "You are a precise data extraction system. Output ONLY a compact JSON object "
+                + "matching the schema below. Include every field exactly once in the listed order. "
+                + "Do not include markdown or whitespace outside strings.\n\nJSON Schema:\n"
+                + jsonSchemaCatalog(preset);
+    }
+
     /** Mirrors StructuredSchema.to_json_schema_prompt_str(): a TypeScript-like schema listing. */
     static String jsonSchemaCatalog(Preset preset) {
         StringBuilder sb = new StringBuilder("{\n");

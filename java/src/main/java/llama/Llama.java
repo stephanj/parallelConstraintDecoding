@@ -254,6 +254,62 @@ public class Llama {
         }
     }
 
+    private static class llama_sampler_chain_default_params {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            llama_sampler_chain_params.layout()    );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_sampler_chain_default_params");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * struct llama_sampler_chain_params llama_sampler_chain_default_params()
+     * }
+     */
+    public static FunctionDescriptor llama_sampler_chain_default_params$descriptor() {
+        return llama_sampler_chain_default_params.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * struct llama_sampler_chain_params llama_sampler_chain_default_params()
+     * }
+     */
+    public static MethodHandle llama_sampler_chain_default_params$handle() {
+        return llama_sampler_chain_default_params.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * struct llama_sampler_chain_params llama_sampler_chain_default_params()
+     * }
+     */
+    public static MemorySegment llama_sampler_chain_default_params$address() {
+        return llama_sampler_chain_default_params.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * struct llama_sampler_chain_params llama_sampler_chain_default_params()
+     * }
+     */
+    public static MemorySegment llama_sampler_chain_default_params(SegmentAllocator allocator) {
+        var mh$ = llama_sampler_chain_default_params.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_sampler_chain_default_params", allocator);
+            }
+            return (MemorySegment)mh$.invokeExact(allocator);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
     private static class llama_backend_init {
         public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(    );
 
@@ -1428,6 +1484,355 @@ public class Llama {
         }
     }
 
+    private static class llama_sampler_free {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            Llama.C_POINTER
+        );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_sampler_free");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void llama_sampler_free(struct llama_sampler *smpl)
+     * }
+     */
+    public static FunctionDescriptor llama_sampler_free$descriptor() {
+        return llama_sampler_free.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void llama_sampler_free(struct llama_sampler *smpl)
+     * }
+     */
+    public static MethodHandle llama_sampler_free$handle() {
+        return llama_sampler_free.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void llama_sampler_free(struct llama_sampler *smpl)
+     * }
+     */
+    public static MemorySegment llama_sampler_free$address() {
+        return llama_sampler_free.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * void llama_sampler_free(struct llama_sampler *smpl)
+     * }
+     */
+    public static void llama_sampler_free(MemorySegment smpl) {
+        var mh$ = llama_sampler_free.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_sampler_free", smpl);
+            }
+            mh$.invokeExact(smpl);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class llama_sampler_chain_init {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            Llama.C_POINTER,
+            llama_sampler_chain_params.layout()
+        );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_sampler_chain_init");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_chain_init(struct llama_sampler_chain_params params)
+     * }
+     */
+    public static FunctionDescriptor llama_sampler_chain_init$descriptor() {
+        return llama_sampler_chain_init.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_chain_init(struct llama_sampler_chain_params params)
+     * }
+     */
+    public static MethodHandle llama_sampler_chain_init$handle() {
+        return llama_sampler_chain_init.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_chain_init(struct llama_sampler_chain_params params)
+     * }
+     */
+    public static MemorySegment llama_sampler_chain_init$address() {
+        return llama_sampler_chain_init.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_chain_init(struct llama_sampler_chain_params params)
+     * }
+     */
+    public static MemorySegment llama_sampler_chain_init(MemorySegment params) {
+        var mh$ = llama_sampler_chain_init.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_sampler_chain_init", params);
+            }
+            return (MemorySegment)mh$.invokeExact(params);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class llama_sampler_chain_add {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
+            Llama.C_POINTER,
+            Llama.C_POINTER
+        );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_sampler_chain_add");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * void llama_sampler_chain_add(struct llama_sampler *chain, struct llama_sampler *smpl)
+     * }
+     */
+    public static FunctionDescriptor llama_sampler_chain_add$descriptor() {
+        return llama_sampler_chain_add.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * void llama_sampler_chain_add(struct llama_sampler *chain, struct llama_sampler *smpl)
+     * }
+     */
+    public static MethodHandle llama_sampler_chain_add$handle() {
+        return llama_sampler_chain_add.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * void llama_sampler_chain_add(struct llama_sampler *chain, struct llama_sampler *smpl)
+     * }
+     */
+    public static MemorySegment llama_sampler_chain_add$address() {
+        return llama_sampler_chain_add.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * void llama_sampler_chain_add(struct llama_sampler *chain, struct llama_sampler *smpl)
+     * }
+     */
+    public static void llama_sampler_chain_add(MemorySegment chain, MemorySegment smpl) {
+        var mh$ = llama_sampler_chain_add.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_sampler_chain_add", chain, smpl);
+            }
+            mh$.invokeExact(chain, smpl);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class llama_sampler_init_greedy {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            Llama.C_POINTER    );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_sampler_init_greedy");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_init_greedy()
+     * }
+     */
+    public static FunctionDescriptor llama_sampler_init_greedy$descriptor() {
+        return llama_sampler_init_greedy.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_init_greedy()
+     * }
+     */
+    public static MethodHandle llama_sampler_init_greedy$handle() {
+        return llama_sampler_init_greedy.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_init_greedy()
+     * }
+     */
+    public static MemorySegment llama_sampler_init_greedy$address() {
+        return llama_sampler_init_greedy.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_init_greedy()
+     * }
+     */
+    public static MemorySegment llama_sampler_init_greedy() {
+        var mh$ = llama_sampler_init_greedy.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_sampler_init_greedy");
+            }
+            return (MemorySegment)mh$.invokeExact();
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class llama_sampler_init_grammar {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            Llama.C_POINTER,
+            Llama.C_POINTER,
+            Llama.C_POINTER,
+            Llama.C_POINTER
+        );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_sampler_init_grammar");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_init_grammar(const struct llama_vocab *vocab, const char *grammar_str, const char *grammar_root)
+     * }
+     */
+    public static FunctionDescriptor llama_sampler_init_grammar$descriptor() {
+        return llama_sampler_init_grammar.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_init_grammar(const struct llama_vocab *vocab, const char *grammar_str, const char *grammar_root)
+     * }
+     */
+    public static MethodHandle llama_sampler_init_grammar$handle() {
+        return llama_sampler_init_grammar.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_init_grammar(const struct llama_vocab *vocab, const char *grammar_str, const char *grammar_root)
+     * }
+     */
+    public static MemorySegment llama_sampler_init_grammar$address() {
+        return llama_sampler_init_grammar.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * struct llama_sampler *llama_sampler_init_grammar(const struct llama_vocab *vocab, const char *grammar_str, const char *grammar_root)
+     * }
+     */
+    public static MemorySegment llama_sampler_init_grammar(MemorySegment vocab, MemorySegment grammar_str, MemorySegment grammar_root) {
+        var mh$ = llama_sampler_init_grammar.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_sampler_init_grammar", vocab, grammar_str, grammar_root);
+            }
+            return (MemorySegment)mh$.invokeExact(vocab, grammar_str, grammar_root);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class llama_sampler_sample {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            Llama.C_INT,
+            Llama.C_POINTER,
+            Llama.C_POINTER,
+            Llama.C_INT
+        );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_sampler_sample");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * llama_token llama_sampler_sample(struct llama_sampler *smpl, struct llama_context *ctx, int32_t idx)
+     * }
+     */
+    public static FunctionDescriptor llama_sampler_sample$descriptor() {
+        return llama_sampler_sample.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * llama_token llama_sampler_sample(struct llama_sampler *smpl, struct llama_context *ctx, int32_t idx)
+     * }
+     */
+    public static MethodHandle llama_sampler_sample$handle() {
+        return llama_sampler_sample.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * llama_token llama_sampler_sample(struct llama_sampler *smpl, struct llama_context *ctx, int32_t idx)
+     * }
+     */
+    public static MemorySegment llama_sampler_sample$address() {
+        return llama_sampler_sample.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * llama_token llama_sampler_sample(struct llama_sampler *smpl, struct llama_context *ctx, int32_t idx)
+     * }
+     */
+    public static int llama_sampler_sample(MemorySegment smpl, MemorySegment ctx, int idx) {
+        var mh$ = llama_sampler_sample.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_sampler_sample", smpl, ctx, idx);
+            }
+            return (int)mh$.invokeExact(smpl, ctx, idx);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
     private static class llama_log_set {
         public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
             Llama.C_POINTER,
@@ -1486,4 +1891,3 @@ public class Llama {
         }
     }
 }
-

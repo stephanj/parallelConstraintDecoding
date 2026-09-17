@@ -38,9 +38,10 @@ class NaiveJsonEngineTest {
     }
 
     @Test
-    void extraKeysDoNotBreakSchemaMatchOnTheirOwn() {
+    void extraKeysBreakSchemaMatch() {
         var r = NaiveJsonEngine.validate(preset(), "{\"risk\": \"LOW\", \"block\": false, \"note\": \"x\"}", 5, 50.0);
-        assertTrue(r.schemaMatch());
+        assertFalse(r.schemaMatch());
+        assertEquals(List.of("unexpected key: note"), r.invalidEnums());
         assertTrue(r.parsed().has("note"));
     }
 

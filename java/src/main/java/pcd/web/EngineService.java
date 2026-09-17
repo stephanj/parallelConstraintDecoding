@@ -12,6 +12,7 @@ import pcd.Preset;
 import pcd.nativeengine.CompiledSchema;
 import pcd.nativeengine.LlamaRuntime;
 import pcd.nativeengine.NaiveJsonEngine;
+import pcd.nativeengine.GrammarJsonEngine;
 import pcd.nativeengine.NativeParallelEngine;
 
 /**
@@ -23,7 +24,7 @@ final class EngineService implements AutoCloseable {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private final LlamaRuntime rt;
-    private final NaiveJsonEngine naive;
+    private final GrammarJsonEngine naive;
     private final ReentrantLock lock = new ReentrantLock(true);
     private final Map<String, NativeParallelEngine> engines = new LinkedHashMap<>();
     final Path modelPath;
@@ -31,7 +32,7 @@ final class EngineService implements AutoCloseable {
     EngineService(Path modelPath) {
         this.modelPath = modelPath;
         this.rt = new LlamaRuntime(LlamaRuntime.Options.defaults(modelPath));
-        this.naive = new NaiveJsonEngine(rt, 700);
+        this.naive = new GrammarJsonEngine(rt, 700);
     }
 
     /** Runs the parallel constrained engine; the result JSON is what the UI renders. */
@@ -80,12 +81,15 @@ final class EngineService implements AutoCloseable {
     ObjectNode runNaive(Preset preset, Consumer<String> onPiece) {
         lock.lock();
         try {
-            NaiveJsonEngine.Result r = naive.run(preset, onPiece);
+            GrammarJsonEngine.Result generation = naive.run(preset, onPiece);
+            NaiveJsonEngine.Result r = generation.output();
             ObjectNode out = MAPPER.createObjectNode();
+            out.put("mode", "grammar_constrained_autoregressive");
+            out.put("completed", generation.completed());
             out.put("elapsedMs", round(r.elapsedMs()));
             out.put("tokens", r.tokens());
             out.put("tokensPerSecond", round(r.tokensPerSecond()));
-            out.put("forwardPasses", r.tokens());
+            out.put("forwardPasses", generation.forwardPasses());
             out.put("text", r.text());
             out.put("validJson", r.validJson());
             out.put("schemaMatch", r.schemaMatch());

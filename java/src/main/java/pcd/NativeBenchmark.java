@@ -8,13 +8,14 @@ import java.util.Locale;
 import pcd.nativeengine.CompiledSchema;
 import pcd.nativeengine.LlamaRuntime;
 import pcd.nativeengine.NativeParallelEngine;
+import pcd.nativeengine.GrammarJsonEngine;
 
 /**
  * Parallel constrained decoding natively in Java (libllama via FFM) — the counterpart of
  * {@code python -m core.benchmark}'s "Parallel Constrained" rows.
  *
  * <pre>
- *   java -jar target/pcd-benchmark.jar [-v] [--runs N] [--pad] [--single-pass] [preset.json ...]
+ *   java -jar target/pcd-benchmark.jar [-v] [--runs N] [--pad] [--single-pass] [--grammar] [preset.json ...]
  * </pre>
  *
  * Environment: {@code PCD_GGUF} (model path), {@code PCD_LLAMA_LIB_DIR} (libllama location).
@@ -27,6 +28,7 @@ public final class NativeBenchmark {
         boolean verbose = false;
         boolean pad = false;
         boolean singlePass = false;
+        boolean grammar = false;
         int runs = 5;
         List<Path> presets = new ArrayList<>();
         for (int i = 0; i < args.length; i++) {
@@ -34,6 +36,7 @@ public final class NativeBenchmark {
                 case "-v", "--verbose" -> verbose = true;
                 case "--pad" -> pad = true;
                 case "--single-pass" -> singlePass = true;
+                case "--grammar" -> grammar = true;
                 case "--runs" -> runs = Integer.parseInt(args[++i]);
                 default -> presets.add(Path.of(args[i]));
             }
@@ -41,6 +44,7 @@ public final class NativeBenchmark {
         if (presets.isEmpty()) {
             presets = defaultPresets();
         }
+        if (runs < 1) throw new IllegalArgumentException("--runs must be positive");
         Path gguf = resolveModel();
 
         System.out.println("=".repeat(70));
@@ -73,6 +77,19 @@ public final class NativeBenchmark {
                         System.out.printf(Locale.ROOT, "    %-36s %-24s %.3f  (levels=%d)%n",
                                 f.name(), f.value(), f.prob(), f.levels());
                     }
+                }
+                if (grammar) {
+                    GrammarJsonEngine baseline = new GrammarJsonEngine(rt, 700);
+                    baseline.run(preset, piece -> {});
+                    List<GrammarJsonEngine.Result> samples = new ArrayList<>();
+                    for (int i = 0; i < runs; i++) samples.add(baseline.run(preset, piece -> {}));
+                    samples.sort((a, b) -> Double.compare(a.output().elapsedMs(), b.output().elapsedMs()));
+                    var result = samples.get(samples.size() / 2);
+                    System.out.printf(Locale.ROOT,
+                            "    grammar autoregressive  : %7.1f ms | %d tokens | %d passes | schema=%s | completed=%s%n",
+                            result.output().elapsedMs(), result.output().tokens(), result.forwardPasses(),
+                            result.output().schemaMatch(), result.completed());
+                    if (verbose) System.out.println("    " + result.output().text());
                 }
                 System.out.println("-".repeat(70));
             }

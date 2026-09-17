@@ -192,6 +192,34 @@ dropped in favour of the native engine below.
 
 ## Java native engine (libllama via FFM) — faster than the Python engine
 
+### Grammar-constrained autoregressive baseline
+
+The web race and web benchmarks now use the same loaded GGUF model with a
+llama.cpp grammar sampler followed by greedy selection. The grammar enforces
+all fields in schema order, boolean types and exact enum strings, with no extra
+keys. Output is compact JSON. `NaiveJsonEngine` remains available as the original
+prompt-only baseline; the historical measurements below have not been rerun.
+
+Run the new baseline alongside the parallel CLI benchmark:
+
+```bash
+cd java
+mvn -q package
+PCD_GGUF=/absolute/path/to/model.gguf java -jar target/pcd-benchmark.jar --grammar --runs 3
+```
+
+The grammar supports this project's flat boolean/enum presets, not arbitrary
+JSON Schema. It follows llama.cpp's [GBNF grammar format](https://github.com/ggml-org/llama.cpp/blob/master/grammars/README.md).
+Elapsed time includes prompt tokenization, grammar construction, prefill, sampling,
+and streaming callbacks; model loading and final validation are excluded.
+The 700-token limit can still truncate a result (`completed=false`), and grammar
+constraints do not ensure factual correctness. API responses identify the new
+baseline as `mode: "grammar_constrained_autoregressive"` and report actual decode
+calls in `forwardPasses`, including prefill and the final end-token evaluation.
+
+For native integration tests, set `PCD_TEST_GGUF` to the model path when running
+`mvn test`. Without that variable, native integration tests are skipped.
+
 The Java engine (`java/src/main/java/pcd/nativeengine/`) drives **llama.cpp
 directly** through the JDK Foreign Function & Memory API (JDK 22+, no JNI) and
 implements the technique step for step:
@@ -262,10 +290,10 @@ Two scenarios ship next to the four upstream presets:
 Any preset can carry such a `samples` bank (`[{label, context, expected}]`);
 the editor leaves it untouched when you save.
 
-The token-by-token baseline in the app is a Java greedy decoder on the same
-libllama runtime (`NaiveJsonEngine`), with the same prompt and `{\n  `
-assistant prefill as the Python baseline, so the race is engine-vs-engine on
-identical weights.
+The token-by-token baseline in the app uses `GrammarJsonEngine` on the same
+libllama runtime and identical weights. A grammar enforces the schema while
+the model generates compact JSON one token at a time. Historical measurements
+above used the original prompt-only baseline and have not been rerun.
 
 ### CLI benchmark
 
