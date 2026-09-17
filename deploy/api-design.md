@@ -1,6 +1,6 @@
 # API investigation
 
-Investigated 2026-09-17 against the current working tree, including the in-progress Docker/public-demo changes. This is a proposal, not an implemented API. Findings are based on source inspection; no server was listening on localhost:8000, so no live inference or capacity measurements were made.
+Investigated 2026-09-17 against the current working tree. This is a proposal, not an implemented API. Findings are based on source inspection; no server was listening on localhost:8000, so no live inference or capacity measurements were made.
 
 ## Recommendation
 
@@ -154,6 +154,6 @@ Do not derive an SLA from the README's Mac medians. Measure end-to-end p50/p95/p
 
 ## References
 
-- Local sources: `Server.java`, `EngineService.java`, `Preset.java`, `Prompts.java`, `nativeengine/{LlamaRuntime,CompiledSchema,NativeParallelEngine}.java`, root `Dockerfile`, and `deploy/docker.md`.
+- Local sources: `Server.java`, `EngineService.java`, `Preset.java`, `Prompts.java`, `nativeengine/{LlamaRuntime,CompiledSchema,NativeParallelEngine}.java`and `Main.java`.
 - [JDK 25 HttpServer documentation](https://docs.oracle.com/en/java/javase/25/docs/api/jdk.httpserver/com/sun/net/httpserver/HttpServer.html): context routing uses longest-prefix matching, so strict endpoint matching must be added in handlers; shutdown delay is bounded.
 - [llama.cpp native API](https://github.com/ggml-org/llama.cpp/blob/master/include/llama.h): upstream reference for native integration. Implementation must remain matched to the repository's pinned llama.cpp build and generated FFM layouts; upstream master is not an ABI compatibility promise.
