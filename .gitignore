@@ -55,3 +55,6 @@ java/.settings/
 
 # benchmark runs written by the web UI
 results/
+
+# clever-tools link (per-developer)
+.clever.json

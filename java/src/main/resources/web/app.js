@@ -443,7 +443,7 @@
       return opts ? `<optgroup label="${title}">${opts}</optgroup>` : "";
     }).join("");
     sel.value = m.current;
-    sel.disabled = m.models.length < 2;
+    sel.disabled = m.models.length < 2 || document.body.classList.contains("read-only");
   }
   $("model-select").addEventListener("change", async (e) => {
     const sel = e.target;
@@ -465,6 +465,17 @@
 
   // ---------------------------------------------------------------- boot
   (async () => {
+    try {
+      const st = await api("/api/status");
+      if (st.readOnly) {
+        document.body.classList.add("read-only");
+        for (const id of ["preset-new", "field-add", "preset-delete", "preset-run", "run-bench", "model-select"]) $(id).disabled = true;
+        $("preset-form").querySelector('button[type="submit"]').disabled = true;
+        $("editor-status").textContent = "Read-only instance: scenarios can be viewed but not changed.";
+        $("bench-hint").textContent = "Read-only instance: showing stored runs.";
+        $("model-status").textContent = "fixed";
+      }
+    } catch (e) { /* status is cosmetic */ }
     try { await loadModels(); } catch (e) { $("model-status").textContent = "models: " + e.message; }
     await loadPresets();
     drawTicks();

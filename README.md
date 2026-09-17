@@ -302,7 +302,7 @@ with the Python numbers above.
 **Why the two engines can disagree.** Scored against the CFP's own filing on
 the 100 cached Devoxx talks (`python3 java/tools/eval/devoxx_eval.py`, server
 running), with the 1.5B model and the shared prompt: track 44 vs 47,
-session format 52 vs 33, audience level 22 vs 27 (parallel vs baseline). The
+audience level 22 vs 27 (parallel vs baseline). The
 investigation behind those numbers:
 
 - The disagreement is *not* the decoding. Scoring choices by their first token
@@ -312,10 +312,10 @@ investigation behind those numbers:
   1.5B model's preferences move a lot with wording. Hence the shared prompt.
 - Only `track` is really inferable from an abstract (8 classes, majority
   28%): both engines land around 45–50% on the 1.5B and ~53% on the 3B.
-  `session_format` (61% `Conference`) and `audience_level` (~50%
-  `INTERMEDIATE`) are the speaker's form choices; "accuracy" there mostly
-  measures whether a prompt biases toward the majority class, so don't read
-  much into either engine's score on those two.
+  `audience_level` (~50% `INTERMEDIATE`) is the speaker's form choice, so
+  "accuracy" there mostly measures majority-class bias. The session format
+  was removed from the scenario for the same reason: any talk can be
+  submitted in any format.
 
 Two scenarios ship next to the four upstream presets:
 
@@ -422,6 +422,15 @@ Every difference is within run-to-run noise (±2 ms).
   calibrated probabilities, which is naturally lower than a single-token
   probability (e.g. `counterparty_jurisdiction_risk` → `TIER_3_HIGH` at 0.46
   after 4 levels).
+
+## Hosting it (Clever Cloud / any Docker host)
+
+`Dockerfile` builds a self-contained CPU image (llama.cpp compiled at the
+pinned tag, JRE 25, the Qwen 2.5 1.5B and Qwen 3.5 0.8B models baked in) that
+serves the web app on `0.0.0.0:8080` in read-only demo mode. See
+[deploy/clever-cloud.md](deploy/clever-cloud.md) for the Clever Cloud steps,
+the environment knobs (`PORT`, `PCD_BIND`, `PCD_READ_ONLY`, `PCD_GGUF`) and
+what to expect from CPU inference.
 
 ## Layout
 

@@ -24,7 +24,7 @@ import llama.llama_model_params;
 public final class LlamaRuntime implements AutoCloseable {
 
     /** Homebrew installs ggml and llama.cpp as separate formulas; both lib dirs are searched. */
-    static final List<String> DEFAULT_LIB_DIRS = List.of("/opt/homebrew/opt/ggml/lib", "/opt/homebrew/opt/llama.cpp/lib");
+    static final List<String> DEFAULT_LIB_DIRS = List.of("/opt/homebrew/opt/ggml/lib", "/opt/homebrew/opt/llama.cpp/lib", "/opt/llama/lib", "/usr/local/lib");
 
     private static boolean libsLoaded;
 
@@ -64,6 +64,9 @@ public final class LlamaRuntime implements AutoCloseable {
         llama_context_params.flash_attn_type(cparams,
                 opts.flashAttention() ? Llama.LLAMA_FLASH_ATTN_TYPE_ENABLED() : Llama.LLAMA_FLASH_ATTN_TYPE_DISABLED());
         llama_context_params.kv_unified(cparams, opts.kvUnified());
+        int threads = Math.max(1, Runtime.getRuntime().availableProcessors());
+        llama_context_params.n_threads(cparams, threads);        // defaults are 4/4: far too few on a CPU host
+        llama_context_params.n_threads_batch(cparams, threads);
         llama_context_params.no_perf(cparams, true);
         ctx = Llama.llama_init_from_model(model, cparams);
         if (ctx.equals(MemorySegment.NULL)) {
@@ -90,10 +93,18 @@ public final class LlamaRuntime implements AutoCloseable {
         }
         String override = System.getenv("PCD_LLAMA_LIB_DIR");
         List<String> dirs = override == null ? DEFAULT_LIB_DIRS : List.of(override.split(":"));
-        for (String lib : List.of("libggml-base.dylib", "libggml.dylib", "libllama.dylib")) {
-            Path found = dirs.stream().map(d -> Path.of(d, lib)).filter(Files::exists).findFirst()
-                    .orElseThrow(() -> new IllegalStateException(
-                            "Missing " + lib + " in " + dirs + " (brew install llama.cpp, or set PCD_LLAMA_LIB_DIR=dir[:dir])"));
+        String ext = System.getProperty("os.name").toLowerCase().contains("mac") ? ".dylib" : ".so";
+        // Dependency order matters on Linux builds without an rpath: base, then the CPU backend when it
+        // is a separate library (Linux builds), then ggml, then llama.
+        for (String lib : List.of("libggml-base" + ext, "libggml-cpu" + ext, "libggml" + ext, "libllama" + ext)) {
+            Path found = dirs.stream().map(d -> Path.of(d, lib)).filter(Files::exists).findFirst().orElse(null);
+            if (found == null) {
+                if (lib.startsWith("libggml-cpu")) {
+                    continue; // built into libggml on this platform (macOS Homebrew)
+                }
+                throw new IllegalStateException(
+                        "Missing " + lib + " in " + dirs + " (brew install llama.cpp, or set PCD_LLAMA_LIB_DIR=dir[:dir])");
+            }
             System.load(found.toString());
         }
         Llama.llama_backend_init();

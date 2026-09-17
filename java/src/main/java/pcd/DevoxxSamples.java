@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public final class DevoxxSamples {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    /** CFP session types that map onto the preset's session_format choices. */
+    /** CFP session types whose talks are worth routing (keynotes, documentaries etc. are not submissions). */
     private static final Set<String> FORMATS = Set.of("Conference", "Deep Dive", "Tools-in-Action", "Hands-on Lab", "Lunch Talk", "BOF");
 
     public static void main(String[] args) throws Exception {
@@ -73,8 +73,9 @@ public final class DevoxxSamples {
                     + "Speakers: " + speakers + "\n\n"
                     + "Abstract:\n" + stripHtml(t.path("description").asText());
             Map<String, String> expected = new LinkedHashMap<>();
+            // The session format (conference / deep dive / ...) is the speaker's choice, not something an
+            // abstract reveals, so it is neither a field nor an expected value.
             expected.put("track", t.path("track").path("name").asText());
-            expected.put("session_format", t.path("sessionType").path("name").asText());
             expected.put("audience_level", t.path("audienceLevel").asText());
             samples.add(new Preset.Sample("#" + t.path("id").asText() + " " + t.path("title").asText(), context, expected));
         }

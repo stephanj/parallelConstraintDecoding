@@ -40,14 +40,24 @@ public final class Server {
     private final Stores.Runs runs;
     private final HttpServer http;
     private final ModelCatalog catalog;
+    private final boolean readOnly;
 
     public Server(int port, Path modelPath, Path presetsDir, Path resultsDir) throws IOException {
+        this("127.0.0.1", port, false, modelPath, presetsDir, resultsDir);
+    }
+
+    /**
+     * @param readOnly demo mode for public hosting: scenarios, the model and stored benchmark runs
+     *     cannot be changed; running races on any text is still allowed.
+     */
+    public Server(String bind, int port, boolean readOnly, Path modelPath, Path presetsDir, Path resultsDir) throws IOException {
+        this.readOnly = readOnly;
         this.presets = new Stores.Presets(presetsDir);
         this.runs = new Stores.Runs(resultsDir);
         this.catalog = new ModelCatalog(modelPath.toAbsolutePath().getParent());
         this.engine = new EngineService(modelPath, modelPath.getFileName().toString());
 
-        http = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
+        http = HttpServer.create(new InetSocketAddress(bind, port), 0);
         http.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         http.createContext("/api/status", ex -> handle(ex, this::status));
         http.createContext("/api/models", ex -> handle(ex, this::modelsApi));
@@ -61,7 +71,8 @@ public final class Server {
 
     public void start() {
         http.start();
-        System.out.println("Parallel Constrained Decoding UI: http://127.0.0.1:" + http.getAddress().getPort());
+        System.out.println("Parallel Constrained Decoding UI: http://" + http.getAddress().getHostString() + ":"
+                + http.getAddress().getPort() + (readOnly ? " (read-only mode)" : ""));
     }
 
     public void stop() {
@@ -75,7 +86,14 @@ public final class Server {
         ObjectNode out = MAPPER.createObjectNode();
         out.put("model", engine.modelName());
         out.put("presets", presets.list().size());
+        out.put("readOnly", readOnly);
         json(ex, 200, out);
+    }
+
+    private void requireWritable() {
+        if (readOnly) {
+            throw new ReadOnly();
+        }
     }
 
     /**
@@ -84,6 +102,7 @@ public final class Server {
      */
     private void modelsApi(HttpExchange ex) throws IOException {
         if (ex.getRequestMethod().equals("POST")) {
+            requireWritable();
             JsonNode body = MAPPER.readTree(ex.getRequestBody());
             ModelCatalog.Entry entry = catalog.find(body.path("id").asText(""));
             engine.switchModel(entry.path(), entry.id());
@@ -119,6 +138,7 @@ public final class Server {
                 }
             }
             case "PUT" -> {
+                requireWritable();
                 ObjectNode body = (ObjectNode) MAPPER.readTree(ex.getRequestBody());
                 if (id != null) {
                     body.put("id", id);
@@ -131,6 +151,7 @@ public final class Server {
                 json(ex, 200, p.toJson());
             }
             case "DELETE" -> {
+                requireWritable();
                 if (id == null || !presets.delete(id)) {
                     throw new Stores.NotFound("preset not found");
                 }
@@ -161,6 +182,7 @@ public final class Server {
 
     /** SSE: runs every preset through both engines, emits one event per preset, stores the run. */
     private void benchmark(HttpExchange ex) throws IOException {
+        requireWritable();
         List<Preset> all = presets.list();
         ObjectNode run = MAPPER.createObjectNode();
         run.put("timestamp", java.time.Instant.now().toString());
@@ -223,6 +245,8 @@ public final class Server {
     private static void handle(HttpExchange ex, Handler h) throws IOException {
         try {
             h.handle(ex);
+        } catch (ReadOnly e) {
+            error(ex, 403, "this instance is read-only: scenarios, model and benchmark runs cannot be changed");
         } catch (Stores.NotFound e) {
             error(ex, 404, e.getMessage());
         } catch (IllegalArgumentException e) {
@@ -265,6 +289,8 @@ public final class Server {
         }
         json(ex, status, MAPPER.createObjectNode().put("error", message == null ? "error" : message));
     }
+
+    private static final class ReadOnly extends RuntimeException {}
 
     /** Minimal Server-Sent Events writer over the JDK HttpServer's chunked response. */
     private static final class Sse implements AutoCloseable {

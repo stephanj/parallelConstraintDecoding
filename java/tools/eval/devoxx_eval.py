@@ -4,7 +4,7 @@
 import json, urllib.request, collections, sys
 p = json.load(open("presets/devoxx_cfp.json"))
 base = {k: v for k, v in p.items() if k != "samples"}
-keys = ["track", "session_format", "audience_level"]
+keys = ["track", "audience_level"]
 hits = {"parallel": collections.Counter(), "baseline": collections.Counter()}
 def race(body):
     req = urllib.request.Request("http://localhost:8000/api/run/race", data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})

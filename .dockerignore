@@ -1,0 +1,6 @@
+# Only what the image build needs: java/ sources + pom, presets/. Everything else stays out.
+*
+!java/pom.xml
+!java/src/
+!presets/
+java/src/test/
