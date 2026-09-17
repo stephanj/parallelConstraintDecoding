@@ -1,0 +1,78 @@
+{
+  "id": "spam_email",
+  "title": "Spam & phishing triage",
+  "description": "Decide what an inbound email is and what the mail gateway should do with it.",
+  "context": "From: \"Chase Online Banking\" <alerts@chase-secure-verify.com>\nTo: dave.morrison@acme-corp.com\nSubject: URGENT: Your account has been temporarily suspended\nReply-To: support@chase-secure-verify.com\nDate: Tue, 15 Sep 2026 03:41:07 +0000\nX-Originating-IP: 185.220.101.5\nAuthentication-Results: spf=fail; dkim=none; dmarc=fail\n\nDear Valued Customer,\n\nWe detected unusual sign-in activity on your account from an unrecognised device. To protect your funds, your online access has been temporarily suspended.\n\nYou must verify your identity within 24 hours or your account will be permanently closed:\n\n  http://chase-secure-verify.com/restore?ref=8813-ACME\n\nPlease have your card number, expiry date and CVV ready to complete verification.\n\nThank you for banking with Chase.\nChase Security Team",
+  "schema": {
+    "safe_to_deliver": {
+      "type": "boolean",
+      "description": "Whether this is a genuine message that can go straight to the inbox"
+    },
+    "category": {
+      "type": "enum",
+      "description": "The kind of email",
+      "choices": [
+        "LEGITIMATE",
+        "NEWSLETTER",
+        "PROMOTION",
+        "PHISHING",
+        "MALWARE",
+        "SCAM",
+        "SPAM_BULK"
+      ]
+    },
+    "impersonated_brand": {
+      "type": "enum",
+      "description": "The organisation the sender pretends to be, if any",
+      "choices": [
+        "NONE",
+        "BANK",
+        "PARCEL_DELIVERY",
+        "TAX_AUTHORITY",
+        "CLOUD_PROVIDER",
+        "SOCIAL_NETWORK",
+        "EMPLOYER",
+        "OTHER"
+      ]
+    },
+    "sender_authenticated": {
+      "type": "boolean",
+      "description": "Whether SPF, DKIM and DMARC checks passed for the sender domain"
+    },
+    "asks_for_credentials": {
+      "type": "boolean",
+      "description": "Whether the email asks for passwords, card numbers or other secrets"
+    },
+    "urgency_pressure": {
+      "type": "enum",
+      "description": "How hard the email pushes the reader to act immediately",
+      "choices": [
+        "NONE",
+        "MILD",
+        "STRONG",
+        "THREATENING"
+      ]
+    },
+    "risk_level": {
+      "type": "enum",
+      "description": "Overall risk to the recipient",
+      "choices": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "recommended_action": {
+      "type": "enum",
+      "description": "What the mail gateway should do",
+      "choices": [
+        "DELIVER",
+        "DELIVER_WITH_WARNING",
+        "QUARANTINE",
+        "BLOCK_SENDER",
+        "REPORT_TO_SECURITY"
+      ]
+    }
+  }
+}

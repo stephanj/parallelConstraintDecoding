@@ -1,0 +1,184 @@
+{
+  "id": "fintech_fraud",
+  "title": "FinTech Fraud & Autonomous AML Compliance (28 Fields)",
+  "description": "Real-time multi-attribute financial fraud detection, sanctions verification, and autonomous containment decision.",
+  "context": "TRANSACTION ALERT #TX-98421\nTimestamp: 2026-09-15 03:14:22 UTC\nCardholder: Sarah Jenkins (Account ID: US-99120)\nTransaction Amount: ,850.00 USD\nMerchant: CyberGold Crypto Exchange (Nicosia, Cyprus)\nCardholder Billing Address: Seattle, WA, USA\nDevice IP: 185.220.101.5 (Known Tor Exit Node, Frankfurt, Germany)\nDevice Fingerprint: Unrecognized Linux Firefox 128.0 (First seen 4 minutes ago)\nVelocity Check: 3 previous transactions attempted in past 10 minutes from Singapore (), London (), and Frankfurt (,850).\nCardholder Typical Activity: Average monthly spend ,200. No prior cryptocurrency, wire transfer, or foreign cross-border transactions recorded in 3 years.\nCurrent Account Balance: ,200.00 USD.\nTwo-Factor Authentication: SMS 2FA prompt bypassed via Session Hijacking / Cookie Injection anomaly.",
+  "schema": {
+    "is_fraudulent": {
+      "type": "boolean",
+      "description": "Whether transaction is fraudulent"
+    },
+    "risk_tier": {
+      "type": "enum",
+      "description": "Calculated risk tier",
+      "choices": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "recommended_action": {
+      "type": "enum",
+      "description": "Immediate mitigation action",
+      "choices": [
+        "APPROVE",
+        "CHALLENGE_2FA",
+        "MANUAL_REVIEW",
+        "BLOCK_TRANSACTION",
+        "FREEZE_ACCOUNT"
+      ]
+    },
+    "primary_anomaly": {
+      "type": "enum",
+      "description": "Predominant anomaly",
+      "choices": [
+        "IP_GEOLOCATION_MISMATCH",
+        "UNUSUAL_VELOCITY",
+        "HIGH_VALUE_TRANSFER",
+        "NEW_DEVICE",
+        "TOR_EXIT_NODE"
+      ]
+    },
+    "secondary_anomaly": {
+      "type": "enum",
+      "description": "Secondary anomaly indicator",
+      "choices": [
+        "RAPID_DESTINATION_CHANGE",
+        "MULTIPLE_FAILED_LOGINS",
+        "CARD_NOT_PRESENT",
+        "NONE"
+      ]
+    },
+    "requires_human_escalation": {
+      "type": "boolean",
+      "description": "Whether senior fraud analyst must review"
+    },
+    "can_auto_block": {
+      "type": "boolean",
+      "description": "Whether system should execute automated block"
+    },
+    "aml_sar_filing_required": {
+      "type": "boolean",
+      "description": "Whether FinCEN SAR report must be filed"
+    },
+    "fincen_flag_threshold": {
+      "type": "boolean",
+      "description": "Whether transfer amount exceeds AML reporting threshold"
+    },
+    "sanctions_screening_risk": {
+      "type": "enum",
+      "description": "OFAC sanctions risk",
+      "choices": [
+        "CLEARED",
+        "POTENTIAL_MATCH",
+        "HIGH_CONFIDENCE_MATCH"
+      ]
+    },
+    "tor_exit_node_detected": {
+      "type": "boolean",
+      "description": "Whether connection originates from anonymizing proxy/Tor"
+    },
+    "device_fingerprint_mismatch": {
+      "type": "boolean",
+      "description": "Whether device hardware ID differs from cardholder device"
+    },
+    "velocity_score": {
+      "type": "enum",
+      "description": "Transaction frequency score",
+      "choices": [
+        "NORMAL",
+        "ELEVATED",
+        "EXTREME_BURST"
+      ]
+    },
+    "block_card_immediately": {
+      "type": "boolean",
+      "description": "Whether payment card should be deactivated immediately"
+    },
+    "freeze_online_banking": {
+      "type": "boolean",
+      "description": "Whether web portal access should be restricted"
+    },
+    "notify_cardholder_sms": {
+      "type": "boolean",
+      "description": "Whether urgent SMS alert should be dispatched"
+    },
+    "notify_cardholder_email": {
+      "type": "boolean",
+      "description": "Whether notification email should be dispatched"
+    },
+    "requires_identity_verification": {
+      "type": "boolean",
+      "description": "Whether government ID biometric verification is required"
+    },
+    "merchant_category_risk": {
+      "type": "enum",
+      "description": "Merchant category code risk level",
+      "choices": [
+        "LOW",
+        "MODERATE",
+        "HIGH_RISK_CRYPTO",
+        "RESTRICTED_GAMBLING"
+      ]
+    },
+    "chargeback_probability": {
+      "type": "enum",
+      "description": "Probability of cardholder chargeback dispute",
+      "choices": [
+        "LOW",
+        "MEDIUM",
+        "VERY_HIGH"
+      ]
+    },
+    "counterparty_jurisdiction_risk": {
+      "type": "enum",
+      "description": "Jurisdiction risk tier of destination merchant",
+      "choices": [
+        "TIER_1_LOW",
+        "TIER_2_MODERATE",
+        "TIER_3_HIGH",
+        "SANCTIONED_ZONE"
+      ]
+    },
+    "auto_reverse_transfer": {
+      "type": "boolean",
+      "description": "Whether clearing network should attempt immediate reversal"
+    },
+    "fraud_ring_association": {
+      "type": "boolean",
+      "description": "Whether signature matches known syndicate patterns"
+    },
+    "alert_clearing_house": {
+      "type": "boolean",
+      "description": "Whether inter-bank network should be warned"
+    },
+    "escalate_to_fiu": {
+      "type": "boolean",
+      "description": "Whether Financial Intelligence Unit should be notified"
+    },
+    "confidence_score_tier": {
+      "type": "enum",
+      "description": "Model decision confidence bucket",
+      "choices": [
+        "HIGH_CONFIDENCE_FRAUD",
+        "LEANING_FRAUD",
+        "BORDERLINE",
+        "LEGITIMATE"
+      ]
+    },
+    "loss_prevention_priority": {
+      "type": "enum",
+      "description": "Queue priority for asset recovery team",
+      "choices": [
+        "IMMEDIATE_P0",
+        "STANDARD_QUEUE",
+        "LOW_PRIORITY"
+      ]
+    },
+    "account_takeover_suspected": {
+      "type": "boolean",
+      "description": "Whether cardholder credentials were compromised"
+    }
+  }
+}

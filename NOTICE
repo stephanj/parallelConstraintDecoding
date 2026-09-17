@@ -1,0 +1,16 @@
+Parallel Constrained Decoding — local port
+
+This project vendors the `python/core/` engine and `presets/` from
+https://huggingface.co/harshatheg/Qwen-2.5-1B-RLCD (Apache License 2.0),
+which is a source-code repository (no model weights) implementing
+"Parallel Constrained Decoding" on top of mlx-community/Qwen2.5-1.5B-Instruct-4bit.
+
+Local modifications:
+  - python/core/engine.py: PyTorch/Spaces backend router removed; imports the MLX engine directly.
+  - python/core/benchmark.py: default preset list includes presets/code_security.json.
+  - python/core/schema.py: to_parallel_schema_str() now lists each field's allowed choices in the parallel prefill prompt.
+  - python/example.py, python/pyproject.toml, README.md, NOTICE added.
+  - java/: new Java implementation of the technique on llama.cpp (FFM); the schema catalog
+    prompt text in java/src/main/java/pcd/Prompts.java is ported from upstream core/schema.py;
+    java/src/main/java/llama: bindings generated from llama.cpp headers (MIT).
+  - java/src/main/resources/web/vendor/chart.umd.min.js: Chart.js 4.4.1 (MIT), vendored so the web app works offline.

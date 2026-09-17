@@ -1,0 +1,841 @@
+{
+  "id" : "devoxx_cfp",
+  "title" : "Devoxx CFP talk routing",
+  "description" : "Route a submitted talk to the right Devoxx Belgium track and format from its title and abstract.",
+  "context" : "CFP SUBMISSION #31453 - Devoxx Belgium 2026\nTitle: Architecture Observability and Guardrails\nSpeakers: Victor Rentea\n\nAbstract:\nHow do you observe and enforce the code quality to prevent AI Slop? The majority of the teams attending my workshops report 100% of their code is AI-generated already for many months. Some even report they often have to fix PRs that business vibe-coded. This talk summarizes the design feedback loops they setup for their agents, as well as techniques to maximize the human mental bandwidth in the code review step. You’ll hear about C4 model, plantuml diagrams, captured sequence diagrams, complexity visualisation, and efficient testing practices.",
+  "schema" : {
+    "track" : {
+      "type" : "enum",
+      "description" : "The Devoxx Belgium track this talk belongs in",
+      "choices" : [ "Mind the Geek", "Security, Trust & Compliance", "Java Language & Platform", "People, Practices & Career", "Agentic Engineering & Tooling", "Cloud Native, Data & Infrastructure", "Architecture & Modernization", "Development Practices" ]
+    },
+    "session_format" : {
+      "type" : "enum",
+      "description" : "The session format that fits the proposal best",
+      "choices" : [ "Conference", "Deep Dive", "Tools-in-Action", "Hands-on Lab", "Lunch Talk", "BOF" ]
+    },
+    "audience_level" : {
+      "type" : "enum",
+      "description" : "Experience the audience needs to follow the talk",
+      "choices" : [ "BEGINNER", "INTERMEDIATE", "ADVANCED" ]
+    },
+    "main_technology" : {
+      "type" : "enum",
+      "description" : "The technology the talk is mostly about",
+      "choices" : [ "Java", "Kotlin", "JavaScript", "Python", "Rust", "Go", "Language-agnostic" ]
+    },
+    "ai_is_central_theme" : {
+      "type" : "boolean",
+      "description" : "Whether AI, LLMs or agents are the main subject of the talk"
+    },
+    "includes_live_coding" : {
+      "type" : "boolean",
+      "description" : "Whether the speakers will write or run code live on stage"
+    },
+    "attendees_need_laptop" : {
+      "type" : "boolean",
+      "description" : "Whether attendees must bring a laptop to take part"
+    }
+  },
+  "samples" : [ {
+    "label" : "#31453 Architecture Observability and Guardrails",
+    "context" : "CFP SUBMISSION #31453 - Devoxx Belgium 2026\nTitle: Architecture Observability and Guardrails\nSpeakers: Victor Rentea\n\nAbstract:\nHow do you observe and enforce the code quality to prevent AI Slop? The majority of the teams attending my workshops report 100% of their code is AI-generated already for many months. Some even report they often have to fix PRs that business vibe-coded. This talk summarizes the design feedback loops they setup for their agents, as well as techniques to maximize the human mental bandwidth in the code review step. You’ll hear about C4 model, plantuml diagrams, captured sequence diagrams, complexity visualisation, and efficient testing practices.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#4098 From Developer to Builder: A Spec-Driven Development Deep Dive",
+    "context" : "CFP SUBMISSION #4098 - Devoxx Belgium 2026\nTitle: From Developer to Builder: A Spec-Driven Development Deep Dive\nSpeakers: Simon Martinelli\n\nAbstract:\nSpec-Driven Development is a way of working with AI coding agents where the specification drives the code, not the prompt. I use Spec-Driven Development according to the AI Unified Process (AIUP) in several customer projects, and in this deep dive, I show how it works in practice.\n\nWe will build a business application from scratch, and also learn how to work on brownfield projects. We write specifications, let an AI agent generate the code, run it, and add tests that check the code against the spec. When the requirements change, we update the spec and regenerate the code rather than patching the code by hand.\n\nWe will explore the harness: the rules, context, and tests around the agent that keep its output predictable enough for real work. By the end, you will know what Spec-Driven Development is, where it helps, where it does not, and how to try it on your own stack.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#7018 A Year of Agentic AI Evolution: Lessons Learned Building Production-grade Agentic Systems",
+    "context" : "CFP SUBMISSION #7018 - Devoxx Belgium 2026\nTitle: A Year of Agentic AI Evolution: Lessons Learned Building Production-grade Agentic Systems\nSpeakers: Mario Fusco, Kevin Dubois\n\nAbstract:\nLast year at Devoxx, we introduced the first version of LangChain4j's agentic framework and explored the core patterns behind agentic AI systems.\n\nSince then, real-world usage, community feedback, and a lot of experimentation have taught us that production-ready agentic systems need more than a fixed set of predefined patterns. Different use cases need different trade-offs, and a predefined list can only take you so far.\n\nIn this session, we'll show how LangChain4j's agentic support has evolved. We have moved toward a more flexible orchestration model that lets developers compose their own strategies, while also allowing us to grow the library of built-in patterns. We will demonstrate in practice how these new patterns work discussing their respective pros and cons and fields of applicability.\n\nWe'll also cover the operational capabilities added to the framework to make these workloads production-ready. You'll see how to observe and trace agent execution, persist state, recover long-running workflows after failures, and handle human-in-the-loop pauses without losing control of the process.\n\nJoin us as we demonstrate these new features along with their trade-offs, and learn what it takes to build robust, production-ready agentic systems.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#19733 Bootiful Spring Boot 4",
+    "context" : "CFP SUBMISSION #19733 - Devoxx Belgium 2026\nTitle: Bootiful Spring Boot 4\nSpeakers: Josh Long\n\nAbstract:\nSpring Boot 4.x and Java 25+ have arrived, making it an exciting time to be a Java developer! Join me, Josh Long (@starbuxman), as we dive into the future of Spring Boot with Java 25. We'll learn how to scale your applications and codebases effortlessly, explore the robust Spring Boot ecosystem featuring AI, modularity, seamless data access, security, and cutting-edge production optimizations like Project Loom's virtual threads, Project Leyden, GraalVM, and more. Let's explore the latest-and-greatest in Spring Boot to build faster, more scalable, more efficient, more modular, more secure, and more intelligent systems and services.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#31452 Responsibly Dimming the Lights in the Software Factory",
+    "context" : "CFP SUBMISSION #31452 - Devoxx Belgium 2026\nTitle: Responsibly Dimming the Lights in the Software Factory\nSpeakers: Victor Rentea\n\nAbstract:\nThe most agentified engineering teams of my clients are all converging towards the same workflow, aiming to optimize the code review step while preventing human cognitive debt and skill erosion. This talk summarizes their practices, teaching actionable steps and milestones to gradually improve the quality of AI-generated code up to a point in which you can safely start decreasing the code review ‘intensity’. Dark Factories are not built ground up - instead, lights are responsibly dimmed, then turned off one by one, area by area, after observing impeccable code produced consistently.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#11556 223 Pull Requests in 11 Days: The Recipe for Building Real Software with AI Agents",
+    "context" : "CFP SUBMISSION #11556 - Devoxx Belgium 2026\nTitle: 223 Pull Requests in 11 Days: The Recipe for Building Real Software with AI Agents\nSpeakers: Julien Dubois\n\nAbstract:\nI've always wanted to create a developer UI for Spring Boot, but the task was massive. The project I ended up doing has 83,000 lines of code, 116 test suites... The honest by-hand estimate for one experienced developer: 6.5 to 8.5 months.\n\nI did it in about 11 days, shipping version 1 after less than 2 weeks.\n\nNot by typing faster: I didn't even open my IDE. I did this by managing a fleet of AI agents: 223 merged pull requests, around 20 a day, with the agents doing all the scaffolding, the panels and the tests while I architected, reviewed and steered. That's roughly a 12–17× reduction in human effort, as measured from my git history and PR metadata.\n\nThis talk is about showing you the recipe for delivering at this speed, using modern AI tools. I'll show you how to run it: write the specifications, the test harness, running agents in parallel... And working differently: prep the agents in the afternoon, let them build overnight, merge the results over coffee the next day.\n\nAnd as a bonus, we get a great new Spring Boot developer console!",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#23524 Modern Java in Practice - The Features That Matter",
+    "context" : "CFP SUBMISSION #23524 - Devoxx Belgium 2026\nTitle: Modern Java in Practice - The Features That Matter\nSpeakers: Nicolai Parlog, Falk Sippach\n\nAbstract:\nYou may be on the latest Java version but are you getting the most out of it? Recent releases have added a lot of features and while some might have flown under the radar, others come together to form more than the sum of their parts. Either way, it is worth looking at the whole corpus of Java changes over the last years:\n\n- pattern matching and Data-Oriented Programming\n- virtual threads and structured concurrency\n- an on-ramp for beginners and better experiments for experts\n- new APIs, from stream gatherers to sequenced collections, from lazy constants to HTTP/3\n- improved performance, like ahead-of-time computation and compact object headers\n- better security and tooling - most out of the box, some on demand\n\nAnd there’ll even be time to take a peak at the future and look into the current proposals for value types and string templates, deconstructible class and “withers”. After this deep dive, you’ll be ready to get the most out of the latest Java versions - or at least have good arguments to convince your tech lead to update.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Java Language & Platform",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#49256 ADRs: The Why and How",
+    "context" : "CFP SUBMISSION #49256 - Devoxx Belgium 2026\nTitle: ADRs: The Why and How\nSpeakers: Venkat Subramaniam\n\nAbstract:\nDecisions, decisions, decision, that is our life every day. But, what is worse than making a bad decision is not remembering why we made a decision, good or bad. Architectural Decision Records are highly important to document the decisions we make, to support the decisions, to bring in necessary and sufficient reasons, and to reevaluate decisions when the business requirements and/or the technologies change. In this presentation we will look at ADRs, how to create them, how to maintain them, and the values they provide.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#22916 Java and the Next Generation of Programming Models",
+    "context" : "CFP SUBMISSION #22916 - Devoxx Belgium 2026\nTitle: Java and the Next Generation of Programming Models\nSpeakers: Ana-Maria Mihalceanu\n\nAbstract:\nModern software increasingly interacts with AI models, query languages, and other specialized programming models, forcing you to switch contexts, embed foreign code, or write verbose wrappers to bridge the gap. What if you could express logic from outside the JVM directly in Java?\n\nIn this session, we start by looking at how Java enables you to safely interact with runtimes outside of the JVM using the Foreign Function and Memory API and tools like jextract.\nThen will push further with Project Babylon’s code reflection: express AI models as Java programs that Babylon can analyze, transform and lower to inference engines, thus leveraging hardware accelerator backends while skipping external model files or the need to glue code.\n\nAlong the way, you will learn how to build expressive FFM-based inference today and author pure Java AI-ready models with Code Reflection tomorrow!",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Java Language & Platform",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#23529 From Autocomplete to Autopilot: How AI Is Changing the Developer Experience",
+    "context" : "CFP SUBMISSION #23529 - Devoxx Belgium 2026\nTitle: From Autocomplete to Autopilot: How AI Is Changing the Developer Experience\nSpeakers: Tugdual Grall\n\nAbstract:\nFor most developers, AI assistance started as \"smart autocomplete.\" That story has changed completely. \n\nToday, GitHub Copilot can take a request in plain language and carry it out for you — in your editor, terminal, desktop application or in the cloud while you focus on something else. We've moved from autocomplete to autopilot.\n\nThis 3-hours deep dive is built around live demos and real projects. Step by step, we'll see the many places where AI can help across your workflow: writing and understanding code in the IDE, CLI, and in the Copilot App — then moving into the software delivery lifecycle with PR review, feature creation using cloud agents, and security.\n\nYou'll also learn how to customize Copilot for your own projects and needs, using Skills, Agents, and MCP to connect it to your tools, data, and conventions — and how to automate real work with agentic workflows in plain language, across several languages and tools.\n\nYou'll leave with more than a \"wow\": concrete techniques to improve quality, control cost, and set the right guardrails, administration, and governance. Expect many demonstrations and plenty of Q&A.\n\nWhat you'll learn:\n- Using Copilot across the IDE, CLI, App and cloud\n- AI in the SDLC: PR review, cloud agents, and security\n- Customizing with agents, skills, and custom instructions\n- Automating tasks with agentic workflows\n- Improving quality and controlling cost\n- Guardrails, administration, and governance for teams",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#22912 Loop Engineering, beyond prompt, context, and harness engineering",
+    "context" : "CFP SUBMISSION #22912 - Devoxx Belgium 2026\nTitle: Loop Engineering, beyond prompt, context, and harness engineering\nSpeakers: Guillaume Laforge, Wietse Venema\n\nAbstract:\n\"I don't prompt Claude anymore. I have loops running that prompt Claude... My job is to write loops.\" said Boris Cherny, the creator of Claude Code, demonstrating a change in the way developers work with their favorite coding agent. Developers are moving away from manually coding and writing isolated prompts, and toward Loop Engineering: the practice of designing automated systems that steer coding agents autonomously.\n\nIn this 3-hour deep dive, we’ll look at the concepts, approaches, and architecture behind \"Loop Engineering\". You will learn that the power of AI doesn't (only) lie in the model itself, but in the harness and loops built around it. We will explore the core primitives required to build robust loops (skills, triggers, hooks, Git worktrees, sub-agents, state & memory...), how to implement the fundamental loop structures (turn-based, goal-based, time-based, and proactive), and how to hopefully prevent these autonomous systems from launching rm -Rf on your codebase!\n\nYou will leave this session with concrete examples, advice, and tips'n tricks, to build your own loops, replacing tedious manual tasks with self-driving workflows that investigate, implement, and verify their own code and artifacts.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#5051 🧰 Dev Containers: the ultimate toolbox for developers?",
+    "context" : "CFP SUBMISSION #5051 - Devoxx Belgium 2026\nTitle: 🧰 Dev Containers: the ultimate toolbox for developers?\nSpeakers: Stéphane Philippart\n\nAbstract:\nAt some point, we’ve all had to (re)install our entire development environment after switching machines.\nWhether by choice or simply during on-boarding at a new company, a new mission,...\nWe’ve also all spent far to many hours figuring out which tools to install just to submit a PR or MR to an open source project.\n\nAnd in many other situations, we quickly find ourselves facing the nightmare of configuring tools and frameworks when all we really want to do is what we love: coding.\nAnd let’s not even get started on version updates and inter-dependencies 😅...\n\nFortunately, there is a solution to all these problems: dev containers.\n\nDuring this tools-in-action session, I invite you to explore them with me.\nThe only thing I allow myself to install on my machine: Docker!\nEverything else will be handled through configuration so that tools, frameworks, version management, and dependencies become a non-event in your development workflow.\n\nYou’ll leave knowing how to use dev containers and how to build your entire development stack as code.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Mind the Geek",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#17791 Consistency Patterns in Event-Driven Architecture",
+    "context" : "CFP SUBMISSION #17791 - Devoxx Belgium 2026\nTitle: Consistency Patterns in Event-Driven Architecture\nSpeakers: Emanuel Trandafir\n\nAbstract:\nDistributed systems have a dirty secret. Your message broker swears the domain event is published — others are already listening, already reacting to this new order. But then, in a split second, your database rolls back. A constraint violation. Something breaks. And now the entire system knows about an order that never actually existed.\n\nThis talk covers the patterns that prevent that chaos: the Dual Write problem, Outbox and Inbox patterns for consistency between database and event stream, idempotent consumers, and Sagas — Orchestration and Choreography.\n\nYou'll leave knowing which pattern solves which problem, when to use each, and what you're really trading off with eventual consistency",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#9752 Learning modern Java the playful way",
+    "context" : "CFP SUBMISSION #9752 - Devoxx Belgium 2026\nTitle: Learning modern Java the playful way\nSpeakers: Marit van Dijk, Piotr Przybyl\n\nAbstract:\nStaying up to date with Modern Java can feel overwhelming. If you don’t have any experience with recent Java versions (or at all), features like Structured Concurrency or Stream Gatherers might sound exciting, but also scary: “How do I even get started with that?”\n\nFear not! In this deep dive Marit and Piotr will take their time to explain and demo the new exciting things and also show you how to use them in your IDE, so that the next day you can start having fun and profit with modern Java in your favorite tools on your own.\n\nAs a bonus you’ll also see how to improve your IDEA-fu and understand vector search with multi-modal (text & images) models.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Java Language & Platform",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#8186 The Hexagonal Hangover",
+    "context" : "CFP SUBMISSION #8186 - Devoxx Belgium 2026\nTitle: The Hexagonal Hangover\nSpeakers: Ties van de Ven\n\nAbstract:\n“It depends.” It’s the classic software architect’s answer… but what does it actually depend on? Patterns like Clean and Hexagonal Architecture are great tools, but they are often applied dogmatically. When we automatically wrap simple features in endless layers of abstraction and domain interfaces, we introduce unnecessary distance between related concepts. Those extra layers are intended to decouple, but they can sometimes just make our code harder to navigate, test, and maintain. In this talk, we’ll take a step back from “best practices” and look at the trade-offs behind architectural choices. Using clear Java code samples, we will explore the metrics that help guide these decisions: coupling, cohesion, and distance. Instead of looking for universally “clean” solutions, we’ll discuss how to evaluate what makes sense for your specific context.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#16414 From vibe coding to harness engineering: modernizing a regulated environment with AI",
+    "context" : "CFP SUBMISSION #16414 - Devoxx Belgium 2026\nTitle: From vibe coding to harness engineering: modernizing a regulated environment with AI\nSpeakers: Anyul Rivas\n\nAbstract:\nMigrating a banking mainframe to the cloud under fluctuating security regulations in three months seemed like an impossible mission. AI (agents, MCP tools) was the force multiplier that made it possible, but it demanded a paradigm shift. This session dissects the evolution from the illusion of vibe coding—generating code through fluid conversations—to the rigorous discipline of harness engineering.\n\nWhen AI writes the code, software craftsmanship evolves. The focus is no longer on syntax, but on building safety nets. We will explore how to tame automated code generation in hostile and highly regulated environments by building relentless harnesses: Spec-Driven Development, evolutionary pipelines, and continuous validation.\n\nKey Points\nEvolution of Craftsmanship: The shift from typing code to orchestrating, limiting, and auditing systems generated by multiple sub-agents.\n\nHarness Building: Using extreme testing (integration, test containers, environment simulation) to contain and certify the behavior of generated code.\n\nSpec-Driven Development: The specification as a single, unbreakable contract between business, security, and AI agents.\n\nRadical Pragmatism: How to maintain agility and design principles when the rules of the regulated environment change daily.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#16439     AI Security Deep Dive, Securing Agents and AI Applications",
+    "context" : "CFP SUBMISSION #16439 - Devoxx Belgium 2026\nTitle:     AI Security Deep Dive, Securing Agents and AI Applications\nSpeakers: Brian Vermeer\n\nAbstract:\nAI is transforming how we write software and the applications we build, introducing entirely new security challenges.\n\nIn this session, we’ll explore two critical areas of AI security. First, we’ll look at agentic coding and the risks of AI agents that read untrusted content, execute commands, and interact with your development environment. Next, we’ll examine AI-powered applications, covering threats such as prompt injection, tool abuse, poisoned retrieval, and memory manipulation.\n\nThe focus is on practical defence. You’ll learn proven mitigation strategies, architectural patterns, and the current landscape of AI security tooling, including guardrails, runtime protection, and security testing frameworks. Through live demos and real-world examples, you’ll leave with actionable techniques to build and use AI systems more securely.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Security, Trust & Compliance",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#10031 The Dark Secrets of Computer Science",
+    "context" : "CFP SUBMISSION #10031 - Devoxx Belgium 2026\nTitle: The Dark Secrets of Computer Science\nSpeakers: Fabien Marsaud\n\nAbstract:\nThe idea stems from https://xkcd.com/2347/ and Mark Rendle’s talk at Devoxx.be 2024.\n\nMost people are unaware of the hassles we face (or inflict upon ourselves) regarding legacy systems, technical choices, or our own organizational structures.\n\nThe goal is to have a laugh about our points of contention (Lombok? Reactive? Date formats?), our nemeses (printers, CORS), language quirks—including the fact that you can run *Doom* inside the TypeScript type system—why no one truly understands C++, wacky HTTP status codes, centering `div`s (of course), the Y2K non-event versus the real Y2K38 problem, RGB vs. CMYK, April Fools' RFCs, web page and file encoding issues, consistently botched Excel integrations, business-dictated file naming conventions, the headache of IEEE 754 rounding, the \"ultimate\" email validation regex, hidden (or missing) CPU instructions, the shift toward inclusivity since 2020 (dropping \"master/slave\" terminology...), SOA, the long-awaited WASM, corporate timesheets, and—last but not least—the crucial question: *how do you exit vi?*",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Mind the Geek",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#24234 AsyncAPI in action: OpenAPI for event-driven applications",
+    "context" : "CFP SUBMISSION #24234 - Devoxx Belgium 2026\nTitle: AsyncAPI in action: OpenAPI for event-driven applications\nSpeakers: Michel Schudel\n\nAbstract:\nMost developers know OpenAPI as the standard for describing and generating code around synchronous APIs like REST, a single spec that produces client code, server stubs, and (Swagger) docs, keeping everything originating from the same spec.\n\nAsyncAPI brings that spec-first approach to event-driven systems: message brokers, topics, consumers and producers, described in a machine-readable definition that tooling can act on.\n\nIn this tools-in-action session, we'll use AsyncAPI to generate a working Spring Boot producer and consumer for Kafka, including the message DTOs and the API documentation straight from the spec. No hand-written boilerplate. We define the spec, generate both sides of the conversation, and watch a message flow end-to-end between them.\n\nAfter this session, you'll have a clear understanding of what AsyncAPI is and how it relates to OpenAPI, how spec-first generation removes hand-written boilerplate and drift between producer, consumer, and docs, and enough hands-on familiarity with the tooling: spec structure, generator templates, to try it on your own event-driven services.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#9032 Agents With Seatbelts: Practical Ways to Keep AI Code Gen Under Control",
+    "context" : "CFP SUBMISSION #9032 - Devoxx Belgium 2026\nTitle: Agents With Seatbelts: Practical Ways to Keep AI Code Gen Under Control\nSpeakers: Jonathan Vila López\n\nAbstract:\nIn this session I will share best practices for using MCP setups and AI Agents in real development workflows 🤖. The goal is to improve both quality and security, since even with all the excitement around these tools, it’s still very easy to create confusing interactions, accidental data exposure, or Agents that trigger actions we never intended.\n\nI will also present reports comparing how different LLM models generate code, showing clear differences in stability, output consistency, and the amount of guidance each model needs to avoid mistakes.\n\nAnd last but not least, I will talk about the elephant in the room: metrics 📏. How do we measure our improvement using AI? Is it something companies are doing right? Spoiler alert ... no 😰\n\nThe talk focuses on helping teams build more reliable, productive, and secure AI workflows, making AI code generation a real benefit rather than a risky experiment 😅.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#8171 0 to 350 Engineers on Claude Code: What Could Go Wrong?",
+    "context" : "CFP SUBMISSION #8171 - Devoxx Belgium 2026\nTitle: 0 to 350 Engineers on Claude Code: What Could Go Wrong?\nSpeakers: Nicolas Martignole\n\nAbstract:\nWe are living through a revolution. \n\nFrom assisting us in writing code to coordinating a fleet of agents, we find ourselves in the eye of the storm. Coding agents like Claude Code, Copilot, Codex CLI, and Cursor are reshaping our craft and our place within the company.\n\nI brought Claude Code to my company, Back Market, in June 2025. We were \"behind\" other companies, such as Doctolib. Step by step, we moved from smart autocompletion to writing features end-to-end. Today we have Product Managers who write code, developers who do architecture and design, and managers who build their own internal tools—all with Claude Code. And there's me, looking at how we can control our monthly spending, leading a team of 40 subject-matter experts, with successes (and failures).\n\nBut more broadly, what's the flip side? What happens when a junior developer opens a single pull request with 50 modified files using Claude Code? What happens when one team migrates a module in place of the team that originally owned it, with Claude Code? What are the risks, and how do you stay in control within your company?\n\nFinally, as developers—whether junior or senior—this asks us to adapt. \nHow do we get up to speed? What does prompting actually mean? How does an agent work? What are Skills? What's the impact on CI/CD? On the Platform engineering teams? On the run side? On upfront design?\n\nI don't think AI will replace developers. I think developers who use AI can replace us.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "People, Practices & Career",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#25042 Owning the Code You Didn't Type",
+    "context" : "CFP SUBMISSION #25042 - Devoxx Belgium 2026\nTitle: Owning the Code You Didn't Type\nSpeakers: Renato Guerra Cavalcanti\n\nAbstract:\nFor most of our careers, the scarce thing was producing code. That world is ending. An assistant now produces competent code faster than any of us can read it, and the bottleneck has moved from writing to understanding.\n\nNothing moved on the responsibility side, though. We are still accountable for every line we merge, no matter who or what typed it. Staying in the loop, knowing the system, owning the design, that is the job description now.\n\nThis talk is not a manifesto, it is a set of recipes. The practices I use daily to stay in control of code that arrives faster than I could write it:\n\n- Phased delivery - Large tasks are split into small phases with a review gate after each one. No big-bang diffs.\n- Walk-throughs - The assistant guides me through a change step by step, in reading order, instead of leaving me alone with a raw diff.\n- Made for humans - Correct is not the bar, understandable is. Design and readability are acceptance criteria, and I send back what does not meet them.\n- Engineering depth - Know your stuff. The deeper you understand your system, the harder it is to be fooled by a confident, plausible answer.\n- Files and comments - Sessions produce files and in-code comments instead of long chat threads. Easy to navigate, easy to annotate for the assistant.\n\nTogether these form a flow that keeps me in control and grows my knowledge instead of eroding it. You will leave with techniques you can apply the next day, whatever assistant you use.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#21675 All you need to know about Maven 4!",
+    "context" : "CFP SUBMISSION #21675 - Devoxx Belgium 2026\nTitle: All you need to know about Maven 4!\nSpeakers: Matthias Bünger\n\nAbstract:\nMaven is more than 20 years old, and it's last major version (Maven 3) was released in 2010. Since then Maven got several great updates, but the Maven team also realized that Maven can't evolve further without huge changes which have the capability to break the whole ecosystem if done wrong. Now - after years of intensive planning and coding - the release of Maven 4 is closer than ever before!\n\nIn this talk I'll speak about the motivation and challenges the team had while developing Maven 4 and of course about its new features and improvements.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#19706 Software engineering in the age of AI agents: who’s in control?",
+    "context" : "CFP SUBMISSION #19706 - Devoxx Belgium 2026\nTitle: Software engineering in the age of AI agents: who’s in control?\nSpeakers: Bert Jan Schrijver\n\nAbstract:\nAn AI deletes a production database… and insists it didn't. Welcome to modern software engineering.\n95% of developers now use AI tools weekly. Claude Code, Cursor, Copilot - agentic coding assistants are writing more code than ever. But the data shows a darker side: up to 5 times more technical debt, over 40% higher code complexity, and a flood of code that needs review.\nThe real shift isn't about writing more code faster. It's about moving from writing code to writing specs, from building systems to generating them, and from trusting output to verifying it.\nIn this talk, I'll share real stories - including a production database incident, a 45-minute spec-to-app demo, and lessons from 3 projects built in 1 hour. You'll leave with a practical framework: experiment boldly, deploy carefully, and raise the bar on testing. One rule applies no matter what: if you bring it to a review, it's your code.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#7008 How to survive and thrive as a dev (team) in the exponential age of AI. Real-world AI adoption, smarter ways of working, and lessons from the front lines",
+    "context" : "CFP SUBMISSION #7008 - Devoxx Belgium 2026\nTitle: How to survive and thrive as a dev (team) in the exponential age of AI. Real-world AI adoption, smarter ways of working, and lessons from the front lines\nSpeakers: Sander Hoogendoorn\n\nAbstract:\nThe AI revolution isn’t coming — it’s already altering how we architect products, ship features, and run engineering teams.\n\nDuring this talk, in his signature charismatic style, Sander Hoogendoorn, CTO at iBOOD.com and a seasoned developer with over four decades of coding experience, doesn’t get stuck in theory or hype, but confronts the pressing issues head-on. You’ll get a no-fluff, grounded view from iBOOD — what we’re already doing with AI, how we built it into our systems, and how it shapes the way we work.\n\nWe won’t shy away from the dark side either — vendor lock-in, breaking prompts, model opacity, shifting APIs, and how quickly a dependency can become fragile. These are real risks that shape architectural and organizational decisions we make daily.\n\nTo survive exponential speed, we retired many practices: no Scrum, no rigid ceremonies, no big upfront plans, no pull requests or code reviews. Instead, we embrace working in fluid autonomous microteams, continuous learning, experimentation, and radical adaptability.\n\nExpect an honest, fast-paced, and experience-driven session — mixing architecture, culture, and practical insight — on what it truly takes for developers and teams to survive and thrive in the age of AI.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#8166 Integration patterns for distributed systems",
+    "context" : "CFP SUBMISSION #8166 - Devoxx Belgium 2026\nTitle: Integration patterns for distributed systems\nSpeakers: Dirk Fröhner, Sabarish Sekar\n\nAbstract:\nToday's applications are interconnected: they expose APIs, publish events, call third-party services, and externalize states. They must therefore address the fundamental challenges of distributed systems, such as out-of-order delivery, retries, idempotence, and partial failures. To address these challenges, architects must carefully evaluate integration options while considering how to manage complex system interactions. In this session, learn about common design trade-offs for distributed systems and how to navigate them with design patterns, illustrated by examples.\n\nThe target audience is from many floors the architect elevator would stop by: Software architects, software developers, IT executives and everyone around - such general software architecture sessions are relevant for many roles in every company in every segment. For those with legacy architectures, it provides an outlook on what migration and modernization transformation they could go through in order to get towards flexible, individually evolvable and scalable systems that are loosely coupled.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#22923 Fun with Flags: How OpenFeature Solves Your Feature Flag Headaches",
+    "context" : "CFP SUBMISSION #22923 - Devoxx Belgium 2026\nTitle: Fun with Flags: How OpenFeature Solves Your Feature Flag Headaches\nSpeakers: Simon Schrottner\n\nAbstract:\nFeature flags have revolutionized the software delivery lifecycle, enabling teams to decouple releases from deployments and create a more agile development process. They're often hailed as one of the key practices in modern software development—at least in theory.\n\nHowever, as systems grow in complexity, so do the challenges associated with feature flagging. From supporting multiple languages and managing targeted evaluations to avoiding vendor lock-in and safely decommissioning obsolete code, what initially seems like a straightforward problem can quickly become daunting.\n\nThe OpenFeature community is tackling these challenges head-on by providing vendor-agnostic SDKs and a suite of powerful tools designed to simplify the feature flagging experience. Join me as we explore the common pitfalls of feature flagging and discover how OpenFeature can help bring the fun back into this critical aspect of software development.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#7012 Destructoring is the future of Javas Encapsulation",
+    "context" : "CFP SUBMISSION #7012 - Devoxx Belgium 2026\nTitle: Destructoring is the future of Javas Encapsulation\nSpeakers: Richard Gross\n\nAbstract:\nDestructoring—the breakdown of an object into its constituent parts—is key to Java's ability to reliably maintain encapsulation and invariants. We resolve this apparent paradox in the presentation by looking at past and future language and platform features in the JDK.\n\nClassic Java serialization breaks encapsulation: it directly accesses private fields, thereby bypassing constructors and the checks anchored there. The reason for this is that deconstruction and reconstruction have not been first-class citizens in the JDK until now.\n\nThis is precisely where current work within the JDK Project Amber comes in – under the working title “Derived Record/Class Creation.” This approach allows us to explicitly specify how objects are deconstructed and reconstructed. This will not only make serialization more secure and robust in the future, but we will also gain “withers” (targeted, immutable copies with individual modified components) for records and pattern matching, which will be extended beyond pure record patterns to normal classes.\n\nGiven these circumstances, it is worth taking a closer look: What is already there, what comes next – and what does this mean for our daily Java practice?",
+    "expected" : {
+      "session_format" : "Lunch Talk",
+      "track" : "Java Language & Platform",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#12751 Microservices Without the Distributed Mess",
+    "context" : "CFP SUBMISSION #12751 - Devoxx Belgium 2026\nTitle: Microservices Without the Distributed Mess\nSpeakers: Steven Hillaert\n\nAbstract:\nMicroservices are hard, that's probably the only thing we all agree on when it comes to microservices.\n\nThe promise of autonomy, scalability, and independent delivery often deliver something completely different: distributed spaghetti or lasagna. Where we have these blobs spread over the network, with synchronous call chains, unclear ownership, fragile transactions, and teams arguing where the “real” business logic should live.\n\nThis session looks at microservices from a pragmatic architecture perspective rooted in real experience. Not as a hype (anti-)pattern, but as a set of trade-offs around boundaries, ownership, communication, and consistency. \n\nWe will explore how Domain-Driven Design can help define service boundaries, but also where DDD terminology gets misused. What is a bounded context? How large should a service be? Can one microservice contain multiple APIs? When does orchestration make sense? Should we layer services?\n\nThe goal of this talk is not to sell microservices or dismiss them. The goal is to give developers and architects better mental models for designing services that are cohesive, autonomous, and understandable.\n\nAttendees will leave with practical heuristics for spotting bad service boundaries, avoiding accidental distributed monoliths, and choosing communication patterns that fit the business problem instead of the architecture diagram.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#9046 rm -rf self-doubt: Debugging Impostor Syndrome for Developers",
+    "context" : "CFP SUBMISSION #9046 - Devoxx Belgium 2026\nTitle: rm -rf self-doubt: Debugging Impostor Syndrome for Developers\nSpeakers: Vincent Mayers\n\nAbstract:\n\"Whether you think you can or you think you can't – you're right.\"\n\nIn software, we trust the logic of our systems, but the \"human hardware\" running the code often executes a background process of self-doubt. Imposter Syndrome isn't a permanent bug; it's a physiological response hard-coded into our biology. From junior devs facing their first pull request to Java Champions keynote-ing at international conferences, the \"fraud detection\" alert is a universal experience.\n\nThis session deconstructs the neuroscience behind this phenomenon—from the amygdala's \"fight-or-flight\" triggers to the cognitive effects of cortisol. We will move beyond the \"soft skill\" fluff to examine practical, iterative steps for managing these triggers. Learn how to reframe self-doubt as a signal for growth, optimize your response to code reviews, and lean into the discomfort of the unknown to thrive in an industry that changes every week.\n\nYou’ll walk away with tools you can apply immediately, whether you’re debugging unfamiliar code, speaking up in design discussions, or stepping into a bigger role",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "People, Practices & Career",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#23539 Everyday JSON",
+    "context" : "CFP SUBMISSION #23539 - Devoxx Belgium 2026\nTitle: Everyday JSON\nSpeakers: Viktor Klang\n\nAbstract:\nJSON is ubiquitous in modern software, and many use cases are just too small to justify adding external dependencies.\n\nTo address these everyday use cases, a new JEP proposes a simple, incubating API for parsing, navigating, and generating JSON documents-both for Java developers and for the JDK itself.\n\nWhile the Java ecosystem offers many libraries with JSON-processing capabilities, this built-in API is not intended to replace them, but rather to offer a low-friction option when an external library would be unnecessary or impractical.\n\nIn this talk, we will show how Data-Oriented Programming helps simplify the API, discuss its intended use cases, outline the design trade-offs, and demonstrate its capabilities.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Java Language & Platform",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#14459 Bootiful Security",
+    "context" : "CFP SUBMISSION #14459 - Devoxx Belgium 2026\nTitle: Bootiful Security\nSpeakers: Daniel Garnier-Moiroux, Josh Long\n\nAbstract:\nAre you tired of juggling dozens of passwords? In 2022 alone, hackers exposed over 24 billion passwords, compromising personal identities, finances, and more. But what if there was a better way? Enter Passkeys. This cutting-edge solution not only offers robust multi-factor authentication but is now paving the way to replace passwords altogether. Join Daniel Garnier Moiroux and Josh Long as they unveil the power of Passkeys. Witness firsthand how the new Spring Security 7  can revolutionize your systems and services, making them more secure and easier to use. Say goodbye to password fatigue and hello to a secure, seamless login experience. Are you ready to embrace the future of authentication?",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Security, Trust & Compliance",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#4086 AI Made Building Cheap. Now Decisions Are the Bottleneck.",
+    "context" : "CFP SUBMISSION #4086 - Devoxx Belgium 2026\nTitle: AI Made Building Cheap. Now Decisions Are the Bottleneck.\nSpeakers: Dave Sammut, João Rosa\n\nAbstract:\nAI is transforming software delivery. Code can be generated, tests created, architectures sketched, and implementation options explored in minutes. Building has never been cheaper.\nYet many organisations are discovering an unexpected consequence: as execution accelerates, decision-making becomes the real bottleneck.\nDrawing on consulting engagements across banking, insurance, retail, and telecommunications, this talk explores how AI is changing the economics of software delivery and why decision quality is emerging as a competitive advantage. Rather than focusing on generating code faster, I demonstrate how AI can improve discovery, architecture, and delivery conversations before implementation begins.\nThrough practical examples and live demonstrations, attendees will see how conversations can be transformed into Event Storming maps, Team Topologies views, C4 architecture diagrams, assumptions, risks, and architectural options. These techniques help teams expose hidden complexity, align stakeholders faster, and make better-informed decisions.\nKey takeaways: Understand why AI shifts the constraint from execution to judgement, learn practical techniques for AI-assisted discovery and architecture, expose risks and assumptions earlier, and balance delivery speed with architectural integrity.\nTarget audience: Software architects, technical leads, senior engineers, engineering managers, enterprise architects, and technology leaders.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "People, Practices & Career",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#17786 Agent Loops, Decoded: Fundamentals to Agentic Patterns in Spring AI",
+    "context" : "CFP SUBMISSION #17786 - Devoxx Belgium 2026\nTitle: Agent Loops, Decoded: Fundamentals to Agentic Patterns in Spring AI\nSpeakers: Christian Tzolov\n\nAbstract:\nAt their core, AI agents are context orchestrators — gathering information, querying models, evaluating outputs, and adapting their approach. This live-coded session takes you from Spring AI fundamentals to agentic patterns.\nWe start with the fundamentals: ChatClient essentials, context engineering, and session memory. We cover how Advisors extend the LLM execution path, including Recursive Advisors implementing the Agent Loop — the loop behind every autonomous agent — then enrich context with RAG and connect to external services via Tool Calling and MCP.\n\nFrom there, we build up the agentic patterns Tool Calling and Advisors make possible:\n- Tool Search Tool — dynamic tool discovery for agents with hundreds of tools\n- LLM-as-a-Judge — automated response evaluation in an evaluator-optimizer loop\n- Explainable Agents — augmenting tool calls with the model's reasoning for debuggability\n- Agent Skills — LLM-agnostic capabilities, loaded on demand\n- Todo / structured planning — preventing \"lost in the middle\" failures\n- AskUserQuestion — gathering requirements before acting\n- Subagent Orchestration — delegating to specialized agents with isolated context\n- MCP, A2A, and ACP — securing tool access, building rich MCP Apps, and connecting agents to other agents and clients\n\nYou'll leave understanding how a few building blocks compose into any agentic pattern, with an early preview of what's next: durable, crash-recoverable agentic workflows in Spring AI 2.1.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#8194 Write Java Code Like a Seasoned Hacker: 2026 Edition",
+    "context" : "CFP SUBMISSION #8194 - Devoxx Belgium 2026\nTitle: Write Java Code Like a Seasoned Hacker: 2026 Edition\nSpeakers: Soroosh Khodami\n\nAbstract:\nEver wondered how you would write code if you were a seasoned hacker?\nIn this hands-on session, you’ll learn how to adopt that mindset to build secure Java applications with confidence in the AI era. Every year, thousands of organizations are breached, and billions of records are exposed. Only in 2024, cyberattacks compromised 1.7 billion individuals, and millions of applications were targeted daily. Through \"live demos\" of real-world attacks and defenses, we’ll cover the essentials every modern Java developer needs in 2026.\n\nKey takeaways:\n- A quick look at the OWASP Top 10 (2025) and practical solutions for the newest risks.\n- How to implement supply chain security strategies to defend against threats like Shai-Hulud or Log4Shell.\n- Ways to integrate essential security checks (SAST/SCA) into your CI/CD pipeline for continuous protection.\n- Practical threat modeling techniques to identify and prioritize risks early in the design phase and later in incident response.\n- How to set up security monitoring and logging to detect and respond to attacks in production.\n- Practical strategies to use AI assistants securely in your development workflow.\n- And finally, why using hardened container images is a simple yet highly effective strategy for runtime security.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Security, Trust & Compliance",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#21691 MCP 2.0 - Stateless, New Auth (CIMD), and Exciting Extensions",
+    "context" : "CFP SUBMISSION #21691 - Devoxx Belgium 2026\nTitle: MCP 2.0 - Stateless, New Auth (CIMD), and Exciting Extensions\nSpeakers: James Ward\n\nAbstract:\nThe MCP Spec & Implementations have quickly evolved since initial release almost 2 years ago. This session covers what has changed and how it impacts MCP server developers. You will learn about the new stateless transport, new auth (CIMD), and the extensions including MCP Apps, Tasks, and Skills over MCP. You learn from code examples and demos how you can build MCP servers that utilize the latest MCP features & approaches.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#8153 Taming Microservice Overload: Our Journey to Modular Monoliths",
+    "context" : "CFP SUBMISSION #8153 - Devoxx Belgium 2026\nTitle: Taming Microservice Overload: Our Journey to Modular Monoliths\nSpeakers: Mario Klaver\n\nAbstract:\nAt the Port of Rotterdam, our system had grown into far more microservices than our teams could effectively own. The result: operational overhead, fragmented domain knowledge, and an overgrown architecture that was hard to maintain and evolve.\nIn this session, I’ll share how we combined Domain-Driven Design (DDD) with Spring Modulith to consolidate our microservices into a smaller set of modular monoliths. Each microservice represents a bounded context, with modules organized around distinct business capabilities, preserving clear domain boundaries while reducing operational complexity.\n\nYou’ll learn:\n- How to define and model business domains and bounded contexts using DDD\n- How to implement these domains as modular monoliths with Spring Modulith\n- How Spring Modulith keeps your modules clean and maintainable\n- Common pitfalls we encountered and how we solved them\n\nIf your microservices landscape has outgrown your teams, this talk shows how modular monoliths can restore clarity, ownership, and long-term maintainability, without compromising architectural integrity.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#15354 Will Valhalla Fix Tony's Billion-Dollar Mistake?",
+    "context" : "CFP SUBMISSION #15354 - Devoxx Belgium 2026\nTitle: Will Valhalla Fix Tony's Billion-Dollar Mistake?\nSpeakers: José Paumard, Remi Forax\n\nAbstract:\nIn March 2027, in JDK 28 (JVM gods willing!), after more than 12 years of effort, the Valhalla project will deliver its first feature: Value Classes (JEP 401) as a preview feature. Value classes are defined as regular classes with a \"value\" keyword in front. They are backward compatible with your code written before Java 28, without you having to recompile it.\nValue classes bring new optimization opportunities at the JVM level: scalarization on stack and flattening on heap. For that, the Java specification had to be reinterpreted and enhanced, challenging us to reconsider some of the fundamentals on which Java was created 30 years ago. What does == mean? Is a reference always a pointer? Can an instance of a value class be null? Can you observe the transition between the default values and the final values of fields during object construction? And more.\nThis presentation covers all these questions, showing the trade-offs that need to be made in order to bring value classes to the Java platform.\nYou will hear about new code patterns, performance, and type safety. And, as value classes are just the first step, we will cover what Valhalla should bring in the future.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Java Language & Platform",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#4087  Harness Engineering: Building the System Around Your AI Coding Agent ",
+    "context" : "CFP SUBMISSION #4087 - Devoxx Belgium 2026\nTitle:  Harness Engineering: Building the System Around Your AI Coding Agent \nSpeakers: JI Darwish\n\nAbstract:\nAI coding agents feel like magic. It is easy to assume there is something exotic inside, some secret sauce that makes agents reliable. Well, there isn't, the core of every AI coding agent is very simple: send a message to a model, parse tool calls, execute them, feed the results back, repeat. Everything else (context management, permissions, observability, safety guardrails) is engineering layered on top of it that we should be building.\n\nIn this deep dive, we build that engine from scratch (in Java!), live on stage. Not to build the best agent, but to understand how the pieces fit together. We point it at a real codebase, and watch what happens. It compiles. Tests pass. And it violates every convention the team agreed on. So we iterate. We add context, constraints, and feedback, and at each step we examine what changed, why it helped, and what it maps to in the tools you already use.\n\nThe goal is a mental model. By the end, you will understand the components inside the AI coding tools you use every day, what you can layer on top to get smoother results and safer expectations, and where the honest limits still are, the gap no amount of engineering has closed yet.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#17782 Is the IDE dead ?",
+    "context" : "CFP SUBMISSION #17782 - Devoxx Belgium 2026\nTitle: Is the IDE dead ?\nSpeakers: Martin Lippert\n\nAbstract:\nAI has fundamentally changed software development. But in a world of autonomous coding agents and AI-assisted creation, do developers even need a traditional IDE anymore? Is the terminal becoming our primary home once again, or are we moving toward something entirely different?\nIn this session, Martin takes the audience on a journey through the history of developer tools to the present AI inflection point. He will:\n- Reflect on what human engineers actually need from their environment in 2026.\n- Analyze whether the IDE is evolving or being replaced by terminal-based workflows like Claude Code.\n- Discuss the evolving role of AI agents as the new \"power users\" of development tools.\n- Summarize the implications for both toolsmiths and software engineers in the years to come.",
+    "expected" : {
+      "session_format" : "Lunch Talk",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#24218 Conquest, time travel and explosions using Git",
+    "context" : "CFP SUBMISSION #24218 - Devoxx Belgium 2026\nTitle: Conquest, time travel and explosions using Git\nSpeakers: Alexander Chatzizacharias\n\nAbstract:\nA talk on git? In this day and age?! Yes. Especially in this day and age. AI agents are running increasingly obscure git commands in our terminals, and most of us just nod along, pretending we know what rerere does. If the machines get to have fun with git, so do we.\n\nSo to understand git better, Alexander built an RTS game with git at its core, and in this session you will see it in action! Expect jumps between alternate timelines using branches, time travel back and forth through history, and a front row seat to what happens when a merge conflict occurs between two buildings.\n\nSomewhere between the conquests and the explosions, the weird parts of git start to make sense. Detached heads, rebases, the plumbing underneath, all of it becomes a lot less mysterious once you have seen it blow up an energy plant. Beginners will leave with a solid feel for how git actually works, veterans with a fresh look at a tool they use every day. Come for the explosions, stay for the fun and giggles!",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Mind the Geek",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#4090 Help! I hate my team mate!",
+    "context" : "CFP SUBMISSION #4090 - Devoxx Belgium 2026\nTitle: Help! I hate my team mate!\nSpeakers: Jessica Siewert\n\nAbstract:\nEverybody now and then comes into a new team, or someone else comes into theirs. More often than not, cooperation does not go seamlessly straight away. Sometimes this evens out by itself along the way. But in many occasions, it does not. Ways of working could be different. Something one values a lot, may not be valued at all by another, creating conflict. One may criticise or get criticised and things get uncomfortable. Teams may split into \"camps\" or one person just never agrees with the others. Team members may feel stepped over, pushed aside or misunderstood. If this goes on for too long, team members start to feel generally disrespected and demotivated. Then there are cases one member feels another is not qualified, or just a bully. This goes beyond forming and storming, this becomes a (team-wide) problem. In this talk you will see you are not the only one experiencing these challenges. You will hear experiences on solving these kind of cases (or not!), get an idea of how others deal with it and what your options are if you ever find yourself in the weeds (again). In any case, you probably will be surprised by yourself or your team mate in one way or another...",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "People, Practices & Career",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#4100 Life in the Ivory Tower: Confessions of a Former Developer Who Turned Into an Architect",
+    "context" : "CFP SUBMISSION #4100 - Devoxx Belgium 2026\nTitle: Life in the Ivory Tower: Confessions of a Former Developer Who Turned Into an Architect\nSpeakers: Robin Custers\n\nAbstract:\nUp until a couple of years ago, I was riding the waves of the latest technologies, shipping code, and mocking the \"suits\" who spent their days writing documentation that was never read. But then, the unthinkable happened. I joined a new organization and transitioned to the dark side. I became one of them: an Enterprise Architect. Or as I like to call myself: a fake enterprise architect.\n\nI quickly found out that my new reality meant dealing with consultants pitching one-shot solutions as the ultimate silver bullet (pun intended), and uncovering the psychology of IT by learning why technical decisions are rarely about technology. At the same time, I wanted to stay in touch with the real world where frameworks evolve and pipelines run. But how on earth do you find the time for that?\n\nThis talk is a transparent look inside my shiny new office, commonly known as the Ivory Tower. Whether you're a developer trying to challenge corporate IT decisions, an architect struggling to explain them, or you just want to make fun of enterprise architects (the real ones, that is): this session is for a broad audience, sharing lessons learned trying to bridge the gap between two worlds that should never be disconnected.\n\nExpect to walk away with:\n- Tips on how to keep your technical skills alive while moving up the corporate ladder\n- A look into the psychology behind IT decision-making and why it's never just about the code\n- How to foster real collaboration and break down the walls of the Ivory Tower",
+    "expected" : {
+      "session_format" : "Lunch Talk",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#8190 Technical Workshop on AI-Native Tooling for Java Development",
+    "context" : "CFP SUBMISSION #8190 - Devoxx Belgium 2026\nTitle: Technical Workshop on AI-Native Tooling for Java Development\nSpeakers: Juan Antonio Breña 🇪🇸🇪🇺, Leandro Loureiro\n\nAbstract:\n# Abstract\n\n**Technical Workshop on AI-Native Tooling for Java Development**\n\nFor nearly three decades, enterprise Java software has been built manually by software engineers. In 2023, a new generation of AI-powered tools emerged, and tools like Cursor AI, Claude Code, Codex, and GitHub Copilot are now changing how software is planned, designed, implemented, validated, and operated across the full SDLC.\n\nThis workshop will explain step by step how to use Skills, Agents, Commands, and MCP Servers for real world scenarios. \n\nThe workshop is designed for all levels and covers the following topics in a practical, hands-on way:\n\n- How the SDLC has evolved with AI-native engineering workflows organized around the Design / Build / Operate model\n- How to use Commands to automate repeatable actions across planning, implementation, validation, and operations\n- How to compose reusable Skills across analysis, design, implementation, operations, and regulatory review\n- How to connect issue-driven planning with OpenSpec, GitHub Issues, and Azure DevOps work items\n- How to configure and delegate to specialized Agents\n- How to apply a Zero Trust mindset to agent skills, generated artifacts, and automated workflows\n- How to use OpenSpec/SpecKit\n- How to extend agent capabilities with MCP Servers\n- How to write a solid AGENTS.md\n- How to write a solid Skill\n- How to write a solid Agent\n- How to write a solid Command\n\nThe demos will walk through real examples using Spring Boot, Quarkus, and Micronaut",
+    "expected" : {
+      "session_format" : "Hands-on Lab",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#21654 Your AI Agent Trusts Strangers. Let Me Show You.",
+    "context" : "CFP SUBMISSION #21654 - Devoxx Belgium 2026\nTitle: Your AI Agent Trusts Strangers. Let Me Show You.\nSpeakers: Elder Moraes\n\nAbstract:\nYour AI agent will follow instructions hidden in the content it reads. And you may not be able to stop it right now.\nIndirect prompt injection is the vulnerability nobody scoped for. The agent treats a poisoned document or a tampered tool result as trusted input, and with MCP and tools attached, that input can move money, delete data, or leak a key. Most Java teams shipping agents today have never seen the attack, so they have never built the defense.\nIn 30 minutes, you will be able to do three things: reproduce an indirect injection against a Java agent, apply the mitigations that actually hold (least privilege, instruction and data separation, tool allowlists, output validation), and reason about your agent with a real threat model. All live in LangChain4j.\nJoin us and walk out able to attack your own agent before someone else does.\n\nKey Takeaways\n- See how an indirect prompt injection turns a helpful agent into an exfiltration path through the content it reads.\n- Apply the mitigations that hold: least privilege, instruction and data separation, tool allowlists, output validation.\n- Reason about a Java agent with a real threat model, treating every tool result as untrusted.\n\nTarget Audience\nDevelopers, Security Engineers, Architects",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#10023 You thought technical debt was bad? Meet design debt!",
+    "context" : "CFP SUBMISSION #10023 - Devoxx Belgium 2026\nTitle: You thought technical debt was bad? Meet design debt!\nSpeakers: Julien Topçu, Josian Chevalier\n\nAbstract:\nIn our job, technical debt is probably the most frustrating, draining and tenacious thing we have to fight against. Of course, there are best practices: refactor, aim for simplicity with KISS, avoid over-engineering with YAGNI in order to keep this debt as low as possible. And yet, we never really manage to get rid of it. Worse, it keeps piling up even when we apply those principles, as if it were inevitable.\n\nBut what if those very best practices sometimes made the problem worse instead of solving it? Technical debt may be only the visible part of something deeper: accidental design debt. A far more complex problem that leads to spaghetti software and microservices that are really just a distributed monolith, and that we often create ourselves without even realizing it.\n\nIn this talk, we will explore the mechanisms of design debt and its impact on our architecture, our processes, our organization, and even our business. Through concrete examples, we will see how to detect it, assess how deep it goes, and act before it becomes entrenched for good.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#8156 I Hired a Real Robot as My Junior Dev — and Now My Kids Don't Want to Learn Java Anymore",
+    "context" : "CFP SUBMISSION #8156 - Devoxx Belgium 2026\nTitle: I Hired a Real Robot as My Junior Dev — and Now My Kids Don't Want to Learn Java Anymore\nSpeakers: Jan Van Wassenhove\n\nAbstract:\nFor decades we taught software engineering through languages: Java, C#, Python, patterns, frameworks — because writing software was hard. But what if that’s no longer the hard part?\n\nTake my son. He isn’t learning Java; he’s learning to turn ideas into products. He spins up ideas at the speed of boredom — a study companion app one week, a gaming crosshair overlay the next — shipping from idea to code to demo before the README has found its shoes.\n\nMeanwhile I hired Reachy Mini, a real open-source desktop robot, as my junior developer. I direct it, it drives agents that code in parallel while I sleep. I’m not really a developer anymore — I’m running an agent factory with a robot foreman on my desk.\n\nPart stand-up routine, part field report, part uncomfortable question: are we raising the last generation of developers, or the first generation of agentic builders?\n\nWe’ll explore the agentic inner loop: describe intent, provide context, let agents act, review output, tighten the spec, and loop again until something useful ships. My bet: writing software is becoming a commodity — but expertise isn’t. Architecture, systems thinking, integration, taste, validation and knowing what to build only get more valuable. The interface shifts from typing to talking, from directing code to directing agents — and yes, sometimes the robot still needs a stern code review.\n\nAudience: developers, leads and architects who suspect their job is changing and would rather laugh about it than panic.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Mind the Geek",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#19708 Choose your own adventure in agentic design patterns",
+    "context" : "CFP SUBMISSION #19708 - Devoxx Belgium 2026\nTitle: Choose your own adventure in agentic design patterns\nSpeakers: Guillaume Laforge\n\nAbstract:\nTime to dive a little deeper, beyond the usual AI agent intros. When building your multi-agent systems, you’ll often be combining basic bricks like sequential, parallel, or loop flows. With those components, you create more complex patterns, like reflection loops, and reviewer/critique agents. \n\nHowever the path to \"AI-nlightment\" might require you to make choices with the routing pattern, or to shepherd a swarm of agents to collaborate together. We'll talk about different approach to planning (from programmatic to goal oriented).We'll uncover the concept of progressive disclosure used in skills. We'll see that AI agents can improve baselines with the LLM-as-Judge pattern. And we'll finish with discussing agent loop approaches.\n\nAs a committer on both LangChain4j and ADK for Java (Agent Development Kit), it’ll be my pleasure to guide you through this agentic adventure, and help you make the right choices and use the right abstractions on your journey.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#7011 Secure Your Coding Agent Like It’s Malware",
+    "context" : "CFP SUBMISSION #7011 - Devoxx Belgium 2026\nTitle: Secure Your Coding Agent Like It’s Malware\nSpeakers: Richard Gross\n\nAbstract:\nCoding agents are dangerous: they can write files (including their own permissions or scripts meant to keep them in check), scan the filesystem, read credentials, and make tool calls that modify databases or exfiltrate data. Any content the agent processes (a pull request, an external code library, or online documentation) can trigger these actions and lead to persisted compromise. The 'Comment and Control' attack demonstrated this, as did the mini-Shai-Hulud attack, which copied its loader into Claude's settings.json, so it re-executed on every session start.\n\nBuilt-in agent sandboxes are inadequate. Agents are very good at escaping them (see SandboxEscapeBench) but often need not, as they can disable the sandbox themselves, as specified in the Claude bash sandbox documentation.\n\nCan we make coding agents secure? This talk is for developers running coding agents on their machines or in CI/CD. First we map the attack surface: prompt injection variations (e.g. role-play, poem attack) and how to hide them (Unicode smuggling, custom glyphs). Then we cover seven specific threats (supply chain compromise, data exfiltration) and seven defence layers.\n\nWe treat the agent itself as untrusted, clamping it down with externally enforced controls it cannot reach or reconfigure (VMs, network firewalls). Attendees will leave with a sandbox taxonomy to evaluate their own setups, a set of ready-to-use tools that score well against it, and a concrete plan to shrink their agents' blast radius.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Security, Trust & Compliance",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#29351 Structured Concurrency Looms",
+    "context" : "CFP SUBMISSION #29351 - Devoxx Belgium 2026\nTitle: Structured Concurrency Looms\nSpeakers: Alan Bateman\n\nAbstract:\nStructured Concurrency is the next major feature from Project Loom. Following the introduction of Virtual Threads in JDK 21, which dramatically reduced the effort of writing, maintaining, and observing high-throughput concurrent applications, structured concurrency raises the level of abstraction for concurrent programming. It treats groups of related tasks as a single unit of work, simplifying cancellation, error handling, and observability while making concurrent code easier to understand, maintain, and debug.\n\nThe feature has evolved through several preview releases, shaped by extensive real-world experience and community feedback. Despite its small surface area, the API enables a wide range of structured concurrency patterns.\n\nIn this session, we will explain the motivation and design of structured concurrency, show how to use it effectively, and discuss the lessons learned as the feature evolved. We'll also look beneath the surface at the new lower-level API behind the latest design, offering an early glimpse of work that is expected to form the basis of a future lower-level structured concurrency API.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Java Language & Platform",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#23533 Teaching a New Dog Old Tricks: Give the Agent a Debugger",
+    "context" : "CFP SUBMISSION #23533 - Devoxx Belgium 2026\nTitle: Teaching a New Dog Old Tricks: Give the Agent a Debugger\nSpeakers: Anton Arhipov\n\nAbstract:\nWhen code misbehaves, coding agents often fall back on an old habit. They add print statements. The method works. It also changes the program before the agent understands the problem.\n\nThe debugger provides a cleaner way to find the evidence. Logpoints inspect application state while the program keeps running. They can write custom messages without changing the source. You can even place them inside compiled third-party libraries. Every output line links back to the code that produced it. This includes logpoints and regular loggers as well as print statements.\n\nIntelliJ IDEA makes its debugger tools available to coding agents. The debugger skill covers dozens of tools and settings. Few developers keep all of them in their heads. The complete playbook fits into the agent's context.\n\nThe agent combines that debugger knowledge with its understanding of the project code. It can choose useful locations for breakpoints and logpoints. It can start a debug run configuration and read actual values. As the evidence develops, it can move its observation points. The source stays untouched.\n\nWhat attendees will learn:\n\n- How Logpoints capture runtime state without suspending the program or modifying its source\n- How to investigate behavior inside compiled third-party libraries\n- How navigable debugger output connects runtime observations to their origin in code\n- How an agent combines code context with debugger knowledge to place useful breakpoints and logpoints",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#9035 Toxic Flows in MCP Servers and Skills: What Your Agent Blindly Trusts",
+    "context" : "CFP SUBMISSION #9035 - Devoxx Belgium 2026\nTitle: Toxic Flows in MCP Servers and Skills: What Your Agent Blindly Trusts\nSpeakers: Brian Vermeer\n\nAbstract:\nAI agents don't just trust MCP servers. They trust Skills too. Both are attack surfaces, yet most teams treat neither as part of the same trust model.\n\nIn this talk, we introduce toxic flows: trust paths through an agent stack where tool descriptions, MCP responses, and Skill definitions can leak sensitive context, manipulate agent decisions, and trigger unintended actions without the model violating a single instruction. We demonstrate this live.\n\nThis session is not about adding authentication or wrapping everything in TLS. It's about understanding how trust failures emerge, how they mirror familiar software risks like dependency confusion and unsafe deserialization, and how to design MCP servers and Skill integrations that reduce trust, contain blast radius, and keep agent systems defensible.\n\nAttendees will leave with a practical framework for identifying trust boundaries, evaluating agent integrations, and hardening their AI stack against toxic flows.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Security, Trust & Compliance",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#17759 Kubernetes for Developers",
+    "context" : "CFP SUBMISSION #17759 - Devoxx Belgium 2026\nTitle: Kubernetes for Developers\nSpeakers: Alain Regnier\n\nAbstract:\nLet's face it... containers and Kubernetes are everywhere!\nBut developers don't necessarily want to become Kubernetes specialists.\n\nThis presentation will focus on what developers need to know to get the most of Kubernetes without having to become a DevOps.\n\nWe will cover:\n- modern local development environment (flox, kind...)\n- building container images (multistage build, build without docker...)\n- important kubernetes features developers need to know and how to handle them efficiently (requests/limits, graceful shutdown, probes, OCI volumes...)\n- how to investigate and debug code on kubernetes (kubectl debug, mirrord...)\n- how to secure applications (SecurityContext, CEL, SBOM, RuntimeClass with gVisor/Kata...)\n- how to integrate observability with OpenTelemetry\n\nThe presentation will contain examples and demos with a strong focus on Best Practices.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Cloud Native, Data & Infrastructure",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#10038 Eval Driven Development: Why you need it to make your Agentic Application survive Production",
+    "context" : "CFP SUBMISSION #10038 - Devoxx Belgium 2026\nTitle: Eval Driven Development: Why you need it to make your Agentic Application survive Production\nSpeakers: Urs Peter\n\nAbstract:\nAgentic systems unlock capabilities that traditional “deterministic” applications simply can’t deliver. But there’s a catch: their probabilistic nature introduces real and often unexpected risks—hallucinations, context drift, prompt degradation, and multi-step workflows that evolve in surprising ways. And you definitely don’t want to discover those in production.\n\nThe good news: there is a remedy. We can borrow the most reliable practice from deterministic software—test-driven development—and adapt it to the agentic world. The result is Eval-Driven Development (EDD): a systematic, engineering-first approach to bringing reliability into inherently probabilistic systems.\n\nIn this talk, we explore Eval-Driven Agentic Development and how it can transform your agents from unpredictable to reliable - using the (only?) full-fledged Java/Kotlin Eval framework: Dokimos. We’ll dive into techniques, tools, and patterns needed to make evals a first-class citizen of your development process—demonstrating all of these in a real-world application built with AI frameworks like Spring-AI, LanchChain4J, and Koog.\n\nAlong the way, you will learn how to:\n- Design layered eval suites\n- Create golden datasets\n- Define rubrics and scoring criteria\n- Extract eval signals from agent traces\n- Use regression gates to detect degraded behavior after changes\n- Build a continuous eval loop\n\nEvaluation-Driven Development is the only path forward for reliable, smart next-generation applications. Let's learn how to walk it - together!",
+    "expected" : {
+      "session_format" : "Lunch Talk",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#15360 Analyze and Optimize Your Applications with JFR",
+    "context" : "CFP SUBMISSION #15360 - Devoxx Belgium 2026\nTitle: Analyze and Optimize Your Applications with JFR\nSpeakers: Ana-Maria Mihalceanu, José Paumard\n\nAbstract:\nUnderstanding how to monitor and optimize Java applications is fundamental to building efficient software.\nThis hands-on lab will introduce you to capturing data to understand your application behavior using JDK Flight Recorder (JFR), managing and analyzing JFR recordings, and creating custom JFR events. We'll also cover how JFR can integrate with Prometheus to correlate application and infrastructure behavior, all aimed at enhancing observability.\nAfter this lab, you'll have the confidence to use JFR to monitor, diagnose, and fine-tune your applications.",
+    "expected" : {
+      "session_format" : "Hands-on Lab",
+      "track" : "Java Language & Platform",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#8169 How to Architect Green Software",
+    "context" : "CFP SUBMISSION #8169 - Devoxx Belgium 2026\nTitle: How to Architect Green Software\nSpeakers: Ioannis Kolaxis\n\nAbstract:\nEvery architecture decision carries a sustainability trade-off. A greener data center may sit farther from users, increasing latency. Going serverless eliminates idle compute waste but introduces cold starts and the complexity of maintaining multiple functions.\n\nThis session explores the tension between sustainability and the other \"-ilities\" (maintainability, portability, availability, performance) and presents practical techniques to reduce energy use, carbon footprint, and operating costs.\n\nYou will leave the session with a concrete catalog of trade-offs you can apply to your next project.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#7017 The Importance of HITL to Avoid Chaos and EU Regulations for AI",
+    "context" : "CFP SUBMISSION #7017 - Devoxx Belgium 2026\nTitle: The Importance of HITL to Avoid Chaos and EU Regulations for AI\nSpeakers: Juan Antonio Breña 🇪🇸🇪🇺\n\nAbstract:\nAI coding agents are rapidly becoming first-class citizens in enterprise software workflows. Teams are already delegating consequential decisions to autonomous agents: generating database migrations, refactoring service boundaries, modifying schemas, producing runbooks, and calling external tools. But as agent autonomy grows, a critical question emerges — who is responsible when something goes wrong?\n\nThis talk explores the discipline of Human-in-the-Loop (HITL) design, and how to build AI-assisted workflows that keep humans meaningfully in control without sacrificing the productivity gains that make agents worth adopting in the first place. It also examines the growing body of EU regulation that makes HITL not just a good engineering practice, but a legal requirement for certain classes of systems.\n\nThe session will demonstrate these concepts through a realistic microservices scenario — a Java enterprise platform with AI-assisted delivery — showing how the absence of human oversight leads to cascading failures, and how a well-designed HITL architecture, grounded in both engineering discipline and regulatory awareness, would have prevented them. Attendees will leave with a concrete framework for moving fast with AI agents without losing control of their systems or their compliance posture.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#15359 Is AI killing XP practices? (Or are we letting it?)",
+    "context" : "CFP SUBMISSION #15359 - Devoxx Belgium 2026\nTitle: Is AI killing XP practices? (Or are we letting it?)\nSpeakers: Nacho Cougil\n\nAbstract:\nFor the last 20-30 years, the software industry has been learning — sometimes the hard way — how to build better software. Practices like TDD, refactoring, pair programming, simple design, collective code ownership, continuous integration, and coding standards didn't appear by magic. They came from pain, failed projects, and the brilliant minds behind XP — Kent Beck, Ward Cunningham, and Ron Jeffries — who asked: \"can we do this better?\"\n\nAnd now? Now we have AI. And suddenly, some developers are asking: \"do we still need all that?\"\n\nIn this session, we'll look at 7 XP practices that are genuinely at risk in an AI-assisted world — not because they're wrong, but because AI makes it tempting to skip them. We'll see what happens when teams do skip them (spoiler: it's not pretty 😅), and more importantly, how these practices don't just survive the AI era — they become *more critical than ever*.\n\nAI amplifies everything. Good habits and bad ones. If your team has no tests, no shared standards, no feedback loop — AI will help you build the mess of your life, faster than ever before.\n\nAI is the best stress test XP practices have ever had. Spoiler: they pass 😉",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#23531 We created our own AI orchestrator and it became so much more!",
+    "context" : "CFP SUBMISSION #23531 - Devoxx Belgium 2026\nTitle: We created our own AI orchestrator and it became so much more!\nSpeakers: Ricky van Rijn\n\nAbstract:\nAgentic AI is something everyone wants to use or sell. We wanted an overview of the work and active agents and therefore we created an orchestration tool. Using the Agent, Skills and Spec files from default locations so its interchangeable with other tools. And it really started to change the way we worked on software projects.\n\nAs a Java software Engineer it could be seen as a automation of tasks, as an Scrum Master/Product Owner a way to coordinate and for the business analyst a way to store functional requirements. We've used Embabel Agent as the fundamental layer. On top of that we've created a visual representation so we can have a website open in our office which shows which agent is active, what it's doing and what's the next task. \n\nFor Software Development teams this will be the biggest change, developers are more reviewing and delivering feedback to the AI while business analysts had a field day of delivering the requirements for the spec files which were reviewed by an AI agent before they could be assigned to an AI-agent. The product owner is in control of the queue where sprints are no longer weeks but days. \n\nI want to share how we created this orchestrator and explain on which impact each technical step had on the way-of-work in our team. It wasn't just about creating an application anymore, everything had impact on how we work.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#17800 🚀 From Java to AI: Build Your First Intelligent Agent System!",
+    "context" : "CFP SUBMISSION #17800 - Devoxx Belgium 2026\nTitle: 🚀 From Java to AI: Build Your First Intelligent Agent System!\nSpeakers: Emmanuel Hugonnet, Antoine Sabot-Durand, yann Blazart\n\nAbstract:\n🎯 Revolutionize the way you see Java development with AI!\nYou know Java? Then you already hold 80% of the keys to building sophisticated AI systems. Don't let Python monopolize innovation: with LangChain4j, Java becomes the go-to language for production-grade AI.\n\nOn the agenda for this hands-on workshop:\n\n🧱 Part 1: AI as a Service. Learn to inject intelligence via CDI just like any other Bean. Manage conversational memory with scopes (@SessionScoped) and give your agents \"arms\" through Function Calling.\n\n🏗️ Part 2: The Agent Architect. Go beyond simple chat. Design complex declarative workflows (sequential, parallel) and master the Supervisor Pattern: an AI capable of planning and managing other agents autonomously.\n\n🚀 Why attend? Walk away with ready-to-use patterns, a solid grasp of the MCP/A2A protocols, and the ability to integrate robust agents into your enterprise architectures.\nGo from spectator to AI architect! 🚀",
+    "expected" : {
+      "session_format" : "Hands-on Lab",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#24228 Java, Raspberry Pi, and the Art of Overengineering Everyday Life",
+    "context" : "CFP SUBMISSION #24228 - Devoxx Belgium 2026\nTitle: Java, Raspberry Pi, and the Art of Overengineering Everyday Life\nSpeakers: Matti Tahvonen\n\nAbstract:\nHome automation promises to make life easier. Naturally, I used it to make mine more complicated—and much more fun. In this session, I’ll show how a professional Java developer can turn a Raspberry Pi into a practical automation platform without abandoning familiar tools or disappearing down a Python-shaped rabbit hole.\nWe’ll tour two of my real projects. A BBQ smoker controller drives micro servos and a fan, reads half a dozen temperature sensors, and warns me when to add more wood or tame the flames. Another home server, located at the jetty, takes time-lapse photos of sunsets, measures the water level, and tells me when conditions are right for fishing—even while I’m away at Devoxx.\nAlong the way, I’ll cover the parts that usually make people hesitate: project structure, accessing hardware from Java, fast development loops, remote deployment, running services reliably, building mobile-friendly UIs for my iPhone—I want to control my BBQ smoker while fishing 🤓—and accessing those services securely over the internet.\nNo grand smart-home platform, no Python magic—just pure Java, a Raspberry Pi, sensors, motors, and a healthy willingness to overengineer everyday life.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Mind the Geek",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#21655 What’s happening with Project Amber?",
+    "context" : "CFP SUBMISSION #21655 - Devoxx Belgium 2026\nTitle: What’s happening with Project Amber?\nSpeakers: Gavin Bierman\n\nAbstract:\nProject Amber has introduced a series of Java language features that together\nenable a new programming style: data oriented programming. At its core is\ncompositional pattern matching, which allows values to be deconstructed\nnaturally and safely.\n\nWhere does Project Amber go from here? This talk explores the next wave of\nlanguage features under development. These experiments extend pattern matching\nin several directions, including user-defined deconstruction for ordinary\ninterfaces and classes, nested constant patterns for more compact and expressive\nmatching, an exhaustive pattern-matching statement, safer primitive value\nconversions within pattern matching, and a compact notation for deconstructing\nand constructing record instances — a process we call reconstruction.\n\nAlong the way, I’ll present some of the experimental designs we’re exploring,\ndiscussing both the opportunities they create and the language design challenges\nthey raise.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Java Language & Platform",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#22911 One tool to rule them all: bash, a tiny LLM, and the birth of a coding agent",
+    "context" : "CFP SUBMISSION #22911 - Devoxx Belgium 2026\nTitle: One tool to rule them all: bash, a tiny LLM, and the birth of a coding agent\nSpeakers: Philippe Charrière\n\nAbstract:\nCoding agents look like magic. Strip away the hype and you find a surprisingly small core: a loop, a language model, and… a shell.\n\nIn this Tools in Action, we will see this core live. We give a small, local LLM (under 10B, running on Docker Model Runner) a single built-in tool (bash) and watch it turn into a coding helper. It lists files, greps the repo, runs the tests, curls an API, pipes into jq… all on its own, because the model already knows these CLIs. And when it doesn't? It runs --help and figures it.\n\nWe'll see the smallest agent loop in action: the model decides which command to run, the agents executes it, feeds the result back, and repeat until it answers. We'll look at what actually goes over the wire (the tool description, the tool_calls the model emits), why writing a good description is really prompt engineering, and why returning errors is what lets the model recover on its own.\n\nYou'll leave understanding how coding agents really work under the hood, why one well-chosen built-in tool often beats a pile of MCP servers, and how far a tiny local model can go. \n\nLive demos, few slides, code you can run tonight.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#22932 Why Java Is Perfect for AI - Just Not the AI You’re Thinking Of",
+    "context" : "CFP SUBMISSION #22932 - Devoxx Belgium 2026\nTitle: Why Java Is Perfect for AI - Just Not the AI You’re Thinking Of\nSpeakers: Trisha Gee, Andrey Santrosyan\n\nAbstract:\nDo you think AI belongs to Python? Are you worried we’re playing catch-up in the Java world? Don’t panic! Most enterprises aren’t training models or creating innovative AI tools. They’re adding AI capabilities to software they already run and trust. \n\nEnterprise applications encode business processes, security rules, and decades of operational knowledge. Adding agents that attempt to rediscover a working process on every request is slower, more expensive, and less reliable than using AI where it is genuinely helpful: handling the uncertain and ambiguous parts of the workflow that used to need human intervention.\n\nJava is especially strong for using AI. Java’s static types, mature APIs, testing tools, and explicit contracts provide structure around probabilistic (i.e. unpredictable) output. Its performance and concurrency model (including virtual threads) mean you can run large numbers of agentic tasks quickly and dependably. If your agentic framework works natively with Java, teams can add AI incrementally without rebuilding their architecture, retraining their engineers, or handing their core processes to an external black box.\n\nIn this talk, we'll look beyond chatbots and prompt engineering to see how AI actually fits inside enterprise applications, and how Java gives you the harness to make agentic systems fast, controlled, observable, and dependable.\n\nUsing AI effectively with Java in the enterprise isn’t some fantasy, it’s good, solid software engineering.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#5530 Kill All Mutants! (Intro to Mutation Testing)",
+    "context" : "CFP SUBMISSION #5530 - Devoxx Belgium 2026\nTitle: Kill All Mutants! (Intro to Mutation Testing)\nSpeakers: Dave Aronson\n\nAbstract:\nWould your test suite still pass if the tested code was changed?  If so, you probably have gaps in your test suite, redundant or unreachable code, or maybe even both!\n\nMutation Testing reveals these cases, and provides some guidance about how to fix them.  This talk will tell you what mutation testing is, how it works inside, how to use it, where in your development process to use it, and its benefits, drawbacks, and history.  There will be multiple examples, and a list of tools for many popular languages (and some others).\n\nYou will learn a powerful technique for making sure your test suite is strict and your code is meaningful!",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#14457  Coder, Coach, Catalyst - using questions to make people grow ",
+    "context" : "CFP SUBMISSION #14457 - Devoxx Belgium 2026\nTitle:  Coder, Coach, Catalyst - using questions to make people grow \nSpeakers: Martin Mazur\n\nAbstract:\nAsking the right questions is more powerful than having the right answers. As technologists, we quickly jump into solution mode and try to help by offering solutions and sometimes even taking on other people's problems as our own.\n\nThis is not our fault; we've been trained this way. However, computer problems and people's problems are often very different, and solving or taking on somebody else's problem not only burdens us but also robs them of an opportunity to grow.\n\nIf you feel like every problem in your organization or team constantly gravitates towards you, if you wonder why people just don't \"learn this stuff,\" or if you are looking to become better at helping others grow, this talk is for you!\n\nIn this talk, we will go over basic coaching skills to help you help others - everything from properly listening to asking the right questions. We'll cover different formats from impromptu coaching to more formal coaching and how to use coaching skills to coach up and sideways in your organization.\n\nCome to this talk if you are interested in making the people around you grow and excel and, in the process, create more time to work on your problems, not theirs.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "People, Practices & Career",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#16408 10 Billion Records vs. The Regulator: An Architectural Post-Mortem of an 11TB Exadata Failure",
+    "context" : "CFP SUBMISSION #16408 - Devoxx Belgium 2026\nTitle: 10 Billion Records vs. The Regulator: An Architectural Post-Mortem of an 11TB Exadata Failure\nSpeakers: Martin Ladecky\n\nAbstract:\nWhat happens when your architecture doesn't just fail a performance test, but triggers a national regulatory investigation? In this session, we go inside a critical system failure at a major bank that led to a formal report to BaFin and a complete rethink of our data strategy.\nDealing with 11TB of data on Oracle Exadata taught us that at a certain scale—specifically, the 10-billion-record mark—standard indexing strategies and read-side duplicate checks don't just slow down; they collapse. We will reverse-engineer this incident by walking through the five critical architectural milestones:\n- First Aid: Immediate application-layer mitigation steps to halt cascading timeouts.\n- The Refactoring Oversight: How a missing 10-day query window check, removed years prior, silently waited to trigger an 11TB full scan. \n- The Cache Bottleneck: The high-stakes \"do nothing\" war room decision to wait for the Exadata Smart Flash Cache to warm up and recover. \n- The Structural Flip: Moving 10kB of complex analytic queries from read-side deduplication to a write-side integrity layer. \n- The Exit Strategy: Designing and planning a zero-loss dual-write ingestion architecture to migrate 10 billion records to Cloud PostgreSQL without CDC. \n\nWalk away with an unvarnished, practical blueprint for navigating the compliance-performance paradox, handling database cold starts, and executing a zero-loss cloud modernization strategy under heavy pressure.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#5507 Stopping AI-Generated Architectural Drift: Deterministic Guardrails for Agentic Coding",
+    "context" : "CFP SUBMISSION #5507 - Devoxx Belgium 2026\nTitle: Stopping AI-Generated Architectural Drift: Deterministic Guardrails for Agentic Coding\nSpeakers: Sasha Podlesniuk\n\nAbstract:\nAgentic coding generates code faster than any team can review it, and that speed lets a single questionable pattern spread across a codebase before anyone notices. This talk shows how to stop that drift at the source, with layered guardrails that make architectural violations structurally hard to introduce instead of something you catch too late in review.\n\nDrawn from reviewing hundreds of AI-assisted pull requests: natural-language (NL) repo rules don't hold the line against an LLM. The reliable fix is a deterministic foundation, executable architectural rules acting as fitness functions for AI-generated code, built with ArchUnit, custom linters, and CI gates that fail the build the instant a boundary is crossed. That layer is also what makes NL rules work: once it fences off the cases that must never be wrong, targeted NL rules become precise instead of suggestions an agent ignores. Includes live demos of guardrails catching violations in real time.\n\nTakeaways: why NL rules fail to stop LLMs propagating bad patterns; how to build a deterministic enforcement layer (ArchUnit, custom linters, CI gates) with instant feedback; how that layer makes your NL rules reliable; a practical model for sorting any rule into the right layer.\n\nAudience: software architects, tech leads, and senior engineers maintaining architectural consistency on AI-augmented teams.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#10016 Measuring the Unmeasurable: Evaluating Generative AI in Practice",
+    "context" : "CFP SUBMISSION #10016 - Devoxx Belgium 2026\nTitle: Measuring the Unmeasurable: Evaluating Generative AI in Practice\nSpeakers: Erin Pacquetet\n\nAbstract:\nGetting a generative AI prototype to impress a demo audience is easy. Getting it to behave reliably in production is another story. In production, you don't control what users ask or what the model answers. That's not a bug, that's the whole point of using LLMs. But it is also what makes evaluation genuinely hard, and what separates a convincing proof of concept from a trustworthy production system.\n\nThis session tackles the core paradox of building with large language models: how do you harness their creativity while maintaining control over their outputs? We will use a RAG-based chatbot as our running example, a real-world case where you have to guarantee output quality without ever controlling what users actually ask, and where linguistic fluency and factual accuracy constantly pull in opposite directions, to show what a complete, reproducible evaluation pipeline actually looks like in practice.\n\nAlong the way, we will cover why traditional metrics fall short, how to use LLMs as judges and where that approach quietly fails, when human evaluation is non-negotiable, and how to set up continuous monitoring to catch drift before your users do.\n\nYou will leave with practical frameworks and a clear methodology to make evaluation a constant driver of development, from the first prototype to the last production release.",
+    "expected" : {
+      "session_format" : "Lunch Talk",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#8164 The pizza party of the future 🍕 software teams and product value in the age of coding agents",
+    "context" : "CFP SUBMISSION #8164 - Devoxx Belgium 2026\nTitle: The pizza party of the future 🍕 software teams and product value in the age of coding agents\nSpeakers: Katie Clark, Simon Rohrer\n\nAbstract:\nAI is having a huge impact on our software development teams - nobody is sure how the role of a developer will evolve, and Simon and Katie don’t have the perfect prediction either!\nNow that our teams have ever more capable coding assistants working around the clock, we are seeing “new” bottlenecks appear around value and trust questions. In response to this, we’re seeing organizations create new flavors of engineering roles, move down to one-pizza-teams, move to product owners and their AI wrangler (a one-pizza-slice team?), or even build factory lines. \nThis is not the first time the way we approach software teams has changed: we’ve gone from silos and super specialization to cross-functional Scrum teams and 2-pizza teams; from T-shaped and M-shaped professionals to full-stack, full-lifecycle, DevSecFin…Ops, value streams, Team Topologies, and more. We’ve added all kinds of coaches and then removed them again.\nSo who is invited to the pizza party of the future? Who makes decisions, who takes responsibility, what new and old roles and skills will be needed? And who is no longer welcome? We’ll take a look at what some of the friendlier agile critics from the past can warn us about. We will see how their takes can help us move to a more value-oriented future with agents and humans collaborating on user needs.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "People, Practices & Career",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#21152 Beyond system.out.println: Applying a Debugging Mindset at Scale",
+    "context" : "CFP SUBMISSION #21152 - Devoxx Belgium 2026\nTitle: Beyond system.out.println: Applying a Debugging Mindset at Scale\nSpeakers: Cees Bos\n\nAbstract:\nDebugging a consistently failing unit test is easy; you set a breakpoint and fix it. But how do you debug a \"random\" failure in a massive microservices landscape or a distributed monolith?\n\nDuring an interview, I was once told, \"You are more of a debugger than a coder.\" They were right: I thrive on the bugs that make others give up: the nasty, intermittent issues hidden under the carpet. \nBut you cannot solve these issues with 'System.out.println()' or a simple debugger attached to localhost.\n\nDebugging at scale requires a shift in mindset and tooling. It requires moving from the paradigm of \"5 Whys\" and 'logger.info' to a structured observational approach based on observability data.\nBased on production outages, I'll share how I uncovered the problems, the lessons I learned and how you can combine a debugging mindset with observability tooling like OpenTelemetry and the Grafana toolset to gain deeper insights.",
+    "expected" : {
+      "session_format" : "Lunch Talk",
+      "track" : "Development Practices",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#5538  Strangling the dragon: modernizing legacy systems with the Strangler Fig pattern ",
+    "context" : "CFP SUBMISSION #5538 - Devoxx Belgium 2026\nTitle:  Strangling the dragon: modernizing legacy systems with the Strangler Fig pattern \nSpeakers: Daniel Raneland\n\nAbstract:\nStuck in a legacy system that needs modernizing? Feel like the best course of action is to throw it in a dumpster, light it on fire and rewrite everything from scratch - maybe even in a different language?\n\nHold that thought. While it may be tempting to start a rewrite, rewrites of complicated systems rarely succeed for multiple reasons. Chief among them is time and the fact that not everything can stop and wait for the rewrite, but another important contributor is the second system effect, which usually causes rewrites to be over-engineered and bloated in comparison to what they replace\n\nIn this talk, I'll share my experiences with the Strangler Fig pattern, a better approach where the original system is gradually replaced by breaking out or rewriting parts into separate systems. I'll also talk about combining this with Domain Driven Design and how to use the new design to execute an Inverse Conway Manoeuvre to ensure you're working with Conway's law and not against it.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#17794 Escaping Java's Allocation Gravity with Value Classes",
+    "context" : "CFP SUBMISSION #17794 - Devoxx Belgium 2026\nTitle: Escaping Java's Allocation Gravity with Value Classes\nSpeakers: Clément de Tastes, Remi Forax\n\nAbstract:\nJava 28 will soon introduce, as a preview feature, value classes (JEP 401), a new kind of class that renounces its identity to get better performance.\n\nIn this presentation, we will explain what value classes are, how the Java spec was re-interpreted to conjure their existence, how they interact with existing code and what optimizations they enable both on the stack and the heap.\n\nTo make it concrete, we'll explore these ideas through the simulation and rendering of a black hole: calculating the trajectories of thousands of light rays through curved spacetime means manipulating huge numbers of vectors, rays, coordinates, and intermediate values.\n\nFinally, we will look ahead at the experimental \"!\" syntax for null-restricted types, its optimization potential, and the limitations of the current design.\n\nJoin us to discover value classes and the current state of Project Valhalla.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Java Language & Platform",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#23543 The Yearly Java Performance Update for 2026",
+    "context" : "CFP SUBMISSION #23543 - Devoxx Belgium 2026\nTitle: The Yearly Java Performance Update for 2026\nSpeakers: Per-Ake Minborg\n\nAbstract:\nJava gets faster every year—often without developers changing a single line of application code. But what actually changed inside the JDK, which improvements matter to real applications, and how do the engineers working on Java know that an optimization is truly an improvement?\n\nReturning to Devoxx for the yearly Java performance update, we will explore a curated selection of performance work delivered since last year. We will visit the standard libraries, the HotSpot runtime, the JIT compilers, and the garbage collectors to see how improvements at every layer combine to make modern Java applications faster, more scalable, and more resource-efficient.\nAlong the way, we will examine enhancements to startup and warmup, allocation and memory footprint, garbage-collection throughput, virtual-thread scalability, vectorization, and frequently used library operations. For selected optimizations, we will look beneath the API to understand the implementation techniques involved—and see why a seemingly small change can sometimes produce a surprisingly large result.\n\nAttendees will learn which improvements arrive automatically when upgrading, which require explicit configuration or particular coding patterns, and how to evaluate their impact on real workloads. Expect measurements, implementation details, practical advice, and a glimpse of the performance work already taking shape for future Java releases.\nUpgrade your JDK, bring your benchmarks—and stay on the fast path.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Java Language & Platform",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#24229 Building Autonomous AI Agents with Spring",
+    "context" : "CFP SUBMISSION #24229 - Devoxx Belgium 2026\nTitle: Building Autonomous AI Agents with Spring\nSpeakers: Timo Salm, Sandra Ahlgrimm\n\nAbstract:\nSoftware development has rapidly evolved from explicit, instruction-based programming to integrating the non-deterministic reasoning capabilities of Large Language Models.\nNow, we face the next massive paradigm shift: moving from passive AI tools to Agentic AI. \n\nIn this workshop, you will learn everything you need to build these autonomous systems using Java, Spring AI, the Model Context Protocol (MCP) and more. We will move beyond basic prompting to master chat memory, RAG, tool integration, and agentic patterns. Most importantly, we address the \"day two\" challenges of production: ensuring your agents are observable, secure, and reliable. By the end of the session, you will have built a multi-agent system capable of solving complex, high-level tasks. \n\nJoin us and transform your applications from simple interfaces into proactive digital colleagues.",
+    "expected" : {
+      "session_format" : "Hands-on Lab",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#7006 Prompt It Right: Spring Boot Testing in the AI Era",
+    "context" : "CFP SUBMISSION #7006 - Devoxx Belgium 2026\nTitle: Prompt It Right: Spring Boot Testing in the AI Era\nSpeakers: Philip Riecks\n\nAbstract:\nAI now writes most of your test code, and that changes the skill you need. The bottleneck is no longer typing tests by hand; it's knowing what good tests look like, where each kind belongs, and how to prompt AI to produce them. Without that understanding, you get tests that pass but verify nothing.\n\nThis 3-hour session gives you the full picture of testing Spring Boot applications, so you can direct AI with confidence instead of trusting it blindly.\n\nWe'll cover the complete testing pyramid: fast unit tests, sliced tests that load only the part of the context you need, and integration tests that exercise the real thing with Testcontainers. For each level, you'll see when to reach for it, what it actually proves, and how to prompt AI to write it well.\n\nAlong the way you'll collect practical patterns and recipes you can apply directly to your own codebase, plus the common pitfalls that produce slow, flaky, or misleading tests. We'll close with quick wins that improve almost any Spring Boot test suite.\n\nWhether you're newer to Spring Boot testing or want to sharpen how you collaborate with AI tools, you'll leave knowing not just how to write tests, but how to judge whether the ones AI hands you are worth keeping.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Development Practices",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#22905 When ORM Becomes OMG: Performance Pitfalls in JPA and Friends",
+    "context" : "CFP SUBMISSION #22905 - Devoxx Belgium 2026\nTitle: When ORM Becomes OMG: Performance Pitfalls in JPA and Friends\nSpeakers: Jos Roseboom\n\nAbstract:\nJPA makes database interaction feel almost magical—until your app grinds to a halt. In this talk, we’ll take a tour through the common (and not-so-common) performance pitfalls that turn object-relational mapping into an object-relational mess. From data loading surprises to connection mismanagement, we’ll explore real-world issues using a sample app: the FunFactStore, where fun facts are sold, but bugs are free.\n\nWe’ll dig into how seemingly harmless libraries can sometimes do more harm than good, and how tooling can help you spot trouble before your users do. Whether you’re using Spring Data JPA, navigating tricky transaction boundaries, or just wondering why things suddenly got slow, this session offers practical insights—and maybe a few fun facts.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Cloud Native, Data & Infrastructure",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#7035 Their API Went Down. So Why Is My App on Fire?",
+    "context" : "CFP SUBMISSION #7035 - Devoxx Belgium 2026\nTitle: Their API Went Down. So Why Is My App on Fire?\nSpeakers: Ines Panker\n\nAbstract:\nYou call APIs you don't control... and sooner or later they will have an outage. Will your app survive their outage? Or will they drag you down with them?\n\nThe first step in guarding against remote outages is to wrap calls in try-except statements. As long as we catch the error and log a message, we call our guardrails done. But just \"not crashing\" is a very low bar, and underneath it something worse can still be happening.\n\nImagine you are calling GitHub and their API goes down. You have 500 background tasks that all fires a request to GitHub, wait for the socket to time out, fail, get rescheduled, and try again. Now your workers are all sitting on dead sockets doing nothing, and no other task can get a free worker. Congratulations: someone else's outage is now your outage.\n\nThis talk is about better strategies for fighting unreliable remote APIs. I won't present any heroic distributed-systems wizardry, just a handful of boring but battle-tested patterns that stop other people's failures from amplifying into yours. \n\nHow to actually honor a rate limit without rewriting your codebase (cache the 429, let Redis' TTL be the waiting period). How to resume a 5,000-record sync from page 47 instead of starting from page 1. How a circuit breaker turns \"good manners for the other\ncompany\" into plain self-defense for yours. \n\nIt's all real code pulled from a multi-tenant production system. We can't make other people's APIs reliable. We can only stop their bad day from becoming ours.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#19748 Snake in 10 Lines: Learning More by Coding Less",
+    "context" : "CFP SUBMISSION #19748 - Devoxx Belgium 2026\nTitle: Snake in 10 Lines: Learning More by Coding Less\nSpeakers: Guus de Wit\n\nAbstract:\nCan you create a complete game with just 10 lines of code? That was the quest I set myself when recreating the classic game Snake in as few lines as possible. Let me tell you: I was not ready for the types of challenges I would face. For example, just registering button presses was not as straightforward as I had hoped.\n\nThrough live coding, I will show you how I overcame these obstacles and distilled Snake to its absolute essence. What key elements make this game instantly recognizable? By only using tools from the JDK, we will end up with a minimal code base and if not award-winning, at least a playable version of Snake.\n\nStriving for conciseness led me to a deeper understanding of the code. I will show how constraints push us to think outside the box and lead to more creative solutions. Moreover, my approach can be applied to any problem. Sometimes the best way to understand code is by seeing how little of it you actually need!",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Mind the Geek",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#12753 Software Monuments - Architectural Lessons from the Systems That Shaped Computing",
+    "context" : "CFP SUBMISSION #12753 - Devoxx Belgium 2026\nTitle: Software Monuments - Architectural Lessons from the Systems That Shaped Computing\nSpeakers: Tobias Voss\n\nAbstract:\nArchitects in real life study the monuments built by earlier generations like Cologne Cathedral, Big Ben or Eiffel Tower to understand what makes structures endure. What are the monuments of software to inspire us software engineers? And what can we learn from them for our own software architecture projects?\n\nIn this talk we explore a curated set of the most influential software monuments that shaped computing and the architectural ideas behind their lasting impact. From Linux, which grew from a student project into the backbone of modern computing, to the Apollo Guidance Computer that guided humans to the Moon. From Java, one of the most influential programming platforms of the last three decades, to Deep Blue, the machine that defeated the human world chess champion and pushed the limits of computational intelligence.\n\nWe revisit the birth of the World Wide Web, the software that started the internet revolution and the simple architectural principles that enabled a global platform for applications and information. And we look at ELIZA, the 1960s chatbot that already revealed both the promise and the surprising psychological effects of human–computer interaction.\n\nThrough these stories we uncover the architectural principles that made these systems successful. Principles that still shape modern software systems today. The talk connects history with practice, offering concrete insights and inspiration for engineers designing the next generation of software systems.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#17751 Cheaper or Better? The Strategic Choice Behind AI Adoption",
+    "context" : "CFP SUBMISSION #17751 - Devoxx Belgium 2026\nTitle: Cheaper or Better? The Strategic Choice Behind AI Adoption\nSpeakers: Miriam Sasse\n\nAbstract:\nMost organizations adopt AI with an efficiency promise: faster delivery, leaner processes, fewer costs, more automation. That is useful — but it is only one possible game.\n\nThere is a second path: using AI to increase customer value. Better products, smarter services, more relevant experiences, faster learning from real usage, and stronger relationships with users. The problem is that these two paths often require different rules:\n\nEfficiency asks: How can we deliver the same thing faster and cheaper? \nCustomer value asks: What can we now make possible that was impossible before?\n\nIn this session, we will explore the strategic choice behind AI adoption. Are we using AI to optimize existing processes, or to redesign the value we create? We will look at common traps: automating broken workflows, measuring productivity instead of impact, treating developers as cost factors, and accelerating delivery without improving user outcomes.\nParticipants will learn how to distinguish efficiency-driven AI from value-driven AI, how hidden metrics shape AI adoption, and how teams can ask better questions before introducing new tools, agents, or automation.\n\nThis is not a talk about specific AI tools. It is a conversation about the game we design around AI: the incentives, feedback loops, roles, metrics, and customer value assumptions that determine whether AI makes software merely cheaper — or genuinely better.\n\nTarget audience: anyone involved in AI adoption, software delivery, or product strategy.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Mind the Geek",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#24245 Making sense of vector databases",
+    "context" : "CFP SUBMISSION #24245 - Devoxx Belgium 2026\nTitle: Making sense of vector databases\nSpeakers: Balkrishna Rawool\n\nAbstract:\nVector databases have become very popular in the AI era. Particularly the feature of finding semantically similar objects is quite useful in AI and related applications. But how does a vector database do it? How exactly does a vector database store its data so that it is able to perform a semantic search so fast?\n\nThis talk will introduce vector databases while explaining the fundamental concepts behind it. It will explain what vectors are, how are they stored, what are embedding models, indexing algorithms and similarity/distance metrics. We use Java’s Vector API to implement a simple in-memory vector database and we use Spring AI for integrating with various other vector databases.\n\nIn order to explain these concepts in simple terms, we start with simple use cases that are implemented with vector databases and then slowly increase the complexity to take it to incredibly amazing level!",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Cloud Native, Data & Infrastructure",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#10020 From AI to Agent: A Field Guide to Agentic Patterns in LangChain4j",
+    "context" : "CFP SUBMISSION #10020 - Devoxx Belgium 2026\nTitle: From AI to Agent: A Field Guide to Agentic Patterns in LangChain4j\nSpeakers: Loïc Magnette\n\nAbstract:\nYou have already built AI features into your Java application. The model is wrapped in a service, RAG feeds it context, tools are wired, calls are flowing. It works. Then requirements evolve. A single prompt-and-response is no longer enough. You need steps that follow each other, branches based on decisions, retries when things fail, sometimes several actions at once. The question shifts from \"how do I call an LLM?\" to \"how do I keep it under control?\".\n\nThat is where agentic systems come in. In three hours we start with a single @Agent doing one job and grow it live into a multi-agent system that can analyze, plan, act, and report back. Each step starts naive. We run it, feel the cracks, then reach for the pattern that holds: sequential, loop, parallel, and conditional workflows. AgenticScope and typed keys keep shared state honest. Goal-oriented agents, an LLM-driven supervisor, and a custom Planner take over when a fixed pipeline stops being enough. We add non-AI agents for deterministic work, human-in-the-loop checkpoints before external actions, and observability with the AgentMonitor, because an agent you cannot see is an agent you cannot debug.\n\nYou will leave able to look at a problem and tell whether it wants a plain workflow or a real agent, and how much autonomy to hand over before you lose the thread. The goal is not smarter prompts. It is agentic systems easier to reason about and evolve, because the pattern you do not adopt is the one you do not have to debug.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#5519  The Magic of OpenTelemetry: Rewriting Your App in Production ",
+    "context" : "CFP SUBMISSION #5519 - Devoxx Belgium 2026\nTitle:  The Magic of OpenTelemetry: Rewriting Your App in Production \nSpeakers: Bruce Bujon\n\nAbstract:\nOpenTelemetry makes traces, metrics, and logs appear as if by magic, but what actually happens behind the Java agent we routinely add to our applications?\n\nThis talk goes where most developers never look. You’ll see how the OpenTelemetry agent sneaks into your JVM, intercepts class loading, and rewrites your application on the fly. We’ll explore the power of the javaagent mechanism, the Instrumentation API, and the internals of ByteBuddy that allow instrumenting Spring, Servlets, JDBC, or gRPC without changing a single line of your code. Your application is running, but not quite the way you think it is.\n\nYou’ll leave with a clear understanding of the real impact these changes can have in production: latency, allocations, potential conflicts, and behavior modified at runtime, along with practical techniques to diagnose what is really happening under the hood.\n\nIf you’re using OpenTelemetry without really knowing what it’s doing inside your JVM, or if you want to finally understand how an agent can rewrite your application in production, then welcome: this session opens the black box… and reveals the magic.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Java Language & Platform",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#21694 Why it takes 3000 commits to bring Valhalla's value objects to the JDK",
+    "context" : "CFP SUBMISSION #21694 - Devoxx Belgium 2026\nTitle: Why it takes 3000 commits to bring Valhalla's value objects to the JDK\nSpeakers: David Simms\n\nAbstract:\nAfter years of rounding off a square peg to fit into Java's mainline, JEP 401's value objects are coming to OpenJDK in its first preview. It is a single keyword change, you don't even need to recompile your libraries, yet there's so much happening. What you can learn here:\n\n- What value objects are, why and how you want to use them\n- What value objects do for the Java Virtual Machine, and therefore your code\n- Where Is OpenJDK going with this: \"healing the rift\" between objects and primitives\n\nThere will be some project history, concerning peak Valhalla prototype performance, and how all the dangerous bits were smoothed off to make it usable. There will be some JVM engineering details on implementation and a peek at some wild and crazy ideas for the future, hoping to be a few thesis papers in the coming months. The audience should come away with an understanding that, whilst we don't quite yet have `List<int>`, there is a path to get there, which you will see with JEP 401.\n\nIn the meantime, JEP 401 Value Objects, holds plenty of subtle language features and interactions with the JVM to help your code be better from a safety and clarity point of view and also some performance wins along the way, with the promise of more to come...",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Java Language & Platform",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#19707 Getting started with speaking: Your first conference talk",
+    "context" : "CFP SUBMISSION #19707 - Devoxx Belgium 2026\nTitle: Getting started with speaking: Your first conference talk\nSpeakers: Bert Jan Schrijver\n\nAbstract:\nHave you ever wondered what it takes to become a conference speaker? Where do you start? Which topic do you pick? And how do you actually deliver a talk that lands?\nIn this session, a group of experienced speakers will answer these questions and more. We'll share tips on getting started, writing proposals that get accepted, preparing your material, and delivering a great presentation. We'll talk about what worked, what didn't, and the lessons we learned along the way. You'll leave with practical takeaways - and the confidence to submit your first proposal.",
+    "expected" : {
+      "session_format" : "BOF",
+      "track" : "People, Practices & Career",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#24224 Post-Quantum Today: How Your Passwords Will Be Safe in a Quantum Future",
+    "context" : "CFP SUBMISSION #24224 - Devoxx Belgium 2026\nTitle: Post-Quantum Today: How Your Passwords Will Be Safe in a Quantum Future\nSpeakers: Julian Burr\n\nAbstract:\nThis talk explores:\n* how classical RSA encryption works\n* how quantum algorithms (i.e. Shor’s algorithm) break RSA\n* brief overview of where we are regarding quantum hardware\n* why PQC still matters right now, to prevent “harvest now, decrypt later” attacks\n* what lattice-based PQC looks like and how far along we already are in adopting it\n\nThe target audience is everyone generally interested in future technologies. Especially everyone who might have heard about quantum computing and Shor's algorithm breaking encryption, but don't know what that means for the future of cryptography and where we're at today.\n\nThe key take aways are a (very basic) general understanding how quantum computing works, to understand how it has the potential to break RSA, as well as quantum-safe encryption methods that are already being put in place, how they work and what the future might look like.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Security, Trust & Compliance",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#21687 10 boring reasons why Java is the best ecosystem for agentic development",
+    "context" : "CFP SUBMISSION #21687 - Devoxx Belgium 2026\nTitle: 10 boring reasons why Java is the best ecosystem for agentic development\nSpeakers: Ed Burns\n\nAbstract:\nI was about ten years into my Java career when I had spoken at enough conferences, and befriended enough speakers, that my sense for the hype cycle had been sharpened by the collective skepticism of the speaker jet-set. That was two decades ago. We've all heard the latest hype about what AI agents can do well. Less hyped is what can go wrong: non-determinism, DRY violations, hallucinated APIs, token cost, unreviewable code, and code reviews that start to improve the code, only to keep going until the code is actually broken.\n\nThis talk makes the case that it's the time-honed boring things about Java that keep the agents honest. Successful agentic development maximizes agent strengths — speed, breadth, fearless exploration, tolerance for boilerplate — while backstopping their weaknesses: non-determinism, dependency sprawl, inconsistent error handling, and code that works but nobody wants to maintain.\n\nHere are the 10 boring reasons:\n1. Type system\n2. Testing ecosystem\n3. Backwards compatibility culture\n4. Deep static analysis\n5. Build system maturity and dependency management\n6. Code formatting and style enforcement\n7. Virtual threads and structured concurrency\n8. Observability stack\n9. JVM performance tuning\n10. Breadth of deployment options\n\nFor each, I'll show the specific agentic failure mode it addresses. I'll close with a practical checklist for making your Java development process agent-safe, and tie it up with the message that to move forward, you have to go back.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "ADVANCED"
+    }
+  }, {
+    "label" : "#14463 When benchmarks go bad - what we learned from measuring performance wrong",
+    "context" : "CFP SUBMISSION #14463 - Devoxx Belgium 2026\nTitle: When benchmarks go bad - what we learned from measuring performance wrong\nSpeakers: Francesco Nigro, Holly Cummins\n\nAbstract:\nThe world of performance analysis is littered with flawed claims, cognitive biases, dangerous intuitions, and beguiling fallacies. Both Holly and Franz have been guilty of all of the above. Repeatedly. Especially Holly. But this is a no-judgement zone. Some measurement anti-patterns are subtle, and some are downright counter-intuitive. In this talk, Franz and Holly will explain why measuring performance is important, and talk through some of the ways it can go wrong. That would be depressing if that was all there was, so they’ll also introduce a toolbox of questions and principles that you can use to improve the performance of your own applications.\nThese include:\n- How to set up a test system\n- Recommended load generators\n- The USE method",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#9025 The Quantum Tech Lead: Hands-On and Abstract at the Same Time",
+    "context" : "CFP SUBMISSION #9025 - Devoxx Belgium 2026\nTitle: The Quantum Tech Lead: Hands-On and Abstract at the Same Time\nSpeakers: Cristian Schuszter\n\nAbstract:\nSo you got \"promoted\" to lead a team / project / whatever. What now? Do you have what it takes? It certainly seems that your hierarchy thinks so. But oftentimes things are not so black and white. Being a great plumber doesn't automatically make you a great leader of plumbers, so you need to adapt and adjust your ways of working by dropping old habits and picking up new ones. Then you start getting worried by the fact that you won't be able to have as much impact as before, since you're not coding as much as you used to in the past (and that's what you're good at, right?).\n\nWhat if leadership can amplify your technical impact instead? In this talk, I’ll share how I evolved from individual contributor to a mix of Solution Architect, Tech Lead and classical Engineering Manager at CERN - keeping my hands in the code while scaling my influence through the team that I work with. I'll be sharing best practices and adjustment techniques for you to use when faced with the difficult transition process into technical leadership. And lastly, we'll be talking about how to stay relevant even if you're not spending countless hours honing your coding skills anymore.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "People, Practices & Career",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#11558 BootUI, the missing developer console for Spring Boot and Quarkus",
+    "context" : "CFP SUBMISSION #11558 - Devoxx Belgium 2026\nTitle: BootUI, the missing developer console for Spring Boot and Quarkus\nSpeakers: Julien Dubois\n\nAbstract:\nThis session will showcase BooUI, the developer console I have built for both Spring Boot and Quarkus. We'll detail how to:\n \n- Understand, analyse and fix your application using the \"live view\", showing what users are doing in real time\n- Improve the application code and architecture by using the different \"advisors\" panels\n- Study the application's memory usage and configure it correctly for production\n\nThis hands-on talk will show you how easy it is to install BootUI on both Spring Boot and Quarkus, so have your app ready when coming and you'll be able to benefit from it straight during the session!",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Development Practices",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#22942 Why Documentation Won’t Write Itself—and AI Won’t Save You",
+    "context" : "CFP SUBMISSION #22942 - Devoxx Belgium 2026\nTitle: Why Documentation Won’t Write Itself—and AI Won’t Save You\nSpeakers: Christian Heitzmann\n\nAbstract:\nFor the last nearly two decades, I’ve joined and consulted software teams that all struggled with the same problem: nobody likes writing documentation, and everybody pays the price for it. New developers spend weeks reverse-engineering codebases, architecture lives in people’s heads, and wikis quietly decay into noise.\n\nWith AI now entering the picture, many hope it will fill the gaps. It won’t.\n\nI’ll show the simple ideas that change everything: how to think about documentation in the right levels, how to keep it close to the code, and how to avoid the decay we all know too well. These are the decisions that have to be made before any tool or process can work.\n\nThe documentation won’t write itself. But there are ways to make it far easier and far more reliable.\n\nKey take-aways:\n\n• How to separate architecture, API, and code-level documentation\n• What “docs as code” means once the slogans are gone\n• Why missing context stays missing—with or without AI",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Development Practices",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#25652 In the loop, not in the dark: staying in control in the era of dark software factories",
+    "context" : "CFP SUBMISSION #25652 - Devoxx Belgium 2026\nTitle: In the loop, not in the dark: staying in control in the era of dark software factories\nSpeakers: Alex Gavrilescu\n\nAbstract:\nLast year I built Backlog.md, an open source tool that captures your intent, splits it into small markdown tasks, and lets you follow your agents' progress on a TUI Kanban board. A year and 300,000 agent-written lines later, my projects had quietly turned into a small dark factory: software getting built with nobody really reviewing it. Task tracking told me what the agents did, but not what my system had become. I am no longer the owner of my code.\n\nToday I am building Groma.md to fix this. Groma keeps a real-time architectural blueprint of your project's domain as the source of truth, and tasks become the means to reach the blueprint's next iteration. Imagine UML without the fear that it goes stale, where you can watch exactly which parts of the system your agents are modifying.\n\nWhether you are adding an order management system to a brownfield codebase or starting a new project from scratch, you design it in Groma and let the agents write the code, while you keep an eye on the overall architecture and stay in control of the meaningful decisions.\n\nIn this talk I will take a large open source repository and map it into a Groma blueprint live on stage, to show you how to become the owner of your code again.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#24247 Building AI Agents from First Principles",
+    "context" : "CFP SUBMISSION #24247 - Devoxx Belgium 2026\nTitle: Building AI Agents from First Principles\nSpeakers: Adib Saikali\n\nAbstract:\nYou’ve probably seen AI agents in action—reasoning through complex problems, orchestrating API calls, recovering from mistakes, and maintaining intent across dozens of interactions. But how do they actually work? This workshop answers that question from first principles. Through a series of progressively more capable examples, we’ll evolve a simple request/response interaction into a complete agentic system with an explicit control loop: plan → act → observe → decide. Rather than treating agents as black boxes, we’ll expose the architectural patterns that make them reliable, understandable, and testable.\n\nThe examples are implemented with Spring Boot and Spring AI, but this is not a framework tutorial. The focus is on the fundamental patterns that underpin agentic systems, regardless of language, framework, or AI model. Using a dinner planning assistant as our running example, we’ll progressively introduce tool invocation, planning, memory, multi-step execution, evaluation, error handling, and termination conditions, showing how each capability emerges naturally as the agent evolves.\n\nA central theme of the workshop is that agents are systems embedded in systems. Building robust agents is less about prompt engineering and more about software architecture. By the end of the session, you’ll have a clear mental model of the agentic loop and a practical set of architectural patterns you can apply to build production-ready agentic systems, regardless of the technologies you use.",
+    "expected" : {
+      "session_format" : "Deep Dive",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#19713 Create your own AI Agents without code",
+    "context" : "CFP SUBMISSION #19713 - Devoxx Belgium 2026\nTitle: Create your own AI Agents without code\nSpeakers: David Gageot\n\nAbstract:\nMore and more of us use Coding Assistants that excel at **writing code**.\n\nThey are good and they are expensive!\n\nThe same underlying models can be used to write\nmore specialized, cheaper, more predictable AI agents.\n\n+ Maybe you need an agent specialized for your business.\n+ Or you need a cheap, disposable one for a quick and dirty task.\n+ Later, you want multiple agents to collaborate.\n\nAll of that can be done with no code, leveraging Docker Agent,\nan open-source project and a real Swiss Army knife for AI agent creation:\n\n+ Create intelligent agents that solve real problems in minutes, without code.\n+ Test, benchmark, and optimize agent behavior systematically through evals.\n+ Build collaborative multi-agent architectures with MCP, ACP and A2A.\n+ Work with any LLM provider on your own terms: frontier, local, small, large.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Agentic Engineering & Tooling",
+      "audience_level" : "INTERMEDIATE"
+    }
+  }, {
+    "label" : "#7020 Who to blame? The AI, The Programmer, or The Prompt?",
+    "context" : "CFP SUBMISSION #7020 - Devoxx Belgium 2026\nTitle: Who to blame? The AI, The Programmer, or The Prompt?\nSpeakers: Makan Sepehrifar\n\nAbstract:\nThis interactive session transforms AI security education into an engaging courtroom style debate. We'll present five critical vulnerabilities affecting modern AI development tools, and after each case study, the audience becomes the jury—voting on who's responsible: the careless user, the negligent developer, or the inadequate service provider.\n\nWe'll dissect real CVEs including GitHub Camo Leak (CVE-2025-59145), Ollama RCE (CVE-2024-37032), AWS MCP Server Shell Injection (CVE-2025-5277), Anthropic MCP Inspector DNS Rebinding (CVE-2025-49596 ) and Microsoft Copilot's zero-click data exfiltration (CVE-2025-32711). Each case reveals technical root causes through collaborative analysis. The List of CVEs will be usually update based on the new related CVEs as well.\n\nThe conclusion challenges the \"blame game\" itself: these vulnerabilities expose fundamental architectural weaknesses in agentic AI systems where traditional security models fail. We will talk about Mental Model Gap and how this phenomenon has been seen before in the technological leaps before. We'll establish that securing AI tools demands a shared responsibility framework developers must code defensively, providers must architect securely, and users must understand AI-specific risks.",
+    "expected" : {
+      "session_format" : "Lunch Talk",
+      "track" : "Security, Trust & Compliance",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#9008 G1, ZGC, Shenandoah, ... with all these GCs in Java, which one do I choose?",
+    "context" : "CFP SUBMISSION #9008 - Devoxx Belgium 2026\nTitle: G1, ZGC, Shenandoah, ... with all these GCs in Java, which one do I choose?\nSpeakers: Antoine DESSAIGNE\n\nAbstract:\nIt feels like with every new Java release, there are more and more Garbage Collectors (GCs) coming with more and more options. We hear cryptic phrases like: \"Oh, awesome, ZGC became generational while Shenandoah isn't\" or \"Did you heard how Netflix reduced their tail latencies with ZGC?\"\n\nNaturally, it leaves us with a ton of questions:\n- What on earth are they talking about?\n- What exactly is ZGC?\n- If this ZGC is so magical, why are there even other GCs left in Java anyway?\n- Why do we only ever talk about different GCs for Java, but never for Go or JavaScript? Can the Java folks make up their minds and pick one?\n- And what about native? Do we even need a GC there?\n\nWhether you are a Java developer or just plain curious, everyone is welcome! We will trace the journey from the creation of Java all the way to the present day to understand why we need a GC and why it isn't a solved problem. We will also take a tour of the various GCs, their evolutions, their strengths, and their weaknesses. (Spoiler alert: ZGC is not the one GC to rule them all).\n\nBy the end of this talk, you will know exactly when to use which GC so you can find the perfect fit for every project, every application, and every environment.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "Java Language & Platform",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#25674 Docker Hardened Images - what you need to know",
+    "context" : "CFP SUBMISSION #25674 - Devoxx Belgium 2026\nTitle: Docker Hardened Images - what you need to know\nSpeakers: Matthias Haeussler\n\nAbstract:\nIn 2025, containers became the default route to production for the global software industry, and the container supply chain became one of its largest security liabilities. With Docker Hardened Images (DHI), Docker moved beyond image distribution into supply-chain hardening—opening a catalog of continuously patched images built on familiar Alpine and Debian roots.\n\nWhat originated out of a commercial solution was open-sourced in the end of 2025.\n\nThis short talk examines DHI not as a product announcement, but as a signal for where the ecosystem is heading: transparent CVE reporting, minimal distroless-style bases, signed provenance, hardened helm charts, and free/open foundations for regulated workloads.\n\nWith this talk I want to give a quick insight on what you need to know to use them.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Cloud Native, Data & Infrastructure",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#8196 Testing Architecture Made Simple",
+    "context" : "CFP SUBMISSION #8196 - Devoxx Belgium 2026\nTitle: Testing Architecture Made Simple\nSpeakers: Gunter Rotsaert\n\nAbstract:\nEvery software project starts with architectural decisions—principles and patterns meant to guide the system’s evolution. But as codebases grow, how do you ensure those decisions remain intact? That’s where ArchUnit comes in. By expressing architectural rules as tests, ArchUnit lets you verify your architecture automatically with every build. \n\nTaikai takes this concept further. It builds on ArchUnit by providing a ready-to-use collection of architectural rules for popular technologies, helping teams enforce architectural consistency and best practices effortlessly. In this session, you’ll learn how Taikai can make your architecture more testable, maintainable, and resilient from day one.",
+    "expected" : {
+      "session_format" : "Tools-in-Action",
+      "track" : "Architecture & Modernization",
+      "audience_level" : "BEGINNER"
+    }
+  }, {
+    "label" : "#12758 Knocking on the Wrong Door: The Six Developers You’ll Meet in Security",
+    "context" : "CFP SUBMISSION #12758 - Devoxx Belgium 2026\nTitle: Knocking on the Wrong Door: The Six Developers You’ll Meet in Security\nSpeakers: Enrique Larios Vargas\n\nAbstract:\nSecure by Design does not fail only because developers lack security awareness. It often fails because teams prescribe the wrong intervention: training when the real blocker is time, tools, motivation, or trust. In this practitioner-focused talk, we introduce SECUR-E, the OWASP Security Culture Project v2.0 framework that uses COM-B to help developers and software teams diagnose what actually blocks secure development behavior.\n\nThrough a relatable story, practical examples, and six memorable developer patterns, Skeptic, Enthusiast, Compliant, Unaware, Resistant, and Embedded, the audience will learn why one-size-fits-all security programs miss, bore, or backfire. We will show how a lightweight self-assessment maps Capability, Opportunity, and Motivation into team insights, then translates those insights into better interventions: evidence for Skeptics, support for Enthusiasts, autonomy for Resistant profiles, foundational help for Unaware developers, and amplification for Embedded security-minded builders.\n\nKey takeaways: stop asking “why don’t developers care?”; diagnose whether the blocker is skill, environment, or motivation; choose interventions that fit the pattern; protect psychological safety; and use SECUR-E as a practical playbook for building secure software teams without blame. Audience: software developers, tech leads, security champions, and engineering managers with beginner-to-intermediate knowledge.",
+    "expected" : {
+      "session_format" : "Conference",
+      "track" : "People, Practices & Career",
+      "audience_level" : "BEGINNER"
+    }
+  } ]
+}
