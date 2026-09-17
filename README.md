@@ -398,7 +398,6 @@ engine replaces the fallback with the batched token tree.
 presets/            scenario JSONs (context + schema [+ samples]); shared by both engines
 results/            benchmark runs saved by the web app (gitignored)
 models/             GGUF weights (gitignored)
-deploy/api-design.md  notes for a possible public API (proposal, not implemented)
 python/             MLX reference port (core/, example.py, pyproject.toml)
 java/
   pom.xml                     Java 22+, Jackson, JUnit; shaded jar target/pcd-benchmark.jar
