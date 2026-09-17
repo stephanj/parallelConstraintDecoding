@@ -23,6 +23,7 @@
     <button class="view-tab is-active" data-view="demo">Race</button>
     <button class="view-tab" data-view="presets">Presets</button>
     <button class="view-tab" data-view="bench">Benchmarks</button>
+    <button class="view-tab" data-view="tetris">Tetris</button>
   </nav>
 </header>
 
@@ -193,6 +194,67 @@
   </div>
 </main>
 
+<!-- ============================================================ Tetris -->
+<main id="view-tetris" class="view">
+  <section class="controls">
+    <button id="tetris-start" class="primary">Start</button>
+    <button id="tetris-reset" class="secondary">Reset</button>
+    <label class="control slider">
+      <span>Animation, ms per row</span>
+      <input id="tetris-speed" type="range" min="0" max="80" step="5" value="25">
+    </label>
+    <label class="control slider">
+      <span>Temperature <b id="tetris-temp-val">0.0</b></span>
+      <input id="tetris-temp" type="range" min="0" max="2" step="0.1" value="0">
+    </label>
+    <label class="control">
+      <span>Candidates offered to the model</span>
+      <select id="tetris-candidates">
+        <option value="6">top 6 placements by the heuristic</option>
+        <option value="all">all legal placements</option>
+      </select>
+    </label>
+    <p class="hint">Every falling piece is one extraction call: the board is the input, the legal placements are the
+      allowed values of a single field, and the decoder picks one in two forward passes. At temperature 0 it takes the
+      most probable placement; higher values sample from the distribution. With all legal placements offered, a small
+      model mostly stacks on the left; offering only the heuristic's top candidates keeps the game going while the model
+      still makes every pick.</p>
+  </section>
+
+  <section class="tetris-layout">
+    <div class="tetris-board">
+      <canvas id="tetris-canvas" width="240" height="480" aria-label="Tetris board"></canvas>
+      <div class="tetris-side">
+        <div class="col-head"><h2>Next</h2></div>
+        <canvas id="tetris-next" width="80" height="60" aria-label="Next piece"></canvas>
+        <dl class="stats stats-col">
+          <div><dt>pieces</dt><dd id="tetris-pieces">0</dd></div>
+          <div><dt>lines</dt><dd id="tetris-lines">0</dd></div>
+          <div><dt>score</dt><dd id="tetris-score">0</dd></div>
+          <div><dt>decisions</dt><dd id="tetris-rate">–</dd></div>
+          <div><dt>last decision</dt><dd id="tetris-latency">–</dd></div>
+          <div><dt>forward passes</dt><dd id="tetris-passes">–</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="tetris-decision">
+      <div class="col-head"><h2>Last decision</h2><span class="muted" id="tetris-heur"></span></div>
+      <ol class="fields tetris-probs" id="tetris-probs"></ol>
+      <p class="muted" id="tetris-status"></p>
+      <details class="how">
+        <summary>What the model is asked</summary>
+        <p>The prompt is the board as a 10×20 grid of <code>#</code>/<code>.</code>, the column heights, the falling
+          and next piece, and one line per legal placement stating what it would do (lines cleared, new holes, resulting
+          height, bumpiness). The schema has one field, <code>placement</code>, whose allowed values are exactly those
+          placements — so an illegal move is impossible. A small model is a weak spatial reasoner: the interesting part is
+          watching it decide many times per second with a calibrated probability per option, not whether it beats the
+          simple heuristic shown for reference.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
 <script src="/app.js"></script>
+<script src="/tetris.js"></script>
 </body>
 </html>

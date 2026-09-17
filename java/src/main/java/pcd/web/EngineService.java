@@ -26,7 +26,13 @@ final class EngineService implements AutoCloseable {
     private LlamaRuntime rt;
     private GrammarJsonEngine naive;
     private final ReentrantLock lock = new ReentrantLock(true);
-    private final Map<String, NativeParallelEngine> engines = new LinkedHashMap<>();
+    /** Compiled schemas by their JSON shape; bounded LRU because ad-hoc callers (the Tetris view) send a new schema per turn. */
+    private final Map<String, NativeParallelEngine> engines = new LinkedHashMap<>(64, 0.75f, true) {
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<String, NativeParallelEngine> eldest) {
+            return size() > 64;
+        }
+    };
     private volatile Path modelPath;
     private volatile String modelId;
 
@@ -113,7 +119,6 @@ final class EngineService implements AutoCloseable {
                 ObjectNode probs = fn.putObject("probs");
                 f.probs().entrySet().stream()
                         .sorted((a, b) -> Double.compare(b.getValue(), a.getValue()))
-                        .limit(6)
                         .forEach(e -> probs.put(e.getKey(), round(e.getValue())));
             }
             return out;
@@ -162,7 +167,9 @@ final class EngineService implements AutoCloseable {
         return engines.computeIfAbsent(key, k -> {
             NativeParallelEngine engine = new NativeParallelEngine(rt,
                     new CompiledSchema(rt, preset, CompiledSchema.PromptStyle.SHARED), false, false);
-            engine.run(preset, false); // warm-up: Metal compiles kernels for this schema's batch shapes
+            if (preset.schema().size() > 1) {
+                engine.run(preset, false); // warm-up: Metal compiles kernels for this schema's batch shapes
+            }
             return engine;
         });
     }
