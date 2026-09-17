@@ -36,6 +36,7 @@
   let presets = [];          // summaries
   let current = null;        // full preset shown in the race view
   let editing = null;        // full preset in the editor
+  let sequential = false;    // true: engines shown one after the other (live); false: replayed on one timeline
   let sampleIdx = -1;        // index into current.samples shown in the textarea (-1: none)
   let lastRunIdx = -1;       // sample index used by the previous run, to rotate on the next one
 
@@ -251,7 +252,15 @@
     let parallel = null, t0 = null, revealed = false, raw = "";
     try {
       await sse("/api/run/race", body, (ev, data) => {
-        if (ev === "parallel") { parallel = data; }
+        if (ev === "parallel-start" && sequential) {
+          // Live timer on the parallel lane until its result arrives.
+          const p0 = performance.now();
+          const tickP = () => { setBar("parallel", performance.now() - p0); raf = requestAnimationFrame(tickP); };
+          raf = requestAnimationFrame(tickP);
+        } else if (ev === "parallel") {
+          parallel = data;
+          if (sequential) { cancelAnimationFrame(raf); revealed = true; renderParallel(parallel); }
+        }
         else if (ev === "start") {
           t0 = performance.now();
           stream.innerHTML = '<span class="cursor"></span>';
@@ -467,6 +476,8 @@
   (async () => {
     try {
       const st = await api("/api/status");
+      sequential = !!st.sequentialRace;
+      if (sequential) $("race-hint").textContent = "Runs the parallel engine first, then the token-by-token baseline, each timed live. Edit the text below to try your own input.";
       if (st.readOnly) {
         document.body.classList.add("read-only");
         for (const id of ["preset-new", "field-add", "preset-delete", "preset-run", "run-bench", "model-select"]) $(id).disabled = true;

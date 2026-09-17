@@ -51,6 +51,7 @@ build host between deploys unless the `Dockerfile` args change.
 | `PORT` | `8080` | listening port (Clever Cloud expects 8080) |
 | `PCD_BIND` | `0.0.0.0` | bind address |
 | `PCD_READ_ONLY` | `true` | demo mode; set to `false` only behind auth |
+| `PCD_SEQUENTIAL_RACE` | `true` | show the engines one after the other, each timed live (on a laptop the default replays both on one timeline) |
 | `PCD_GGUF` | `/app/models/<file>` | model to load |
 | `PCD_LLAMA_LIB_DIR` | `/opt/llama/lib` | where `libllama.so` / `libggml*.so` live |
 | build arg `GGUF_URL` / `GGUF_FILE` | Qwen2.5-1.5B Q8_0 | default model (Q4 quants are ~2× faster on CPU) |
