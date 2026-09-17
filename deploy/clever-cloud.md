@@ -8,12 +8,12 @@ no external dependencies. Inference is CPU-only there. Measured in the image on 
 in **~1.1 s / 2 passes**, the grammar baseline needs **~8.5 s / 54 passes** —
 the 2-passes-vs-50 story and the schema guarantees are unchanged, the
 sub-second numbers of an Apple Silicon Mac are not. More vCPUs = faster
-prefill; the x86-64 build picks the best AVX variant at runtime.
+prefill; the x86-64 build targets AVX2/FMA (x86-64-v3).
 
 ## What the image does
 
 - `Dockerfile` (repo root), four stages: build `libllama`/`libggml` at
-  `v0.4.1` (CPU backends for every SIMD level on x86-64), download the two
+  `v0.4.1` (AVX2 CPU backend on x86-64), download the two
   GGUFs, `mvn package`, assemble a JRE 25 runtime image (~3 GB).
 - Two models are baked in and selectable from the header — `qwen2.5-1.5b-instruct-q8_0`
   (default) and `Qwen3.5-0.8B-Q8_0` — **except that read-only mode fixes the
