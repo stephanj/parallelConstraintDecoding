@@ -4,6 +4,11 @@ Fill a whole JSON schema of booleans and enums in **two forward passes**
 instead of generating it token by token — with calibrated confidence per
 field and output that is schema-valid by construction.
 
+[![Demo: Parallel Constrained Decoding — the web app racing the parallel engine against token-by-token generation](https://img.youtube.com/vi/C4Vjbf_HvYY/maxresdefault.jpg)](https://www.youtube.com/watch?v=C4Vjbf_HvYY)
+
+*Watch the demo (YouTube, Devoxx): the web app races the parallel engine
+against grammar-constrained token-by-token generation on the same model.*
+
 This repository contains:
 
 - **`java/`** — a Java implementation of the technique that drives
