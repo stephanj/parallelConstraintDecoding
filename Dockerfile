@@ -7,7 +7,7 @@
 #   1. llama    — compiles libllama/libggml from the exact tag the Java FFM bindings were generated
 #                 against (struct layouts must match). CPU backend only: on x86-64 one AVX2/FMA/F16C
 #                 build (x86-64-v3, every cloud CPU has it); building all SIMD variants was too heavy
-#                 for a PaaS build instance.
+#                 for a hosted build instance.
 #   2. model    — downloads the GGUF weights once (cached as their own layers).
 #   3. build    — mvn package.
 #   4. runtime  — slim JRE + the libs + the jar + presets + model.
@@ -29,7 +29,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN git clone --depth 1 --branch ${LLAMA_TAG} https://github.com/ggml-org/llama.cpp.git /src
 # x86-64 (cloud hosts): AVX2 + FMA + F16C + BMI2 (x86-64-v3).
 # arm64 (local test on Apple Silicon Docker): one portable ARMv8.2 build with dotprod (i8mm is not exposed in Docker VMs).
-# -w: llama.cpp emits thousands of harmless warnings that can overflow a PaaS build log.
+# -w: llama.cpp emits thousands of harmless warnings that can overflow a hosted build log.
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
         CPU_FLAGS="-DGGML_AVX=ON -DGGML_AVX2=ON -DGGML_FMA=ON -DGGML_F16C=ON -DGGML_BMI2=ON"; \
     else \

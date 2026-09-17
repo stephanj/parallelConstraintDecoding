@@ -423,14 +423,14 @@ Every difference is within run-to-run noise (±2 ms).
   probability (e.g. `counterparty_jurisdiction_risk` → `TIER_3_HIGH` at 0.46
   after 4 levels).
 
-## Hosting it (Clever Cloud / any Docker host)
+## Hosting it (any Docker host)
 
 `Dockerfile` builds a self-contained CPU image (llama.cpp compiled at the
 pinned tag, JRE 25, the Qwen 2.5 1.5B and Qwen 3.5 0.8B models baked in) that
 serves the web app on `0.0.0.0:8080` in read-only demo mode. See
-[deploy/clever-cloud.md](deploy/clever-cloud.md) for the Clever Cloud steps,
-the environment knobs (`PORT`, `PCD_BIND`, `PCD_READ_ONLY`, `PCD_GGUF`) and
-what to expect from CPU inference.
+[deploy/docker.md](deploy/docker.md) for build/run steps, the environment
+knobs (`PORT`, `PCD_BIND`, `PCD_READ_ONLY`, `PCD_SEQUENTIAL_RACE`, `PCD_GGUF`)
+and what to expect from CPU inference.
 
 ## Layout
 

@@ -19,7 +19,7 @@ public final class Main {
 
     public static void main(String[] args) throws Exception {
         if (args.length > 0 && args[0].equals("serve")) {
-            // Defaults suit a laptop (loopback:8000); PORT / PCD_BIND / PCD_READ_ONLY suit a host like Clever Cloud.
+            // Defaults suit a laptop (loopback:8000); PORT / PCD_BIND / PCD_READ_ONLY suit a container host.
             int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8000"));
             String bind = System.getenv().getOrDefault("PCD_BIND", "127.0.0.1");
             boolean readOnly = Boolean.parseBoolean(System.getenv().getOrDefault("PCD_READ_ONLY", "false"));

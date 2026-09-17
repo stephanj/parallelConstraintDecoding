@@ -154,6 +154,6 @@ Do not derive an SLA from the README's Mac medians. Measure end-to-end p50/p95/p
 
 ## References
 
-- Local sources: `Server.java`, `EngineService.java`, `Preset.java`, `Prompts.java`, `nativeengine/{LlamaRuntime,CompiledSchema,NativeParallelEngine}.java`, root `Dockerfile`, and `deploy/clever-cloud.md`.
+- Local sources: `Server.java`, `EngineService.java`, `Preset.java`, `Prompts.java`, `nativeengine/{LlamaRuntime,CompiledSchema,NativeParallelEngine}.java`, root `Dockerfile`, and `deploy/docker.md`.
 - [JDK 25 HttpServer documentation](https://docs.oracle.com/en/java/javase/25/docs/api/jdk.httpserver/com/sun/net/httpserver/HttpServer.html): context routing uses longest-prefix matching, so strict endpoint matching must be added in handlers; shutdown delay is bounded.
 - [llama.cpp native API](https://github.com/ggml-org/llama.cpp/blob/master/include/llama.h): upstream reference for native integration. Implementation must remain matched to the repository's pinned llama.cpp build and generated FFM layouts; upstream master is not an ABI compatibility promise.
