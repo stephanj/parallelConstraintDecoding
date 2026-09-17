@@ -182,6 +182,18 @@ is vendored so it works offline).
   `results/`, shows a latency table, a token-by-token vs parallel chart and
   the parallel engine's per-phase breakdown. Runs record which model made them.
 
+- **Tetris** — the decoder plays Tetris: every falling piece is one
+  extraction call whose single field, `placement`, ranges over the legal
+  placements of that piece (so an illegal move is impossible), with the board
+  as text and one line per placement describing what it would do. It decides
+  ~3–4 pieces per second (≈140 ms, 2 forward passes each) and shows the
+  probability of every candidate next to the board, plus what a simple
+  heuristic would have picked. A small model is a weak spatial reasoner: with
+  *all* legal placements offered it mostly stacks on the left and dies within
+  ~15 pieces; offered the heuristic's top 6 (the default) it plays a proper
+  game while still making every pick. A temperature slider samples from the
+  distribution instead of taking the argmax. `?view=tetris&autorun` starts it.
+
 `?preset=<id>` and `?autorun` in the URL pre-select a scenario and start a
 race on load — handy when presenting. For a live talk on a Mac, expose the
 local server to the audience with a tunnel (e.g. `cloudflared tunnel --url
@@ -420,7 +432,7 @@ java/
     Server.java               JDK HttpServer: REST + SSE endpoints, static files, read-only guard
     EngineService.java        one locked runtime shared by all requests; model switching
     Stores.java               presets/ and results/ on disk
-  src/main/resources/web/     index.html, app.js, style.css, vendor/chart.umd.min.js
+  src/main/resources/web/     index.html, app.js, tetris.js, style.css, vendor/chart.umd.min.js
   src/main/java/llama/        generated libllama bindings (jextract)
 ```
 

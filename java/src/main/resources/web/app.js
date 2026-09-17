@@ -45,6 +45,7 @@
     document.querySelectorAll(".view").forEach((v) => v.classList.toggle("is-active", v.id === "view-" + name));
     document.querySelectorAll(".view-tab").forEach((t) => t.classList.toggle("is-active", t.dataset.view === name));
     if (name === "bench") loadRuns();
+    if (name !== "tetris" && window.pcdTetris) window.pcdTetris.pause();
     if (name === "presets" && !editing && current) openEditor(current.id);
   }
   document.querySelectorAll(".view-tab").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
