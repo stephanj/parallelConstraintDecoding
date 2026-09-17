@@ -184,14 +184,19 @@ is vendored so it works offline).
 
 - **Tetris** — the decoder plays Tetris: every falling piece is one
   extraction call whose single field, `placement`, ranges over the legal
-  placements of that piece (so an illegal move is impossible), with the board
-  as text and one line per placement describing what it would do. It decides
-  ~3–4 pieces per second (≈140 ms, 2 forward passes each) and shows the
-  probability of every candidate next to the board, plus what a simple
-  heuristic would have picked. A small model is a weak spatial reasoner: with
-  *all* legal placements offered it mostly stacks on the left and dies within
-  ~15 pieces; offered the heuristic's top 6 (the default) it plays a proper
-  game while still making every pick. A temperature slider samples from the
+  placements of that piece (so an illegal move is impossible). The board goes
+  in as text, and each candidate's label leads with its outcome computed by
+  the game engine (`clears 2 lines - column 4, rotation 0`), so the decoder's
+  first scored token is about the outcome and the token tree only then
+  resolves the position. It decides ~3 pieces per second (≈105 ms, 2 forward
+  passes each) and shows the probability of every candidate next to the
+  board, plus what a simple heuristic would have picked. By default the engine
+  offers only the best outcome class — every placement completing the most
+  lines, or, failing that, those creating the fewest holes — so a line is
+  completed whenever the piece can do it and the model chooses among the
+  remaining candidates (~60 pieces, ~13 lines per game). "All legal
+  placements" shows how a small model does on its own: it mostly stacks on
+  the left and dies within ~15 pieces. A temperature slider samples from the
   distribution instead of taking the argmax. `?view=tetris&autorun` starts it.
 
   [![Tetris controlled by an LLM decoder — video](https://img.youtube.com/vi/CIb3DboK4EQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=CIb3DboK4EQ)
