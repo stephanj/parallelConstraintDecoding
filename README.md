@@ -194,6 +194,10 @@ is vendored so it works offline).
   game while still making every pick. A temperature slider samples from the
   distribution instead of taking the argmax. `?view=tetris&autorun` starts it.
 
+  [![Tetris controlled by an LLM decoder — video](https://img.youtube.com/vi/CIb3DboK4EQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=CIb3DboK4EQ)
+
+  *Watch it play (YouTube, Devoxx): [Tetris controlled by an LLM Decoder](https://www.youtube.com/watch?v=CIb3DboK4EQ).*
+
 `?preset=<id>` and `?autorun` in the URL pre-select a scenario and start a
 race on load — handy when presenting. For a live talk on a Mac, expose the
 local server to the audience with a tunnel (e.g. `cloudflared tunnel --url
