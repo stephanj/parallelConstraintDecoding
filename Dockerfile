@@ -5,9 +5,9 @@
 #
 # Layout of the build:
 #   1. llama    — compiles libllama/libggml from the exact tag the Java FFM bindings were generated
-#                 against (struct layouts must match). CPU backend only, built as loadable backends
-#                 with every SIMD variant (GGML_CPU_ALL_VARIANTS) so the best one (AVX2, AVX-512, ...)
-#                 is picked at runtime on whatever host runs the image.
+#                 against (struct layouts must match). CPU backend only: on x86-64 one AVX2/FMA/F16C
+#                 build (x86-64-v3, every cloud CPU has it); building all SIMD variants was too heavy
+#                 for a PaaS build instance.
 #   2. model    — downloads the GGUF weights once (cached as their own layers).
 #   3. build    — mvn package.
 #   4. runtime  — slim JRE + the libs + the jar + presets + model.
@@ -27,20 +27,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git build-essential cmake libcurl4-openssl-dev ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 RUN git clone --depth 1 --branch ${LLAMA_TAG} https://github.com/ggml-org/llama.cpp.git /src
-# x86-64 (cloud hosts): every CPU variant as loadable backends, best one picked at runtime.
+# x86-64 (cloud hosts): AVX2 + FMA + F16C + BMI2 (x86-64-v3).
 # arm64 (local test on Apple Silicon Docker): one portable ARMv8.2 build with dotprod (i8mm is not exposed in Docker VMs).
+# -w: llama.cpp emits thousands of harmless warnings that can overflow a PaaS build log.
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
-        CPU_FLAGS="-DGGML_BACKEND_DL=ON -DGGML_CPU_ALL_VARIANTS=ON"; \
+        CPU_FLAGS="-DGGML_AVX=ON -DGGML_AVX2=ON -DGGML_FMA=ON -DGGML_F16C=ON -DGGML_BMI2=ON"; \
     else \
         CPU_FLAGS="-DGGML_CPU_ARM_ARCH=armv8.2-a+dotprod+fp16"; \
     fi \
-    && cmake -S /src -B /src/build \
+    && JOBS=$(nproc); [ "$JOBS" -gt 8 ] && JOBS=8; \
+    cmake -S /src -B /src/build \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
+        -DCMAKE_C_FLAGS=-w -DCMAKE_CXX_FLAGS=-w \
         -DGGML_NATIVE=OFF ${CPU_FLAGS} \
         -DLLAMA_CURL=OFF \
         -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_TOOLS=OFF -DLLAMA_BUILD_SERVER=OFF \
-    && cmake --build /src/build --config Release --target llama ggml-cpu -j"$(nproc)" \
+    && cmake --build /src/build --config Release --target llama ggml-cpu -j"$JOBS" \
     && mkdir -p /out/lib \
     && find /src/build -name 'libllama*.so*' -exec cp -a {} /out/lib/ \; \
     && find /src/build -name 'libggml*.so*' -exec cp -a {} /out/lib/ \; \
