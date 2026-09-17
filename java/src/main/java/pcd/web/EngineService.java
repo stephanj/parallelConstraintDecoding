@@ -23,16 +23,61 @@ final class EngineService implements AutoCloseable {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private final LlamaRuntime rt;
-    private final GrammarJsonEngine naive;
+    private LlamaRuntime rt;
+    private GrammarJsonEngine naive;
     private final ReentrantLock lock = new ReentrantLock(true);
     private final Map<String, NativeParallelEngine> engines = new LinkedHashMap<>();
-    final Path modelPath;
+    private volatile Path modelPath;
+    private volatile String modelId;
 
-    EngineService(Path modelPath) {
-        this.modelPath = modelPath;
-        this.rt = new LlamaRuntime(LlamaRuntime.Options.defaults(modelPath));
-        this.naive = new GrammarJsonEngine(rt, 700);
+    EngineService(Path modelPath, String modelId) {
+        load(modelPath, modelId);
+    }
+
+    Path modelPath() {
+        return modelPath;
+    }
+
+    /** The catalog id of the loaded model (a file name, or {@code ollama:name:tag}). */
+    String modelName() {
+        return modelId;
+    }
+
+    /**
+     * Replaces the loaded model. Waits for any run in progress; runs queued behind it see the new
+     * model. If the new file fails to load (unsupported architecture, corrupt file), the previous
+     * model is reloaded and the error propagates.
+     */
+    void switchModel(Path newModel, String newId) {
+        lock.lock();
+        try {
+            if (newModel.equals(modelPath)) {
+                return;
+            }
+            Path previous = modelPath;
+            String previousId = modelId;
+            rt.close();
+            rt = null;
+            engines.clear();
+            try {
+                load(newModel, newId);
+            } catch (RuntimeException e) {
+                load(previous, previousId);
+                throw new IllegalArgumentException("cannot load " + newId + ": " + e.getMessage(), e);
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    private void load(Path path, String id) {
+        long t0 = System.nanoTime();
+        rt = new LlamaRuntime(LlamaRuntime.Options.defaults(path));
+        naive = new GrammarJsonEngine(rt, 700);
+        modelPath = path;
+        modelId = id;
+        System.out.printf("Loaded %s (%s, %s) in %.1fs%n", id, rt.metaValue("general.architecture"),
+                rt.hasChatTemplate() ? "chat template from file" : "no template, ChatML fallback", (System.nanoTime() - t0) / 1e9);
     }
 
     /** Runs the parallel constrained engine; the result JSON is what the UI renders. */
@@ -115,7 +160,8 @@ final class EngineService implements AutoCloseable {
     private NativeParallelEngine engineFor(Preset preset) {
         String key = preset.toJson().get("schema").toString();
         return engines.computeIfAbsent(key, k -> {
-            NativeParallelEngine engine = new NativeParallelEngine(rt, new CompiledSchema(rt, preset), false, false);
+            NativeParallelEngine engine = new NativeParallelEngine(rt,
+                    new CompiledSchema(rt, preset, CompiledSchema.PromptStyle.SHARED), false, false);
             engine.run(preset, false); // warm-up: Metal compiles kernels for this schema's batch shapes
             return engine;
         });

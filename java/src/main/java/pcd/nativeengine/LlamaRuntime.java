@@ -47,10 +47,7 @@ public final class LlamaRuntime implements AutoCloseable {
     }
 
     public LlamaRuntime(Options opts) {
-        loadLibraries();
-        Llama.llama_backend_init();
-        Llama.ggml_backend_load_all();
-        installQuietLogger();
+        initProcess();
 
         MemorySegment mparams = Llama.llama_model_default_params(arena);
         llama_model_params.n_gpu_layers(mparams, 99);
@@ -83,7 +80,11 @@ public final class LlamaRuntime implements AutoCloseable {
         pieceScratch = arena.allocate(256);
     }
 
-    private static synchronized void loadLibraries() {
+    /**
+     * Process-wide, once: shared libraries, ggml backends, and the log callback. The log callback is
+     * a global in llama.cpp, so its upcall stub must outlive every runtime (a global arena).
+     */
+    private static synchronized void initProcess() {
         if (libsLoaded) {
             return;
         }
@@ -95,16 +96,19 @@ public final class LlamaRuntime implements AutoCloseable {
                             "Missing " + lib + " in " + dirs + " (brew install llama.cpp, or set PCD_LLAMA_LIB_DIR=dir[:dir])"));
             System.load(found.toString());
         }
+        Llama.llama_backend_init();
+        Llama.ggml_backend_load_all();
+        installQuietLogger();
         libsLoaded = true;
     }
 
     /** Routes llama.cpp logging through an upcall that only lets errors through. */
-    private void installQuietLogger() {
+    private static void installQuietLogger() {
         try {
             var handle = MethodHandles.lookup().findStatic(LlamaRuntime.class, "onLog",
                     java.lang.invoke.MethodType.methodType(void.class, int.class, MemorySegment.class, MemorySegment.class));
             var descriptor = FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS);
-            MemorySegment stub = Linker.nativeLinker().upcallStub(handle, descriptor, arena);
+            MemorySegment stub = Linker.nativeLinker().upcallStub(handle, descriptor, Arena.global());
             Llama.llama_log_set(stub, MemorySegment.NULL);
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException(e);
@@ -205,6 +209,50 @@ public final class LlamaRuntime implements AutoCloseable {
         return out;
     }
 
+    /** A GGUF metadata value such as {@code general.architecture}, or null when absent. */
+    public String metaValue(String key) {
+        MemorySegment buf = arena.allocate(4096);
+        int n = Llama.llama_model_meta_val_str(model, arena.allocateFrom(key), buf, buf.byteSize());
+        return n < 0 ? null : buf.getString(0);
+    }
+
+    /** True when the GGUF carries a chat template (otherwise prompts fall back to ChatML). */
+    public boolean hasChatTemplate() {
+        return !Llama.llama_model_chat_template(model, MemorySegment.NULL).equals(MemorySegment.NULL);
+    }
+
+    /**
+     * Renders a system + user exchange with the model's own chat template, ending with the
+     * assistant turn opened so generation continues from there. Falls back to ChatML when the
+     * model file has no template.
+     */
+    public String chatPrompt(String system, String user) {
+        MemorySegment tmpl = Llama.llama_model_chat_template(model, MemorySegment.NULL);
+        if (tmpl.equals(MemorySegment.NULL)) {
+            return "<|im_start|>system\n" + system + "<|im_end|>\n<|im_start|>user\n" + user + "<|im_end|>\n<|im_start|>assistant\n";
+        }
+        try (Arena tmp = Arena.ofConfined()) {
+            MemorySegment chat = llama.llama_chat_message.allocateArray(2, tmp);
+            llama.llama_chat_message.role(llama.llama_chat_message.asSlice(chat, 0), tmp.allocateFrom("system"));
+            llama.llama_chat_message.content(llama.llama_chat_message.asSlice(chat, 0), tmp.allocateFrom(system));
+            llama.llama_chat_message.role(llama.llama_chat_message.asSlice(chat, 1), tmp.allocateFrom("user"));
+            llama.llama_chat_message.content(llama.llama_chat_message.asSlice(chat, 1), tmp.allocateFrom(user));
+            int cap = (system.length() + user.length()) * 4 + 4096;
+            MemorySegment buf = tmp.allocate(cap);
+            int n = Llama.llama_chat_apply_template(tmpl, chat, 2, true, buf, cap);
+            if (n < 0) {
+                throw new IllegalStateException("chat template failed for this model");
+            }
+            if (n > cap) {
+                buf = tmp.allocate(n + 1);
+                n = Llama.llama_chat_apply_template(tmpl, chat, 2, true, buf, n + 1);
+            }
+            byte[] bytes = new byte[n];
+            MemorySegment.copy(buf, ValueLayout.JAVA_BYTE, 0, bytes, 0, n);
+            return new String(bytes, StandardCharsets.UTF_8);
+        }
+    }
+
     public String piece(int token) {
         int n = Llama.llama_token_to_piece(vocab, token, pieceScratch, (int) pieceScratch.byteSize(), 0, false);
         if (n < 0) {
@@ -296,7 +344,6 @@ public final class LlamaRuntime implements AutoCloseable {
         Llama.llama_batch_free(batch);
         Llama.llama_free(ctx);
         Llama.llama_model_free(model);
-        Llama.llama_backend_free();
-        arena.close();
+        arena.close(); // the backend and log callback stay alive for the process (see initProcess)
     }
 }

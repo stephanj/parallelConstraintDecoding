@@ -14,7 +14,10 @@
 <header class="top">
   <div class="brand">
     <span class="brand-name">Parallel constrained decoding</span>
-    <span class="brand-model" id="model-name"></span>
+    <label class="brand-model">Model
+      <select id="model-select" aria-label="Model"></select>
+      <span id="model-status"></span>
+    </label>
   </div>
   <nav class="views" aria-label="Views">
     <button class="view-tab is-active" data-view="demo">Race</button>
@@ -42,6 +45,7 @@
         <button class="linklike" id="next-sample" hidden>Next talk</button>
       </div>
       <p class="muted scenario-desc" id="context-meta"></p>
+      <p class="expected-note" id="context-expected" hidden></p>
       <textarea id="context" spellcheck="false" aria-label="Input text"></textarea>
     </div>
     <div class="input-col">
@@ -69,6 +73,10 @@
     </div>
   </section>
 
+  <section class="verdict" id="verdict" hidden>
+    <p id="verdict-text"></p>
+  </section>
+
   <section class="panes">
     <article class="pane pane-naive">
       <header class="pane-head">
@@ -87,7 +95,7 @@
     <article class="pane pane-parallel">
       <header class="pane-head">
         <h2>Parallel constrained</h2>
-        <p class="pane-sub">One prefill, every field decided in the same batched pass.</p>
+        <p class="pane-sub">Same model, same prompt: one prefill, every field decided in the same batched pass.</p>
         <dl class="stats">
           <div><dt>elapsed</dt><dd id="par-ms">–</dd></div>
           <div><dt>forward passes</dt><dd id="par-passes">–</dd></div>
@@ -98,14 +106,10 @@
     </article>
   </section>
 
-  <section class="verdict" id="verdict" hidden>
-    <p id="verdict-text"></p>
-  </section>
-
   <details class="how">
     <summary>How the parallel engine fills a schema in a couple of passes</summary>
     <ol>
-      <li><strong>Prefill once.</strong> The text and a one-line catalog of every field go through the model a single time and stay in the KV cache.</li>
+      <li><strong>Prefill once.</strong> The same prompt the baseline gets — schema, descriptions, allowed values, and the text — goes through the model a single time and stays in the KV cache.</li>
       <li><strong>Broadcast.</strong> That cached prefix is tagged for one sequence per field — no copying.</li>
       <li><strong>One batched pass.</strong> Every sequence gets its own <code>"field": "</code> suffix; the logits at each suffix's last token are read in the same forward pass.</li>
       <li><strong>Score only the allowed values.</strong> Softmax over the candidate tokens gives a calibrated probability per choice — nothing outside the schema can win.</li>

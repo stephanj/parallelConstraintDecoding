@@ -14,3 +14,4 @@ Local modifications:
     prompt text in java/src/main/java/pcd/Prompts.java is ported from upstream core/schema.py;
     java/src/main/java/llama: bindings generated from llama.cpp headers (MIT).
   - java/src/main/resources/web/vendor/chart.umd.min.js: Chart.js 4.4.1 (MIT), vendored so the web app works offline.
+  - The web app can load GGUF model files from a local Ollama store read-only; it does not include or modify Ollama.

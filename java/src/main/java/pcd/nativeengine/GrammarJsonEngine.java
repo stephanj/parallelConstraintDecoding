@@ -23,9 +23,7 @@ public final class GrammarJsonEngine {
     public Result run(Preset preset, Consumer<String> onPiece) {
         // Grammar construction is included in elapsed time; no hidden per-request setup.
         long start = System.nanoTime();
-        String prompt = "<|im_start|>system\n" + Prompts.grammarSystem(preset) + "<|im_end|>\n"
-                + "<|im_start|>user\n" + Prompts.naiveUser(preset) + "<|im_end|>\n"
-                + "<|im_start|>assistant\n";
+        String prompt = rt.chatPrompt(Prompts.grammarSystem(preset), Prompts.naiveUser(preset));
         int[] tokens = rt.tokenize(prompt, true);
         int passes = 0;
         int generated = 0;

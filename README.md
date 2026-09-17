@@ -253,9 +253,11 @@ from a CDN):
   your own text, e.g. an email) and press *Run the race*. Both engines run on the same input and are replayed on one
   time ruler: the parallel result lands as a block of fields with a confidence
   bar each; the token-by-token baseline streams its JSON as it is generated.
-  Underneath: the speedup, the number of forward passes each needed, and the
-  baseline's schema violations (missing keys, invented keys, values outside
-  the allowed set) highlighted in its output.
+  The verdict line between the ruler and the panes gives the speedup and the
+  number of forward passes each needed; the baseline's JSON is pretty-printed
+  as it streams, and its schema violations (if any) are listed under it. For
+  scenarios with a sample bank, both panes say per field whether they agree
+  with the human filing (✓ same as the CFP / ✗ CFP filed it as …).
 - **Presets** — create and edit scenarios in the browser: title, example input,
   and a table of fields (`true / false` or a list of allowed values, each with
   a one-line description). Saved to `presets/*.json`, the same files the CLI
@@ -266,6 +268,54 @@ from a CDN):
 
 `?preset=<id>` and `?autorun` in the URL pre-select a scenario and start the
 race on load, which is handy when presenting. `--port` changes the port.
+
+**Model selection.** The header dropdown lists every `*.gguf` in `models/`
+**and every model of a local Ollama install**, and switches the loaded model
+in place (~0.5 s for a 3 GB file, ~2 s for 8B; runs in flight finish first).
+Benchmark runs record which model produced them. Both
+`qwen2.5-1.5b-instruct-q8_0` and `qwen2.5-3b-instruct-q8_0` are worth having:
+the 3B is roughly 2× slower per pass and noticeably better at judgement calls
+such as audience level.
+
+**Ollama models.** Ollama's store (`~/.ollama/models`, or `$OLLAMA_MODELS`)
+is a directory of GGUF blobs addressed by manifests, so the engine can load
+them directly — nothing talks to Ollama itself and it doesn't need to be
+running. They appear as `ollama:<name>:<tag>` (source group "Ollama"). Each
+model's prompts are rendered with the chat template embedded in its GGUF
+(`llama_chat_apply_template`), so Llama 3, Qwen, Gemma … each get their own
+format; files without a template fall back to ChatML. Embedding models and
+vision projectors are filtered out by reading `general.architecture` from the
+GGUF header. Measured: `ollama:llama3.1:latest` (8B) runs the spam scenario
+in 747 ms / 2 passes vs 2.2 s / 53 passes for the grammar baseline.
+Caveat: some Ollama blobs are Ollama-specific conversions that upstream
+llama.cpp rejects (`gemma4:*`, `qwen3-vl:*` here: "wrong number of tensors");
+the dropdown reports the error and keeps the previous model loaded.
+
+**Same prompt for both engines.** In the web app the parallel engine is
+prefilled with exactly the prompt the grammar-constrained baseline gets
+(schema with descriptions and allowed values, plus the same instruction),
+so the only difference between the two panes is the decoding. The CLI
+benchmark keeps the Python port's one-line catalog prompt
+(`CompiledSchema.PromptStyle.CATALOG`) so its token counts stay comparable
+with the Python numbers above.
+
+**Why the two engines can disagree.** Scored against the CFP's own filing on
+the 100 cached Devoxx talks (`python3 java/tools/eval/devoxx_eval.py`, server
+running), with the 1.5B model and the shared prompt: track 44 vs 47,
+session format 52 vs 33, audience level 22 vs 27 (parallel vs baseline). The
+investigation behind those numbers:
+
+- The disagreement is *not* the decoding. Scoring choices by their first token
+  or by the summed probability of every token that starts them gives
+  identical decisions on all 100 talks.
+- It was the prompt: the two engines originally saw different prompts, and a
+  1.5B model's preferences move a lot with wording. Hence the shared prompt.
+- Only `track` is really inferable from an abstract (8 classes, majority
+  28%): both engines land around 45–50% on the 1.5B and ~53% on the 3B.
+  `session_format` (61% `Conference`) and `audience_level` (~50%
+  `INTERMEDIATE`) are the speaker's form choices; "accuracy" there mostly
+  measures whether a prompt biases toward the majority class, so don't read
+  much into either engine's score on those two.
 
 Two scenarios ship next to the four upstream presets:
 
@@ -390,11 +440,13 @@ python/
 java/
   pom.xml            Java 22+, Jackson, JUnit; shaded jar target/pcd-benchmark.jar
   tools/gen-bindings.sh  regenerates the FFM bindings with jextract
+  tools/eval/devoxx_eval.py  scores both engines against the CFP filing on the cached talks
   src/main/java/pcd/
     Main.java              entry point: `serve` (web app), `bench` (CLI), `devoxx-samples` (refresh talk bank)
     DevoxxSamples.java     fetches tracks + top talks from the Devoxx CFP API into presets/devoxx_cfp.json
     NativeBenchmark.java   CLI benchmark
     Preset.java            preset model, validation, JSON (de)serialization
+    ModelCatalog.java      models/*.gguf + Ollama store → loadable models (GGUF header reader)
     Prompts.java           same prompt text as python/core (catalog + naive baseline)
   src/main/java/pcd/nativeengine/
     LlamaRuntime.java          FFM wrapper: model/context, tokenize, batched decode, logits, seq ops

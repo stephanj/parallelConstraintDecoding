@@ -21,6 +21,10 @@ OUT="$DIR/../src/main/java"
   --include-function llama_model_get_vocab \
   --include-function llama_vocab_n_tokens \
   --include-function llama_vocab_is_eog \
+  --include-function llama_model_chat_template \
+  --include-function llama_chat_apply_template \
+  --include-function llama_model_meta_val_str \
+  --include-struct llama_chat_message \
   --include-function llama_context_default_params \
   --include-function llama_init_from_model \
   --include-function llama_free \

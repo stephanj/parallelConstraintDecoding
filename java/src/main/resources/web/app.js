@@ -83,6 +83,11 @@
     $("context-meta").textContent = s
       ? `${current.description || ""} Talk ${sampleIdx + 1} of ${n}: ${s.label}`
       : (current.description || "");
+    const exp = s && s.expected ? Object.entries(s.expected) : [];
+    $("context-expected").hidden = !exp.length;
+    $("context-expected").textContent = exp.length
+      ? "The CFP filed this talk as " + exp.map(([k, v]) => `${k.replace(/_/g, " ")}: ${v}`).join(", ") + ". Both engines are checked against that."
+      : "";
     $("next-sample").hidden = n < 2;
     resetRace();
   }
@@ -100,6 +105,31 @@
   $("preset-select").addEventListener("change", (e) => selectPreset(e.target.value));
 
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  /**
+   * Pretty-prints (possibly partial) flat JSON as it streams: newlines and indentation around the
+   * structural characters that are outside strings, so commas inside values stay put.
+   */
+  function prettyPartial(raw) {
+    let out = "", inStr = false, esc = false, depth = 0;
+    for (const ch of raw) {
+      if (inStr) {
+        out += ch;
+        if (esc) esc = false;
+        else if (ch === "\\") esc = true;
+        else if (ch === '"') inStr = false;
+        continue;
+      }
+      if (ch === '"') { inStr = true; out += ch; }
+      else if (ch === "{") { depth++; out += "{\n" + "  ".repeat(depth); }
+      else if (ch === "}") { depth = Math.max(0, depth - 1); out += "\n" + "  ".repeat(depth) + "}"; }
+      else if (ch === ",") { out += ",\n" + "  ".repeat(depth); }
+      else if (ch === ":") { out += ": "; }
+      else if (ch === " " || ch === "\n" || ch === "\t") { /* the grammar emits none; drop any */ }
+      else out += ch;
+    }
+    return out;
+  }
 
   // ---------------------------------------------------------------- race
   const RULER_MIN_MS = 3000;
@@ -148,8 +178,9 @@
     fields.innerHTML = res.fields.map((f) => {
       const alts = Object.entries(f.probs).map(([c, p]) => `${c}: ${(p * 100).toFixed(1)}%`).join("\n");
       const exp = expected[f.name];
-      const expHtml = exp === undefined ? "" :
-        `<span class="fexp ${String(f.value) === exp ? "match" : "miss"}">CFP: ${esc(exp)}</span>`;
+      const expHtml = exp === undefined ? "" : (String(f.value) === exp
+        ? `<span class="fexp match">✓ same as the CFP</span>`
+        : `<span class="fexp miss">✗ CFP filed it as ${esc(exp)}</span>`);
       return `<li title="${esc(alts)}"><span class="fname">${esc(f.name)}</span><span class="fval">${esc(f.value)}${expHtml}</span>` +
         `<span class="fbar-wrap"><span class="fbar"><i style="width:${(f.prob * 100).toFixed(0)}%"></i></span><span class="fprob">${(f.prob * 100).toFixed(0)}%${f.levels > 1 ? " · " + f.levels + " lvl" : ""}</span></span></li>`;
     }).join("");
@@ -173,7 +204,14 @@
     for (const k of res.missingKeys) issues.push(`Missing field: ${k}`);
     for (const k of res.extraKeys) issues.push(`Invented field: ${k}`);
     for (const k of res.invalidEnums) issues.push(`Value outside the allowed set: ${k}`);
-    $("naive-issues").innerHTML = issues.map((i) => `<li>${esc(i)}</li>`).join("");
+    const expectedB = (currentSample() && currentSample().expected) || {};
+    const cmp = Object.entries(expectedB).map(([k, v]) => {
+      const got = res.json ? res.json[k] : undefined;
+      return String(got) === v
+        ? `<li class="cmp match">${esc(k)}: ✓ same as the CFP</li>`
+        : `<li class="cmp miss">${esc(k)}: ${esc(String(got))} — ✗ CFP filed it as ${esc(v)}</li>`;
+    });
+    $("naive-issues").innerHTML = issues.map((i) => `<li>${esc(i)}</li>`).join("") + cmp.join("");
 
     // Highlight offending keys in the streamed text.
     const bad = [...res.missingKeys.map(() => null), ...res.extraKeys, ...res.invalidEnums.map((s) => s.split("=")[0])].filter(Boolean);
@@ -186,7 +224,7 @@
     const speed = res.elapsedMs / Math.max(parallel.elapsedMs, 1);
     const n = parallel.fields.length;
     let text = `<strong>${speed.toFixed(1)}× faster</strong> — ${n} fields decided in ${parallel.forwardPasses} forward passes instead of ${res.forwardPasses}, ` +
-      (ok ? "and both outputs match the schema this time." : `and the parallel output is the only one that matches the schema.`);
+      (ok ? "and both outputs match the schema." : `and the parallel output is the only one that matches the schema.`);
     const expected = (currentSample() && currentSample().expected) || {};
     const keys = Object.keys(expected);
     if (keys.length) {
@@ -210,7 +248,7 @@
     const { samples, ...rest } = current;
     const body = { ...rest, context: $("context").value };
     const stream = $("naive-stream");
-    let parallel = null, t0 = null, revealed = false;
+    let parallel = null, t0 = null, revealed = false, raw = "";
     try {
       await sse("/api/run/race", body, (ev, data) => {
         if (ev === "parallel") { parallel = data; }
@@ -225,12 +263,13 @@
           };
           raf = requestAnimationFrame(tick);
         } else if (ev === "token") {
-          const cur = stream.querySelector(".cursor");
-          stream.insertBefore(document.createTextNode(data.t), cur);
+          raw += data.t;
+          stream.textContent = prettyPartial(raw);
+          stream.insertAdjacentHTML("beforeend", '<span class="cursor"></span>');
           stream.scrollTop = stream.scrollHeight;
         } else if (ev === "naive") {
           cancelAnimationFrame(raf);
-          stream.querySelector(".cursor")?.remove();
+          stream.textContent = data.validJson && data.json ? JSON.stringify(data.json, null, 2) : prettyPartial(raw);
           if (!revealed) renderParallel(parallel);
           renderNaive(data, parallel);
         }
@@ -392,12 +431,41 @@
     }
   });
 
+  // ---------------------------------------------------------------- models
+  const fmtGb = (b) => (b / 1e9).toFixed(1) + " GB";
+  async function loadModels() {
+    const m = await api("/api/models");
+    const sel = $("model-select");
+    const groups = { local: "models/ (project)", ollama: "Ollama (local install)" };
+    sel.innerHTML = Object.entries(groups).map(([src, title]) => {
+      const opts = m.models.filter((x) => x.source === src)
+        .map((x) => `<option value="${esc(x.id)}">${esc(x.label)} · ${fmtGb(x.sizeBytes)}</option>`).join("");
+      return opts ? `<optgroup label="${title}">${opts}</optgroup>` : "";
+    }).join("");
+    sel.value = m.current;
+    sel.disabled = m.models.length < 2;
+  }
+  $("model-select").addEventListener("change", async (e) => {
+    const sel = e.target;
+    sel.disabled = true; $("model-status").textContent = "loading…";
+    document.querySelectorAll(".primary").forEach((b) => b.disabled = true);
+    try {
+      const m = await api("/api/models", { method: "POST", body: JSON.stringify({ id: sel.value }) });
+      sel.value = m.current;
+      $("model-status").textContent = "";
+      resetRace();
+    } catch (err) {
+      $("model-status").textContent = err.message;
+      try { const m = await api("/api/models"); sel.value = m.current; } catch (e2) { /* keep selection */ }
+    } finally {
+      sel.disabled = false;
+      document.querySelectorAll(".primary").forEach((b) => b.disabled = false);
+    }
+  });
+
   // ---------------------------------------------------------------- boot
   (async () => {
-    try {
-      const s = await api("/api/status");
-      $("model-name").textContent = s.model;
-    } catch (e) { /* status is cosmetic */ }
+    try { await loadModels(); } catch (e) { $("model-status").textContent = "models: " + e.message; }
     await loadPresets();
     drawTicks();
     const params = new URLSearchParams(location.search);

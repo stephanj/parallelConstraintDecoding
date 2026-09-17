@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
+import pcd.ModelCatalog;
 import pcd.Preset;
 
 /**
@@ -38,18 +39,18 @@ public final class Server {
     private final Stores.Presets presets;
     private final Stores.Runs runs;
     private final HttpServer http;
+    private final ModelCatalog catalog;
 
     public Server(int port, Path modelPath, Path presetsDir, Path resultsDir) throws IOException {
         this.presets = new Stores.Presets(presetsDir);
         this.runs = new Stores.Runs(resultsDir);
-        System.out.println("Loading " + modelPath + " ...");
-        long t0 = System.nanoTime();
-        this.engine = new EngineService(modelPath);
-        System.out.printf("Engine loaded in %.1fs%n", (System.nanoTime() - t0) / 1e9);
+        this.catalog = new ModelCatalog(modelPath.toAbsolutePath().getParent());
+        this.engine = new EngineService(modelPath, modelPath.getFileName().toString());
 
         http = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
         http.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
         http.createContext("/api/status", ex -> handle(ex, this::status));
+        http.createContext("/api/models", ex -> handle(ex, this::modelsApi));
         http.createContext("/api/presets", ex -> handle(ex, this::presetsApi));
         http.createContext("/api/run/parallel", ex -> handle(ex, this::runParallel));
         http.createContext("/api/run/race", ex -> handle(ex, this::runRace));
@@ -72,8 +73,29 @@ public final class Server {
 
     private void status(HttpExchange ex) throws IOException {
         ObjectNode out = MAPPER.createObjectNode();
-        out.put("model", engine.modelPath.getFileName().toString());
+        out.put("model", engine.modelName());
         out.put("presets", presets.list().size());
+        json(ex, 200, out);
+    }
+
+    /**
+     * GET: every loadable model (project models/ + local Ollama store) and which one is loaded.
+     * POST {id}: switch to that model; a load failure leaves the previous model in place.
+     */
+    private void modelsApi(HttpExchange ex) throws IOException {
+        if (ex.getRequestMethod().equals("POST")) {
+            JsonNode body = MAPPER.readTree(ex.getRequestBody());
+            ModelCatalog.Entry entry = catalog.find(body.path("id").asText(""));
+            engine.switchModel(entry.path(), entry.id());
+        }
+        ObjectNode out = MAPPER.createObjectNode();
+        out.put("current", engine.modelName());
+        ArrayNode arr = out.putArray("models");
+        for (ModelCatalog.Entry e : catalog.list()) {
+            ObjectNode m = arr.addObject();
+            m.put("id", e.id()).put("label", e.label()).put("source", e.source());
+            m.put("sizeBytes", e.sizeBytes()).put("architecture", e.architecture());
+        }
         json(ex, 200, out);
     }
 
@@ -142,7 +164,7 @@ public final class Server {
         List<Preset> all = presets.list();
         ObjectNode run = MAPPER.createObjectNode();
         run.put("timestamp", java.time.Instant.now().toString());
-        run.put("model", engine.modelPath.getFileName().toString());
+        run.put("model", engine.modelName());
         ArrayNode rows = run.putArray("presets");
         try (Sse sse = Sse.open(ex)) {
             for (Preset p : all) {

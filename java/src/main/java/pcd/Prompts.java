@@ -31,7 +31,7 @@ public final class Prompts {
     }
 
     /** Mirrors StructuredSchema.to_json_schema_prompt_str(): a TypeScript-like schema listing. */
-    static String jsonSchemaCatalog(Preset preset) {
+    public static String jsonSchemaCatalog(Preset preset) {
         StringBuilder sb = new StringBuilder("{\n");
         for (Preset.FieldDef f : preset.schema().values()) {
             if (f.isBoolean()) {

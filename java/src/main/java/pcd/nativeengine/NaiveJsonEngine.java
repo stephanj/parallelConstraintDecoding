@@ -51,9 +51,7 @@ public final class NaiveJsonEngine {
 
     /** Generates the JSON for {@code preset}; {@code onPiece} receives each decoded piece as it is produced. */
     public Result run(Preset preset, Consumer<String> onPiece) {
-        String prompt = "<|im_start|>system\n" + Prompts.naiveSystem(preset) + "<|im_end|>\n"
-                + "<|im_start|>user\n" + Prompts.naiveUser(preset) + "<|im_end|>\n"
-                + "<|im_start|>assistant\n" + PREFILL;
+        String prompt = rt.chatPrompt(Prompts.naiveSystem(preset), Prompts.naiveUser(preset)) + PREFILL;
         int[] promptTokens = rt.tokenize(prompt, true);
 
         long t0 = System.nanoTime();

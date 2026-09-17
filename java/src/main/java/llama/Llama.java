@@ -826,6 +826,126 @@ public class Llama {
         }
     }
 
+    private static class llama_model_meta_val_str {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            Llama.C_INT,
+            Llama.C_POINTER,
+            Llama.C_POINTER,
+            Llama.C_POINTER,
+            Llama.C_LONG
+        );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_model_meta_val_str");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int32_t llama_model_meta_val_str(const struct llama_model *model, const char *key, char *buf, size_t buf_size)
+     * }
+     */
+    public static FunctionDescriptor llama_model_meta_val_str$descriptor() {
+        return llama_model_meta_val_str.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int32_t llama_model_meta_val_str(const struct llama_model *model, const char *key, char *buf, size_t buf_size)
+     * }
+     */
+    public static MethodHandle llama_model_meta_val_str$handle() {
+        return llama_model_meta_val_str.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int32_t llama_model_meta_val_str(const struct llama_model *model, const char *key, char *buf, size_t buf_size)
+     * }
+     */
+    public static MemorySegment llama_model_meta_val_str$address() {
+        return llama_model_meta_val_str.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * int32_t llama_model_meta_val_str(const struct llama_model *model, const char *key, char *buf, size_t buf_size)
+     * }
+     */
+    public static int llama_model_meta_val_str(MemorySegment model, MemorySegment key, MemorySegment buf, long buf_size) {
+        var mh$ = llama_model_meta_val_str.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_model_meta_val_str", model, key, buf, buf_size);
+            }
+            return (int)mh$.invokeExact(model, key, buf, buf_size);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
+    private static class llama_model_chat_template {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            Llama.C_POINTER,
+            Llama.C_POINTER,
+            Llama.C_POINTER
+        );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_model_chat_template");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * const char *llama_model_chat_template(const struct llama_model *model, const char *name)
+     * }
+     */
+    public static FunctionDescriptor llama_model_chat_template$descriptor() {
+        return llama_model_chat_template.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * const char *llama_model_chat_template(const struct llama_model *model, const char *name)
+     * }
+     */
+    public static MethodHandle llama_model_chat_template$handle() {
+        return llama_model_chat_template.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * const char *llama_model_chat_template(const struct llama_model *model, const char *name)
+     * }
+     */
+    public static MemorySegment llama_model_chat_template$address() {
+        return llama_model_chat_template.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * const char *llama_model_chat_template(const struct llama_model *model, const char *name)
+     * }
+     */
+    public static MemorySegment llama_model_chat_template(MemorySegment model, MemorySegment name) {
+        var mh$ = llama_model_chat_template.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_model_chat_template", model, name);
+            }
+            return (MemorySegment)mh$.invokeExact(model, name);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
     private static class llama_memory_clear {
         public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
             Llama.C_POINTER,
@@ -1484,6 +1604,69 @@ public class Llama {
         }
     }
 
+    private static class llama_chat_apply_template {
+        public static final FunctionDescriptor DESC = FunctionDescriptor.of(
+            Llama.C_INT,
+            Llama.C_POINTER,
+            Llama.C_POINTER,
+            Llama.C_LONG,
+            Llama.C_BOOL,
+            Llama.C_POINTER,
+            Llama.C_INT
+        );
+
+        public static final MemorySegment ADDR = Llama.findOrThrow("llama_chat_apply_template");
+
+        public static final MethodHandle HANDLE = Linker.nativeLinker().downcallHandle(ADDR, DESC);
+    }
+
+    /**
+     * Function descriptor for:
+     * {@snippet lang=c :
+     * int32_t llama_chat_apply_template(const char *tmpl, const struct llama_chat_message *chat, size_t n_msg, bool add_ass, char *buf, int32_t length)
+     * }
+     */
+    public static FunctionDescriptor llama_chat_apply_template$descriptor() {
+        return llama_chat_apply_template.DESC;
+    }
+
+    /**
+     * Downcall method handle for:
+     * {@snippet lang=c :
+     * int32_t llama_chat_apply_template(const char *tmpl, const struct llama_chat_message *chat, size_t n_msg, bool add_ass, char *buf, int32_t length)
+     * }
+     */
+    public static MethodHandle llama_chat_apply_template$handle() {
+        return llama_chat_apply_template.HANDLE;
+    }
+
+    /**
+     * Address for:
+     * {@snippet lang=c :
+     * int32_t llama_chat_apply_template(const char *tmpl, const struct llama_chat_message *chat, size_t n_msg, bool add_ass, char *buf, int32_t length)
+     * }
+     */
+    public static MemorySegment llama_chat_apply_template$address() {
+        return llama_chat_apply_template.ADDR;
+    }
+
+    /**
+     * {@snippet lang=c :
+     * int32_t llama_chat_apply_template(const char *tmpl, const struct llama_chat_message *chat, size_t n_msg, bool add_ass, char *buf, int32_t length)
+     * }
+     */
+    public static int llama_chat_apply_template(MemorySegment tmpl, MemorySegment chat, long n_msg, boolean add_ass, MemorySegment buf, int length) {
+        var mh$ = llama_chat_apply_template.HANDLE;
+        try {
+            if (TRACE_DOWNCALLS) {
+                traceDowncall("llama_chat_apply_template", tmpl, chat, n_msg, add_ass, buf, length);
+            }
+            return (int)mh$.invokeExact(tmpl, chat, n_msg, add_ass, buf, length);
+        } catch (Throwable ex$) {
+           throw new AssertionError("should not reach here", ex$);
+        }
+    }
+
     private static class llama_sampler_free {
         public static final FunctionDescriptor DESC = FunctionDescriptor.ofVoid(
             Llama.C_POINTER
@@ -1891,3 +2074,4 @@ public class Llama {
         }
     }
 }
+

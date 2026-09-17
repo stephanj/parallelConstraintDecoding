@@ -72,7 +72,7 @@ public final class NativeParallelEngine {
         int m = schema.fields.size();
 
         // --- tokenize ---------------------------------------------------------------------------
-        int[] contextTokens = rt.tokenize(preset.context() + "<|im_end|>\n<|im_start|>assistant\n{\n", true);
+        int[] contextTokens = rt.tokenize(schema.userTurn(preset) + schema.userSuffix + "{\n", true);
         int sysLen = schema.systemTokens.length;
         int prefixLen = sysLen + contextTokens.length;
         long t1 = System.nanoTime();

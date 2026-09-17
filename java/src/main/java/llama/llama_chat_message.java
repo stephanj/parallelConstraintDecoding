@@ -14,20 +14,22 @@ import static java.lang.foreign.MemoryLayout.PathElement.*;
 
 /**
  * {@snippet lang=c :
- * struct llama_sampler_chain_params {
- *     bool no_perf;
+ * struct llama_chat_message {
+ *     const char *role;
+ *     const char *content;
  * }
  * }
  */
-public class llama_sampler_chain_params {
+public class llama_chat_message {
 
-    llama_sampler_chain_params() {
+    llama_chat_message() {
         // Should not be called directly
     }
 
     private static final GroupLayout $LAYOUT = MemoryLayout.structLayout(
-        Llama.C_BOOL.withName("no_perf")
-    ).withName("llama_sampler_chain_params");
+        Llama.C_POINTER.withName("role"),
+        Llama.C_POINTER.withName("content")
+    ).withName("llama_chat_message");
 
     /**
      * The layout of this struct
@@ -36,48 +38,92 @@ public class llama_sampler_chain_params {
         return $LAYOUT;
     }
 
-    private static final OfBoolean no_perf$LAYOUT = (OfBoolean)$LAYOUT.select(groupElement("no_perf"));
+    private static final AddressLayout role$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("role"));
 
     /**
      * Layout for field:
      * {@snippet lang=c :
-     * bool no_perf
+     * const char *role
      * }
      */
-    public static final OfBoolean no_perf$layout() {
-        return no_perf$LAYOUT;
+    public static final AddressLayout role$layout() {
+        return role$LAYOUT;
     }
 
-    private static final long no_perf$OFFSET = 0;
+    private static final long role$OFFSET = 0;
 
     /**
      * Offset for field:
      * {@snippet lang=c :
-     * bool no_perf
+     * const char *role
      * }
      */
-    public static final long no_perf$offset() {
-        return no_perf$OFFSET;
+    public static final long role$offset() {
+        return role$OFFSET;
     }
 
     /**
      * Getter for field:
      * {@snippet lang=c :
-     * bool no_perf
+     * const char *role
      * }
      */
-    public static boolean no_perf(MemorySegment struct) {
-        return struct.get(no_perf$LAYOUT, no_perf$OFFSET);
+    public static MemorySegment role(MemorySegment struct) {
+        return struct.get(role$LAYOUT, role$OFFSET);
     }
 
     /**
      * Setter for field:
      * {@snippet lang=c :
-     * bool no_perf
+     * const char *role
      * }
      */
-    public static void no_perf(MemorySegment struct, boolean fieldValue) {
-        struct.set(no_perf$LAYOUT, no_perf$OFFSET, fieldValue);
+    public static void role(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(role$LAYOUT, role$OFFSET, fieldValue);
+    }
+
+    private static final AddressLayout content$LAYOUT = (AddressLayout)$LAYOUT.select(groupElement("content"));
+
+    /**
+     * Layout for field:
+     * {@snippet lang=c :
+     * const char *content
+     * }
+     */
+    public static final AddressLayout content$layout() {
+        return content$LAYOUT;
+    }
+
+    private static final long content$OFFSET = 8;
+
+    /**
+     * Offset for field:
+     * {@snippet lang=c :
+     * const char *content
+     * }
+     */
+    public static final long content$offset() {
+        return content$OFFSET;
+    }
+
+    /**
+     * Getter for field:
+     * {@snippet lang=c :
+     * const char *content
+     * }
+     */
+    public static MemorySegment content(MemorySegment struct) {
+        return struct.get(content$LAYOUT, content$OFFSET);
+    }
+
+    /**
+     * Setter for field:
+     * {@snippet lang=c :
+     * const char *content
+     * }
+     */
+    public static void content(MemorySegment struct, MemorySegment fieldValue) {
+        struct.set(content$LAYOUT, content$OFFSET, fieldValue);
     }
 
     /**
