@@ -41,6 +41,8 @@ public final class Server {
     private final HttpServer http;
     private final ModelCatalog catalog;
     private final boolean readOnly;
+    /** UI hint: show the two engines one after the other (live) instead of replayed on one timeline. */
+    private final boolean sequentialRace = Boolean.parseBoolean(System.getenv().getOrDefault("PCD_SEQUENTIAL_RACE", "false"));
 
     public Server(int port, Path modelPath, Path presetsDir, Path resultsDir) throws IOException {
         this("127.0.0.1", port, false, modelPath, presetsDir, resultsDir);
@@ -87,6 +89,7 @@ public final class Server {
         out.put("model", engine.modelName());
         out.put("presets", presets.list().size());
         out.put("readOnly", readOnly);
+        out.put("sequentialRace", sequentialRace);
         json(ex, 200, out);
     }
 
@@ -173,6 +176,7 @@ public final class Server {
     private void runRace(HttpExchange ex) throws IOException {
         Preset p = presetFromBody(ex);
         try (Sse sse = Sse.open(ex)) {
+            sse.send("parallel-start", MAPPER.createObjectNode());
             sse.send("parallel", engine.runParallel(p));
             sse.send("start", MAPPER.createObjectNode());
             ObjectNode naive = engine.runNaive(p, piece -> sse.send("token", MAPPER.createObjectNode().put("t", piece)));

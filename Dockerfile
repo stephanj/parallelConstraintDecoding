@@ -80,6 +80,7 @@ ENV PCD_LLAMA_LIB_DIR=/opt/llama/lib \
     PCD_BIND=0.0.0.0 \
     PORT=8080 \
     PCD_READ_ONLY=true \
+    PCD_SEQUENTIAL_RACE=true \
     JAVA_TOOL_OPTIONS="--enable-native-access=ALL-UNNAMED"
 WORKDIR /app
 COPY --from=llama /out/lib /opt/llama/lib
