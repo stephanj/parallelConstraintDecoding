@@ -35,9 +35,11 @@
   }
   function fits(b, cs) { return cs.every(([r, c]) => r >= 0 && r < H && c >= 0 && c < W && !b[r][c]); }
   function dropRow(b, type, rot, col) {
-    // Hard-drop from above: lowest row at which the piece still fits. -1 if it doesn't fit at all.
-    let row = -1;
-    for (let r = 0; r < H; r++) { if (fits(b, cells(type, rot, r, col))) row = r; else if (row >= 0) break; }
+    // Hard-drop from the spawn row: the piece must fit at the top, then falls until the next row is
+    // blocked. Never scans past an obstacle (that would let a piece tunnel under an overhang).
+    if (!fits(b, cells(type, rot, 0, col))) return -1;
+    let row = 0;
+    while (row + 1 < H && fits(b, cells(type, rot, row + 1, col))) row++;
     return row;
   }
   function place(b, type, rot, row, col) {
